@@ -1,13 +1,13 @@
 const fs = require('fs')
 
-module.exports = (client, args) => {
+exports.run = (client, args) => {
   var RichEmbed = client.embed;
   var msg = args[0];
   if (msg.author.bot) return false;
-  var prefix = client.config[msg.guild.id].prefix || ".";
+  var prefix = ".";
   if (msg.mentions.users.first() && msg.mentions.users.first().id == client.user.id) {
     msg.channel.send(
-      `The prefix on ${msg.guild.name} is ${prefix}`
+      `The prefix on ${msg.guild.name} is \`\`${prefix}\`\``
     );
     return true;
   } else if (!msg.content.startsWith(prefix)) {
@@ -41,6 +41,7 @@ module.exports = (client, args) => {
         return false;
       }
     }
-    
+    var args = msg.content.slice(target + prefix.length).split(" ");
+    module.run(client, msg, args)
   }
 };

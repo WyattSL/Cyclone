@@ -10,6 +10,9 @@ exports.run = function(client, args) {
     var footers = require("/app/stuff/footer.json")
     return footers[client.random(footers.length)];
   }
+  client.config = {}
+  client.config[288100334084030465] = {}
+  client.config[288100334084030465].prefix = "."
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0
   var mod = 0
