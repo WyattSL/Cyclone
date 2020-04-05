@@ -4,20 +4,28 @@ module.exports = (client, args) => {
   var RichEmbed = client.embed;
   var msg = args[0];
   if (msg.author.bot) return false;
+  var prefix = client.config[msg.guild.id].prefix || ".";
   if (msg.mentions.users.first() && msg.mentions.users.first().id == client.user.id) {
     msg.channel.send(
-      `The prefix on ${msg.guild.name} is ${client.config[msg.guild.id].prefix}`
+      `The prefix on ${msg.guild.name} is ${prefix}`
     );
     return true;
-  } else if (!msg.content.startsWith(client.config[msg.guild.id].prefix)) {
+  } else if (!msg.content.startsWith(prefix)) {
     return false;
   }
-  var target = msg.content.slice(client.config[msg.guild.id].prefix.length).split(" ")[0]
+  var target = msg.content.slice(prefix.length).split(" ")[0]
   var module = `/app/commands/${target}.js`
   if (fs.existsSync(module)) {
     module = require(module);
     if (module.meonly) {
       if (msg.author.id !== 270035320894914560) {
+        var e = new RichEmbed;
+        e.setTitle("Error!")
+        e.setColor(0xFF0000);
+        e.setDescription("You do not have permission to perform this action. ``IS_WYATT=FALSE``")
+        e.setThumbnail("https://wl-cyclone.glitch.me/img/X")
+        e.setFooter(client.generateFooter());
+        msg.channel.send(e);
         return false;
       }
     }
@@ -26,11 +34,13 @@ module.exports = (client, args) => {
         var e = new RichEmbed;
         e.setTitle("Error!")
         e.setColor(0xFF0000);
-        e.setDescription("You do not have permission to perform this action.")
-        e.setThumbnail("https://wl-cyclone.glitch.me/img/suspicous.png")
+        e.setDescription("You do not have permission to perform this action. ``" + module.permission + "``")
+        e.setThumbnail("https://wl-cyclone.glitch.me/img/X")
         e.setFooter(client.generateFooter());
+        msg.channel.send(e);
         return false;
       }
     }
+    
   }
 };

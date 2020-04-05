@@ -4,7 +4,11 @@ exports.run = function(client, args) {
     if (!max) {
       max = 1
     }
-    Math.floor(Math.random * 10)
+    Math.floor(Math.random * max)
+  }
+  client.generateFooter = function() {
+    var footers = require("/app/stuff/footer.json")
+    return footers[client.random(footers.length)];
   }
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0
