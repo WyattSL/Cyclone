@@ -26,7 +26,7 @@ exports.run = function(client, msg, args) {
   if (target.id == msg.guild.owner.id) {
     var e = new client.embed;
     e.setTitle(`Error`);
-    e.setDescription(`The owner cannot be banned, silly!`);
+    e.setDescription(`The owner cannot be kicked, silly!`);
     e.setColor(0xFF0000);
     e.setFooter(client.generateFooter());
     e.setThumbnail(xu);
@@ -36,17 +36,17 @@ exports.run = function(client, msg, args) {
   if (target.highestRole.position > msg.member.highestRole.position) {
     var e = new client.embed;
     e.setTitle(`Error`);
-    e.setDescription(`You are not a high enough role to ban this person. ${target.highestRole.name} > ${msg.membe.highestRole.name}`);
+    e.setDescription(`You are not a high enough role to kick this person. ${target.highestRole.name} > ${msg.membe.highestRole.name}`);
     e.setColor(0xFF0000);
     e.setFooter(client.generateFooter())
     e.setThumbnail(`https://wl-cycle.glitch.me/img/x`)
     msg.channel.send(e);
     return false;
   }
-  if (!target.bannable) {
+  if (!target.kickable) {
     var e = new client.embed;
     e.setTitle(`Error`);
-    e.setDescription(`I cannot ban ${target.displayName}. I either do not have permission to ban members, or they are a higher role than me.`);
+    e.setDescription(`I cannot kick ${target.displayName}. I either do not have permission to ban members, or they are a higher role than me.`);
     e.setColor(0xFF0000);
     e.setFooter(client.generateFooter());
     e.setThumbnail(xu);
@@ -57,8 +57,8 @@ exports.run = function(client, msg, args) {
   var guild = msg.guild
   var t = Date.now()
   var e = new client.embed;
-  e.setTitle(`Ban`)
-  e.setDescription(`Are you sure you want to ban ${target.displayName}?`);
+  e.setTitle(`Kick`)
+  e.setDescription(`Are you sure you want to kick ${target.displayName}?`);
   e.setAuthor(target.user.username, target.user.avatarURL)
   e.setColor(0x0000FF);
   e.setFooter(client.generateFooter());
@@ -70,21 +70,22 @@ exports.run = function(client, msg, args) {
     collector.on('collect', r => {
       console.log(r.emoji.name + "collected");
       if (r.emoji.name == "❌") {
-        e.setDescription(`Ban cancelled.`);
+        e.setDescription(`Kick cancelled.`);
         e.setColor(0xFF0000);
         m.edit(e);
         m.clearReactions();
         collector.stop();
       } else if (r.emoji.name == "✔️") {
-        e.setDescription(`Ban confirmed. ${target.displayName} has been banned for: ${reason}`);
+        e.setDescription(`Kick confirmed. ${target.displayName} has been kicked for: ${reason}`);
         e.setColor(0x00FF00);
         m.edit(e);
         m.clearReactions();
         collector.stop();
-        var invite = msg.guild.
-        var msg = `You were kicked from ${msg.guild.name} for ${reason} by ${msg.member.displayName}. You can contact the owner at ${msg.guild.owner.user.username}#${msg.guild.owner.user.discriminator}. Here is a invite link: ${invite}`
-        target.send(msg);
-        target.kick(`Kicked by ${msg.author.username}#${msg.author.discriminator} for ${reason}`)
+        msg.guild.channels.random().createInvite({maxUses:1, unique: true}, "Kicked User").then(invite => {
+          var msg = `You were kicked from ${msg.guild.name} for ${reason} by ${msg.member.displayName}. You can contact the owner at ${msg.guild.owner.user.username}#${msg.guild.owner.user.discriminator}. Here is a invite link: ${invite.url}`
+          target.send(msg);
+          target.kick(`Kicked by ${msg.author.username}#${msg.author.discriminator} for ${reason}`)
+        });
       } else {
         console.log(r.emoji.name + ' did not match filter...')
       }
