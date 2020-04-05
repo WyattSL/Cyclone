@@ -25,3 +25,5 @@ fs.readdir("./events/", (err, files) => {
     delete require.cache[require.resolve(`./events/${file}`)];
   });
 });
+
+client.login(process.env.TOKEN)
