@@ -1,6 +1,5 @@
 exports.run = function(client, msg, args) {
   var xu = `https://wl-cyclone.glitch.me/img/X`
-  args.shift(); // shift the command out of the array (index 0)
   var ping = args.shift(); // [moved from 1->0] shift the ping out of the array (index 1)
   var reason = args.join(" ");
   if (!reason) {
@@ -8,9 +7,9 @@ exports.run = function(client, msg, args) {
   }
   var target = msg.mentions.members.first();
   if (!target) {
-    target = msg.guild.members.find(m => m.displayName.includes(target))
+    target = msg.guild.members.find(m => m.displayName.includes(ping))
     if (!target) {
-      target = msg.guild.members.find(m => m.username.includes(target))
+      target = msg.guild.members.find(m => m.username.includes(ping))
       if (!target) {
         var e = new client.embed;
         e.setTitle("Error")

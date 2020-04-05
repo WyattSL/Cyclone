@@ -42,6 +42,10 @@ exports.run = (client, args) => {
       }
     }
     var args = msg.content.slice(target + prefix.length).split(" ");
+    args.shift(); // remove the command
+    if (msg.deletable) {
+      msg.delete(); // delete the command, if it can
+    }
     module.run(client, msg, args)
   }
 };

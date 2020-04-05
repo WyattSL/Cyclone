@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 exports.run = function(client, msg, args) {
-  var commandName = args[1];
+  var commandName = args[0];
   var target = `/app/commands/${commandName}.js`;
   if (fs.existsSync(target)) {
     delete require.cache[require.resolve(target)];
