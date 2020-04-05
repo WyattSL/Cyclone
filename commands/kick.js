@@ -81,9 +81,10 @@ exports.run = function(client, msg, args) {
         m.edit(e);
         m.clearReactions();
         collector.stop();
-        var msg = `You were been banned from ${msg.guild.name} for ${reason} by ${msg.member.displayName}. You can contact the owner at ${msg.guild.owner.user.username}#${msg.guild.owner.user.discriminator}.`
+        var invite = msg.guild.
+        var msg = `You were kicked from ${msg.guild.name} for ${reason} by ${msg.member.displayName}. You can contact the owner at ${msg.guild.owner.user.username}#${msg.guild.owner.user.discriminator}. Here is a invite link: ${invite}`
         target.send(msg);
-        target.ban(`Banned by ${msg.author.username}#${msg.author.discriminator} for ${reason}`)
+        target.kick(`Kicked by ${msg.author.username}#${msg.author.discriminator} for ${reason}`)
       } else {
         console.log(r.emoji.name + ' did not match filter...')
       }

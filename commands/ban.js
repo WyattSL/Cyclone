@@ -100,3 +100,7 @@ exports.run = function(client, msg, args) {
   return true;
 }
 
+exports.permission = "BAN_MEMBERS"
+exports.description = "Permanently remove someone from the guild."
+exports.example = "ban @idiot Excessive Stupidity"
+exports.usage = "ban @user reason"
