@@ -22,6 +22,15 @@ exports.run = function(client, msg, args) {
       }
     }
   }
+  if (target.highestRole.position > msg.member.highestRole.position) {
+    var e = new client.embed;
+    e.setTitle(`Error`);
+    e.setDescription(`You are not a high enough role to ban this person. ${target.highestRole.name} > ${msg.membe.highestRole.name}`);
+    e.setColor(0xFF0000);
+    e.setFooter(client.generateFooter())
+    e.setThumbnail(`https://wl-cycle.glitch.me/img/x`)
+    msg.channel.send(e);
+  }
   var banner = msg.author
   var guild = msg.guild
   var t = Date.now()
@@ -55,7 +64,7 @@ exports.run = function(client, msg, args) {
       }
     });
     collector.on('end', collected => {
-      if (collected < 1) {
+      if (collected.size < 1) {
         e.setDescription(`You did not make a selection in time.`);
         e.setColor(0x000000);
         m.edit(e);

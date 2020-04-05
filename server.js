@@ -19,9 +19,20 @@ const assets = require("/app/stuff/assets.json")
 
 
 app.get("/img/*", function(req, res) {
+  console.log(req.url + " " + req.path)
   var id = req.path.split("/")[req.path.split("/").length];
+  console.log(id);
+  console.log(assets[id]);
   res.redirect(assets[id])
 });
+
+app.get("/*", function(req, res) {
+  res.sendStatus(404);
+})
+
+app.post("/*", function(req, res) {
+  res.sendStatus(404);
+})
 
 
 // listen for requests :)
