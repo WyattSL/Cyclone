@@ -28,6 +28,7 @@ module.exports = (client, args) => {
         e.setColor(0xFF0000);
         e.setDescription("You do not have permission to perform this action.")
         e.setThumbnail("https://wl-cyclone.glitch.me/img/suspicous.png")
+        e.setFooter(client.generateFooter());
         return false;
       }
     }
