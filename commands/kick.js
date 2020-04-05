@@ -4,7 +4,7 @@ exports.run = function(client, msg, args) {
   var ping = args.shift(); // [moved from 1->0] shift the ping out of the array (index 1)
   var reason = args.join(" ");
   if (!reason) {
-    reason = "The ban hammer has spoken!"
+    reason = "Annoying the executor."
   }
   var target = msg.mentions.members.first();
   if (!target) {
@@ -82,9 +82,12 @@ exports.run = function(client, msg, args) {
         m.clearReactions();
         collector.stop();
         msg.guild.channels.random().createInvite({maxUses:1, unique: true}, "Kicked User").then(invite => {
-          var msg = `You were kicked from ${msg.guild.name} for ${reason} by ${msg.member.displayName}. You can contact the owner at ${msg.guild.owner.user.username}#${msg.guild.owner.user.discriminator}. Here is a invite link: ${invite.url}`
-          target.send(msg);
-          target.kick(`Kicked by ${msg.author.username}#${msg.author.discriminator} for ${reason}`)
+          var ms = `You were kicked from ${target.guild.name} for ${reason} by ${msg.member.displayName}. You can contact the owner at ${target.guild.owner.user.username}#${target.guild.owner.user.discriminator}. Here is a invite link: ${invite.url}`
+          console.log(ms);
+          target.send(ms);
+          target.kick(`Kicked by ${msg.author.username}#${msg.author.discriminator} for ${reason}`);
+          var query = `INSERT INTO punishments ("type", "user", "guild", "reason") VALUES ("kick", @0, @1, @2)`;
+          client.db.run(query, target.user.id, target.guild.id, reason);
         });
       } else {
         console.log(r.emoji.name + ' did not match filter...')
