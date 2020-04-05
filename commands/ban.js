@@ -37,26 +37,28 @@ exports.run = function(client, msg, args) {
     var filter = (reaction, user) => user.id == msg.author.id;
     var collector = m.createReactionCollector(filter, { time: 15000 });
     collector.on('collect', r => {
-      console.log(r);
-      if (r == "❌") {
+      console.log(r.emoji.name + "collected");
+      if (r.emoji.name == "❌") {
         e.setDescription(`Ban cancelled.`);
         e.setColor(0xFF0000);
-        m.edit("Embed:", e);
+        m.edit(e);
         m.clearReactions();
         collector.stop();
-      } else if (r == "✔️") {
+      } else if (r.emoji.name == "✔️") {
         e.setDescription(`Ban confirmed.`);
         e.setColor(0x00FF00);
-        m.edit("Embed:", e);
+        m.edit(e);
         m.clearReactions();
         collector.stop();
+      } else {
+        console.log(r.emoji.name + ' did not match filter...')
       }
     });
     collector.on('end', collected => {
       if (collected < 1) {
         e.setDescription(`You did not make a selection in time.`);
         e.setColor(0x000000);
-        m.edit("Embed:", e);
+        m.edit(e);
         m.clearReactions();
       }
     });
