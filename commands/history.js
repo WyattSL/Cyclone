@@ -34,11 +34,14 @@ exports.run = function(client, msg, args) {
         return;
       }
       var i;
+      var e = new client.embed;
+      e.setTitle(`Oh boy. Here we go again.`);
+      e.setDescription(`Listing punishments for ${target}.`)
       for (i=0;i<results.length;i++) {
         var p = results[i];
         var type = p.type;
-        var user = p.user;
-        var guild = p.guild;
+        var guild = `[${p.guild}] ${client.guilds.find(g => g.id == p.guild).name}`;
+        
       }
     }
   });
