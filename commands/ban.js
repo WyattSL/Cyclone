@@ -28,25 +28,25 @@ exports.run = function(client, msg, args) {
   var e = new client.embed;
   e.setTitle(`Ban`)
   e.setDescription(`Are you sure you want to ban ${target.displayName}?`);
-  e.setAuthor(target.username, target.avatarURL)
+  e.setAuthor(target.user.username, target.user.avatarURL)
   e.setColor(0x0000FF);
   e.setFooter(client.generateFooter());
   msg.channel.send(e).then(m => {
-    m.react(":x:")
-    m.react(":white_check_mark:")
+    m.react("❌")
+    m.react("☑")
     var filter = (reaction, user) => user.id == banner.id;
     var collector = m.createReactionCollector(filter, { time: 15000 });
     collector.on('collect', r => {
       console.log(r);
-      if (r == ":x:") {
+      if (r == "❌") {
         e.setDescription(`Ban cancelled.`);
         e.setColor(0xFF0000);
-        m.edit(e);
+        m.edit("Embed:", e);
         m.clearReactions();
-      } else if (r == ":white_check_mark:") {
+      } else if (r == "☑") {
         e.setDescription(`Ban confirmed.`);
         e.setColor(0x00FF00);
-        m.edit(e);
+        m.edit("Embed:", e);
         m.clearReactions();
       }
     });
@@ -54,11 +54,10 @@ exports.run = function(client, msg, args) {
       if (collected < 1) {
         e.setDescription(`You did not make a selection in time.`);
         e.setColor(0x000000);
-        m.edit(e);
+        m.edit("Embed:", e);
         m.clearReactions();
       }
     });
-    m.createReactionCollector
   });
   return true;
 }
