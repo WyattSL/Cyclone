@@ -4,11 +4,13 @@ exports.run = function(client, args) {
     if (!max) {
       max = 1
     }
-    Math.floor(Math.random * max)
+    return Math.floor(Math.random() * max);
   }
   client.generateFooter = function() {
     var footers = require("/app/stuff/footer.json")
-    return footers[client.random(footers.length)];
+    var r = client.random(footers.length-1);
+    var f = footers[r];
+    return f;
   }
   client.config = {}
   client.config[288100334084030465] = {}
@@ -34,5 +36,6 @@ exports.run = function(client, args) {
   const exists = fs.existsSync(dbFile);
   const sqlite3 = require("sqlite3").verbose();
   const db = new sqlite3.Database(dbFile);
-  db.seralize()
+  db.serialize();
+  client.db = db;
 }

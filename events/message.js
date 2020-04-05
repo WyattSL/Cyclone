@@ -18,7 +18,7 @@ exports.run = (client, args) => {
   if (fs.existsSync(module)) {
     module = require(module);
     if (module.meonly) {
-      if (msg.author.id !== 270035320894914560) {
+      if (msg.author.id == 270035320894914560) {}else {
         var e = new RichEmbed;
         e.setTitle("Error!")
         e.setColor(0xFF0000);
