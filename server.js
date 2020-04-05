@@ -20,7 +20,7 @@ const assets = require("/app/stuff/assets.json")
 
 app.get("/img/*", function(req, res) {
   console.log(req.url + " " + req.path)
-  var id = req.path.split("/")[req.path.split("/").length];
+  var id = req.path.split("/")[req.path.split("/").length-1];
   console.log(id);
   console.log(assets[id]);
   res.redirect(assets[id])

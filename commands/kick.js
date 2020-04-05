@@ -100,3 +100,7 @@ exports.run = function(client, msg, args) {
   return true;
 }
 
+exports.description = "Remove a user from the guild."
+exports.usage = "kick @user reason"
+exports.example = "kick @spammer spamming"
+exports.permission = "KICK_MEMBERS"
