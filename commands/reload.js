@@ -1,13 +1,17 @@
 const fs = require("fs");
 
 exports.run = function(client, msg, args) {
-  var commandName = args[0];
+  var commandName = args[1];
   var target = `/app/commands/${commandName}.js`;
   if (fs.existsSync(target)) {
     delete require.cache[require.resolve(target)];
     var e = new client.embed;
     e.setTitle(`Success`)
-    e.setColor()
+    e.setColor(0x00FF00)
+    e.setFooter(client.generateFooter())
+    e.setThumbnail(`https://wl-cycle.glitch.me/img/check`);
+    e.setDescription(`Successfully reloaded ${commandName}.`);
+    msg.channel.send(e);
   } else {
     var e = new client.embed;
     e.setTitle(`Error`);

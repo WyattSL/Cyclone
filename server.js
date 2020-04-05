@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
 
-const id = require("/app/stuff/assets.json")
+const assets = require("/app/stuff/assets.json")
 
 
 app.get("/img/*", function(req, res) {

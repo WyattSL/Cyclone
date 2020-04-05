@@ -27,4 +27,12 @@ exports.run = function(client, args) {
     client.user.setPresence({status: "online", game:{ name: p, type:s}});
     client.prescount=client.prescount+1
   }, (60/presences.length)*mod);
+  
+  // SQL
+  const fs = require("fs")
+  const dbFile = "./.data/sqlite.db";
+  const exists = fs.existsSync(dbFile);
+  const sqlite3 = require("sqlite3").verbose();
+  const db = new sqlite3.Database(dbFile);
+  db.seralize()
 }
