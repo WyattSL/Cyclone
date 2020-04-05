@@ -9,7 +9,10 @@
     "exclude": [
       "^public/",
       "^dist/",
-      ".js"
+      "\\.js"
+    ],
+    "include": [
+      "\\.json"
     ]
   },
   "throttle": 900000

@@ -33,8 +33,8 @@ exports.run = function(client, msg, args) {
   e.setFooter(client.generateFooter());
   msg.channel.send(e).then(m => {
     m.react("❌")
-    m.react("☑")
-    var filter = (reaction, user) => user.id == banner.id;
+    m.react("✔️")
+    var filter = (reaction, user) => user.id == msg.author.id;
     var collector = m.createReactionCollector(filter, { time: 15000 });
     collector.on('collect', r => {
       console.log(r);
@@ -43,11 +43,13 @@ exports.run = function(client, msg, args) {
         e.setColor(0xFF0000);
         m.edit("Embed:", e);
         m.clearReactions();
-      } else if (r == "☑") {
+        collector.stop();
+      } else if (r == "✔️") {
         e.setDescription(`Ban confirmed.`);
         e.setColor(0x00FF00);
         m.edit("Embed:", e);
         m.clearReactions();
+        collector.stop();
       }
     });
     collector.on('end', collected => {
