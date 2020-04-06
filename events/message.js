@@ -3,6 +3,7 @@ const fs = require('fs')
 exports.run = (client, args) => {
   var RichEmbed = client.embed;
   var msg = args[0];
+  console.log("@" + msg.member.displayName + " said " + msg.content + " in " + msg.guild.name + " on #" + msg.channel.name)
   if (msg.author.bot) return false;
   var prefix = ".";
   if (msg.mentions.users.first() && msg.mentions.users.first().id == client.user.id) {

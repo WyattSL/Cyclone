@@ -27,4 +27,8 @@ fs.readdir("./events/", (err, files) => {
   });
 });
 
+client.setInterval(function() {
+  console.log(client.uptime);
+}, 1000);
+
 client.login(process.env.TOKEN)

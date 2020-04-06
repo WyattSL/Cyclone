@@ -17,15 +17,18 @@ exports.run = function(client, args) {
   client.config[288100334084030465].prefix = "."
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0
-  var mod = 0
-  client.setInterval(function() {
-    mod = 15000
-    if (client.prescount > presences.length-1) client.prescount = 0
+  var mod = 15000
+  setInterval(function() {
+    if (client.prescount > presences.length-1) {
+      client.prescount = 0
+      console.log(`Reset presence`)
+    }
     var p = presences[client.prescount];
     p=p.replace(/%users%/, client.users.size);
     p=p.replace(/%guilds%/, client.guilds.size);
     var s = p.split(" ")[0];
     p = p.slice(s.length+1);
+    console.log(`Replaced prefix with ${p} for count ${client.prescount}`)
     client.user.setPresence({status: "online", game:{ name: p, type:s}});
     client.prescount=client.prescount+1
   }, mod);
