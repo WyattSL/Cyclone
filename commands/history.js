@@ -20,11 +20,14 @@ exports.run = function(client, msg, args) {
   }
   var server = args[0] || msg.guild.id
   if (server.toLowerCase() == "global") server = "*"
-  var type = args[1] || "*"
+  console.log(args[1]);  
+  var type = args[1] || "*";
+  console.log(type);
   if (!type) type = "*"
   console.log(type);
-  var query = `SELECT * FROM punishments WHERE user=@0 AND type=@1 AND guild=@2`;
-  client.db.all(query, target.id, type, server, function(err, results) {
+  var query = `SELECT * FROM punishments WHERE user=${target.id} AND type="${type}" AND guild=${server}`;
+  console.log(query);
+  client.db.all(query, function(err, results) {
     if (err) {
       msg.channel.send("I ran into an error. ```fix\n" + err + "```");
       throw err;
@@ -44,7 +47,7 @@ exports.run = function(client, msg, args) {
       }
       var i;
       var e = new client.embed;
-      e.setTitle(`Oh boy. Here we go again.`);
+      e.setTitle(`Here we go again.`);
       e.setDescription(`Listing punishments for ${target}.`);
       e.setColor(0x0000FF);
       e.setFooter(client.generateFooter());
