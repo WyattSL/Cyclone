@@ -20,14 +20,19 @@ exports.run = function(client, msg, args) {
   }
   var server = args[0] || msg.guild.id
   if (server.toLowerCase() == "global") server = "*"
-  console.log(args[1]);  
   var type = args[1] || "*";
-  console.log(type);
   if (!type) type = "*"
-  console.log(type);
-  var query = `SELECT * FROM punishments WHERE user=${target.id} AND type="${type}" AND guild=${server}`;
+  if (type == "*" || !type) {
+    var query = `SELECT * FROM punishments WHERE user=${target.id}`
+  } else {
+    var query = `SELECT * FROM punishments WHERE user=${target.id} AND type=${type}`;
+  }
   console.log(query);
-  client.db.all(query, function(err, results) {
+  if (server !== "*") {
+    query = `${query} AND guild=${server}`
+  }
+  console.log(query);
+  client.db.all(query, target.id, type, server, function(err, results) {
     if (err) {
       msg.channel.send("I ran into an error. ```fix\n" + err + "```");
       throw err;

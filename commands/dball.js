@@ -2,7 +2,7 @@ exports.run = function(client, msg, args) {
   var code = args.join(" ");
   msg.channel.send("```sql\n" + code + "```");
   try {
-    client.db.all(code, function(res, err) {
+    client.db.all(code, function(err, res) {
       if (err) {
         msg.channel.send("```fix\n" + err + "```");
         throw err;
