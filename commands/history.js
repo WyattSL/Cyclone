@@ -23,13 +23,13 @@ exports.run = function(client, msg, args) {
   var type = args[1] || "*";
   if (!type) type = "*"
   if (type == "*" || !type) {
-    var query = `SELECT * FROM punishments WHERE user=${target.id}`
+    var query = `SELECT * FROM punishments WHERE user=@0`
   } else {
-    var query = `SELECT * FROM punishments WHERE user=${target.id} AND type=${type}`;
+    var query = `SELECT * FROM punishments WHERE user=@0 AND type=@1`;
   }
   console.log(query);
   if (server !== "*") {
-    query = `${query} AND guild=${server}`
+    query = `${query} AND guild=@2`
   }
   console.log(query);
   client.db.all(query, target.id, type, server, function(err, results) {
