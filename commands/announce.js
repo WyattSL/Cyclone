@@ -5,7 +5,11 @@ exports.run = function(client, msg, args) {
     var embed = new client.embed;
     embed.setTitle("Oh noes!");
     embed.setDescription("A announcement channel is not set. Please do so in the config.");
-    embed.set
+    embed.setFooter(client.generateFooter());
+    embed.setColor(0xFF0000);
+    embed.addField("Psst! Here's the announcement!", announcement);
+    msg.channel.send(embed);
+    return;
   }
   var name = msg.guild.name;
   var av = msg.guild.iconURL;
