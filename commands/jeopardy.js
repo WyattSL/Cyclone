@@ -81,6 +81,7 @@ exports.run = function(client, msg, args) {
         e.setFooter(client.generateFooter());
         e.setTimestamp();
         msg.channel.send(e);
+        client.jeopardy.voiceconnection.playArbitraryInput(client.assets.Jep_Conclude)
       }
       return;
     });
