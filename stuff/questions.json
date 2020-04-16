@@ -1,9 +1,9 @@
 {
   "text": [
     "What city is the empire state building located in?",
-    "How many states in the USA?",
+    "How many states are in the USA?",
     "Who was the 16th president of the USA?",
-    "WHat company created Fallout 4?",
+    "What company created Fallout 4?",
     "How many protons does Neon have?",
     "What is the most widely used programming language?",
     "How many states are in the East Coast of the USA?",
@@ -14,11 +14,20 @@
   ],
   "audio": {
     "What city is the empire state building located in?": "Jep_EmpireStateBuilding",
-    "What is the most widely used programming language?": "Jep_Programming"
+    "What is the most widely used programming language?": "Jep_Programming",
+    "Who was the 16th president of the USA?": "Jep_President",
+    "How many states are in the USA?": "Jep_States",
+    "What company created Fallout 4?": "Jep_Fallout",
+    "How many protons does Neon have?": "Jep_Neon",
+    "How many states are in the East Coast of the USA?": "Jep_EST",
+    "What game has the highest downloads?": "Jep_Downloads",
+    "What discord server has the most members?": "Jep_DiscordMembers",
+    "What discord bot is in the most servers?": "Jep_DiscordBots",
+    "What is the most played Minecraft server?": "Jep_MCServer"
   },
   "answers": {
     "What city is the empire state building located in?": "New York",
-    "How many states in the USA?": 50,
+    "How many states are in the USA?": 50,
     "Who was the 16th president of the USA?": "Abraham Lincoln",
     "What company created Fallout 4?": "Bethesda",
     "What is the most widely use programming language": "Java",
