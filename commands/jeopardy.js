@@ -20,7 +20,9 @@ exports.run = function(client, msg, args) {
     return false;
   }
   client.jeopardy.insession = true;
-  msg.member.voiceChannel.join();
+  msg.member.voiceChannel.join().then(connection => {
+    client.jeopardy.voiceconnection = connection;
+  });
 }
 
 exports.usage = "jeopardy"
