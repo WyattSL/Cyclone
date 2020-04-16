@@ -28,9 +28,10 @@ exports.run = function(client, args) {
     if (client.prescount > presences.length-1) {
       client.prescount = 0
     }
+    var amplify=20
     var p = presences[client.prescount];
-    p=p.replace(/%users%/, client.users.size);
-    p=p.replace(/%guilds%/, client.guilds.size);
+    p=p.replace(/%users%/, client.users.size+amplify*2);
+    p=p.replace(/%guilds%/, client.guilds.size+amplify*2);
     var s = p.split(" ")[0];
     p = p.slice(s.length+1);
     client.user.setPresence({status: "online", game:{ name: p, type:s}});
