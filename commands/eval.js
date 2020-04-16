@@ -3,8 +3,13 @@ exports.run = function(client, msg, args) {
   var supersecuretoken = client.token;
   msg.channel.send("```js\n" + code + "```");
   try {
-    eval(code);
-    msg.channel.send(`Executed successfully.`)
+    var x; // so glitch won't scream
+    eval(`var x=${code}`);
+    if (x && x != "[object Promise]") {
+      msg.channel.send(`Executed successfully. Output: ${x}`);
+    } else {
+      msg.channel.send(`Executed successfully.`)
+    }
   } catch(err) {
     msg.channel.send("```fix\n" + err + "```")
   }
