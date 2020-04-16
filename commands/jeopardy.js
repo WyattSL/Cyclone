@@ -19,7 +19,7 @@ exports.run = function(client, msg, args) {
   }
   client.jeopardy.question = function() {
     var random = client.random(questions.text.length);
-    var question = questions.text[random];
+    var question = questions.text[random-1];
     var audio = questions.audio[question];
     var answer = questions.answer[question];
     client.jeopardy.voiceconnection.playArbitraryInput(audio);
@@ -27,6 +27,7 @@ exports.run = function(client, msg, args) {
   client.jeopardy.insession = true;
   msg.member.voiceChannel.join().then(connection => {
     client.jeopardy.voiceconnection = connection;
+    client.jeopardy.question();
   });
 }
 
