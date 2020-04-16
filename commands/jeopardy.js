@@ -38,7 +38,10 @@ exports.run = function(client, msg, args) {
     var collector = msg.channel.createMessageCollector(filter, {time: 15000});
     var e = new client.embed;
     e.setTitle("Jeopardy");
-    e.set
+    e.setDescription(question);
+    e.setColor(0x000000);
+    e.setFooter(client.generateFooter());
+    msg.channel.send(e);
     collector.on("collect", msg => {
       var embed = new client.embed;
       embed.setTitle("Jeopardy");

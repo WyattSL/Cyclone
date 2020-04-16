@@ -5,6 +5,7 @@
     "Who was the 16th president of the USA?",
     "WHat company created Fallout 4?",
     "How many protons does Neon have?",
+    "What is the most widely used programming language?",
     "How many states are in the East Coast of the USA?",
     "What game has the highest downloads?",
     "What is the most played Minecraft server?",
@@ -12,13 +13,15 @@
     "What discord bot is in the most servers?"
   ],
   "audio": {
-    "What city is the empire state building located in?": "Jep_EmpireStateBuilding"
+    "What city is the empire state building located in?": "Jep_EmpireStateBuilding",
+    "What is the most widely used programming language?": "Jep_Programming"
   },
   "answers": {
     "What city is the empire state building located in?": "New York",
     "How many states in the USA?": 50,
     "Who was the 16th president of the USA?": "Abraham Lincoln",
-    "WHat company created Fallout 4?": "Bethesda",
+    "What company created Fallout 4?": "Bethesda",
+    "What is the most widely use programming language": "Java",
     "How many protons does Neon have?": 10,
     "How many states are in the East Coast of the USA?": 23,
     "What game has the highest downloads?": "Minecraft",
