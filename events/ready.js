@@ -1,9 +1,3 @@
-async function findFirst(day, month, order) {
-  if (day < 1 || day > 31 || order < 
-  var d = new Date();
-  d.setMonth(month);
-};
-
 exports.run = function(client, args) {
   console.log("starting");
   client.random = function(max) {
@@ -13,9 +7,15 @@ exports.run = function(client, args) {
     return Math.floor(Math.random() * max);
   }
   client.generateFooter = function() {
+    var holidays = require("/app/stuff/holiday.json");
+    var d = new Date();
     var footers = require("/app/stuff/footer.json")
     var r = client.random(footers.length-1);
     var f = footers[r];
+    if (holidays[`${d.getMonth()+1}/${d.getDate()}`]) f = holidays[`${d.getMonth()+1}/${d.getDate()}`];
+    if (holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getYear()}`]) f = holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getYear()}`];
+    console.log(`${d.getMonth()+1}/${d.getDate()}/${d.getYear()}`);
+    console.log(f);
     return f;
   }
   client.config = {}
