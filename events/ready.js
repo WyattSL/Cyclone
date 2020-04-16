@@ -22,8 +22,9 @@ exports.run = function(client, args) {
   }
   client.config = {}
   var i;
-  for (i=0;i<client.guilds.size;i++) { // in future please load config values here: this will just stop errors with prefix
-    client.config[client.guilds.array()[i].id] = {};
+  var glist = client.guilds.array();
+  for (i=0;i<glist.length;i++) { // in future please load config values here: this will just stop errors with prefix
+    client.config[glist[i].id] = {};
   }
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0

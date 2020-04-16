@@ -8,15 +8,19 @@ exports.run = function(client, msg, args) {
     embed.setFooter(client.generateFooter());
     embed.setColor(0x000000);
     if (client.random(1) == 1) {
-      client.setTitle(`Cyclone Configuration`);
+      embed.setTitle(`Cyclone Configuration`);
     } else {
-      client.setTitle(`Top Secret Control Panel`);
+      embed.setTitle(`Top Secret Control Panel`);
     }
     for (i=0;i<configlist.length;i++) {
       var name = configlist[i].name;
       var description = configlist[i].description;
-      var default = configlist[i].default;
+      var Default = configlist[i].default;
+      var type = configlist[i].type;
+      var cvalue = client.config[msg.guild.id][name] || Default;
+      embed.addField(`${name}`, `${description}\nCurrently: ${cvalue}`, true);
     };
+    msg.channel.send(embed);
   }
 }
 
