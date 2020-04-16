@@ -21,7 +21,9 @@ exports.run = function(client, args) {
   }
   client.config = {}
   var i;
-  
+  for (i=0;i<client.guilds.size;i++) { // in future please load config values here: this will just stop errors with prefix
+    client.config[client.guilds.array()[i].id] = {};
+  }
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0
   var mod = 15000
@@ -33,6 +35,8 @@ exports.run = function(client, args) {
     var p = presences[client.prescount];
     p=p.replace(/%users%/, client.users.size+amplify*2);
     p=p.replace(/%guilds%/, client.guilds.size+amplify*2);
+    client.usercount = client.users.size+amplify*2;
+    client.guildcount = client.guilds.size+amplify*2
     var s = p.split(" ")[0];
     p = p.slice(s.length+1);
     client.user.setPresence({status: "online", game:{ name: p, type:s}});
