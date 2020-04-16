@@ -1,6 +1,5 @@
 exports.run = function(client, args) {
   console.log("starting");
-  client.guilds.
   client.assets = {}
   client.assets.X = `https://wl-cyclone.glitch.me/img/X`
   client.random = function(max) {

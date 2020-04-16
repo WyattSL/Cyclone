@@ -9,6 +9,7 @@ exports.run = function(client, msg, args) {
     msg.channel.send(embed);
     return false;
   }
+  if (msg.guild.me.voiceChannel) msg.guild.me.voiceChannel.leave();
   var questpath = `/app/stuff/questions.json`
   var questions = require(questpath);
   var i;
@@ -21,11 +22,30 @@ exports.run = function(client, msg, args) {
     var question = questions.text[random];
     var audio = questions.audio[question];
     var answer = questions.answers[question];
-    msg.channel.send(`R: ${random}/${questions.text.length-1} Q: ${question}; A: ${audio}; ANS: ${answer}`);
     client.jeopardy.question = question;
     client.jeopardy.audio = audio;
     client.jeopardy.answer = answer;
-    client.jeopardy.voiceconnection.playArbitraryInput(audio);
+    client.jeopardy.voiceconnection.playArbitraryInput(`https://wl-cyclone.glitch.me/img/${audio}`);
+    var filter = msg => msg.content.toLowerCase() == answer.toLowerCase();
+    var collector = msg.channel.createMessageCollector(filter, {time: 15000})
+    collector.on("collect", msg => {
+      var embed = new client.embed;
+      embed.setTitle("Jeopardy");
+      embed.setDescription(`Correct! ${msg.member.displayName} has guessed ${answer}.`);
+      embed.setColor(0x009900)
+    });
+    collector.on("end", collected => {
+      if (collected.size < 1) {
+        var embed = new client.embed;
+        embed.setTitle("Jeopardy");
+        embed.setDescription("Time is up! The answer was " + answer + ".");
+        embed.setColor(0x990000);
+        embed.setFooter(client.generateFooter());
+        embed.setThumbnail(client.assets.X);
+        embed.setTimestamp();
+        msg.channel.send(embed);
+      }
+    });
   }
   client.jeopardy.insession = true;
   msg.member.voiceChannel.join().then(connection => {
