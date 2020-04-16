@@ -14,13 +14,32 @@ exports.run = function(client, msg, args) {
     }
     for (i=0;i<configlist.length;i++) {
       var name = configlist[i].name;
+      client.configlistkeys[name] = i;
       var description = configlist[i].description;
       var Default = configlist[i].default;
       var type = configlist[i].type;
       var cvalue = client.config[msg.guild.id][name] || Default;
-      embed.addField(`${name}`, `${description}\nCurrently: ${cvalue}`, true);
+      embed.addField(`${name}: ${cvalue}`, `${description}`, true);
     };
     msg.channel.send(embed);
+  }
+  if (key && !value) {
+    var embed = new client.embed;
+    embed.setFooter(client.generateFooter());
+    embed.setColor(0x000000);
+    embed.setTitle("Cyclone Configuration");
+    embed.setDescription(key);
+    var k = client.configlistkeys[key]
+    if (!k) {
+      embed.setDescription(`I couldn't find ${key}.`);
+      embed.setThumbnail(client.assets.X);
+      embed.setColor(0xFF0000);
+      msg.channel.send(embed);
+      return;
+    }
+    embed.addField(``)
+    
+    
   }
 }
 
