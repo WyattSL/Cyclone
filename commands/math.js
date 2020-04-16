@@ -1,5 +1,9 @@
 exports.run = function(client, msg, args) {
   var eq = args.join(" ");
+  if (!eq) {
+    msg.channel.send("Please specify a equation!");
+    return false;
+  }
   eq=eq.replace(/times/g, "*");
   eq=eq.replace(/x/g, "*");
   eq=eq.replace(/plus/g, "+");
@@ -38,7 +42,7 @@ exports.run = function(client, msg, args) {
   eq=eq.replace(/z/g, "");
   eq=eq.replace(/ /g, "");
   eq=eq.replace(/\^/g, "**");
-  eq=eq.replace(/∞/g, "999999999999999999999")
+  eq=eq.replace(/∞/g, "390105249390105249390105249390105249390105249")
   try {
     var x;
     eval(`var x = ${eq}`);
@@ -48,7 +52,7 @@ exports.run = function(client, msg, args) {
     eq=eq.replace("**", "^");
     eq=eq.replace("**", "^");
     eq=eq.replace("**", "^");
-    eq=eq.replace(/999999999999999999999/g, "∞");
+    eq=eq.replace(/390105249390105249390105249390105249390105249/g, "∞");
     if (x>=9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999) x = "Infinity";
     if (x == "Infinity") x = "∞"
     msg.channel.send(`\`\`${eq}\`\`=${x}`)
