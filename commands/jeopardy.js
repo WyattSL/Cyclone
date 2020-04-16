@@ -35,7 +35,7 @@ exports.run = function(client, msg, args) {
     client.jeopardy.answer = answer;
     client.jeopardy.voiceconnection.playArbitraryInput(`https://wl-cyclone.glitch.me/img/${audio}`);
     var answerLower;
-    if (answer.toLowerCase()) {
+    if (!Number(answer)) {
       answerLower = answer.toLowerCase();
     } else {
       answerLower = answer;
