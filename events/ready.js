@@ -20,8 +20,8 @@ exports.run = function(client, args) {
     return f;
   }
   client.config = {}
-  client.config[288100334084030465] = {}
-  client.config[288100334084030465].prefix = "."
+  var i;
+  
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0
   var mod = 15000

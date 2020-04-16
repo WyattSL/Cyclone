@@ -1,0 +1,14 @@
+[
+  {
+    "name": "DisconnectAFK",
+    "description": "Automatically disconnect people who go AFK. This requires a AFK channel to be set.",
+    "default": "false",
+    "type": "bool"
+  },
+  {
+    "name": "Prefix",
+    "description": "The bot's prefix. This is '.' by default. In the command: .config the '.' is the prefix.",
+    "default": ".",
+    "type": "string"
+  }
+]
