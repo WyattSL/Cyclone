@@ -2,12 +2,28 @@
   "text": [
     "What city is the empire state building located in?",
     "How many states in the USA?",
-    ""
+    "Who was the 16th president of the USA?",
+    "WHat company created Fallout 4?",
+    "How many protons does Neon have?",
+    "How many states are in the East Coast of the USA?",
+    "What game has the highest downloads?",
+    "What is the most played Minecraft server?",
+    "What discord server has the most members?",
+    "What discord bot is in the most servers?"
   ],
   "audio": {
     "What city is the empire state building located in?": "Jep_EmpireStateBuilding"
   },
   "answers": {
-    "What city is the empire state building located in?": "New York"
+    "What city is the empire state building located in?": "New York",
+    "How many states in the USA?": 50,
+    "Who was the 16th president of the USA?": "Abraham Lincoln",
+    "WHat company created Fallout 4?": "Bethesda",
+    "How many protons does Neon have?": 10,
+    "How many states are in the East Coast of the USA?": 23,
+    "What game has the highest downloads?": "Minecraft",
+    "What is the most played Minecraft server?": "Hypixel",
+    "What discord server has the most members?": "Minecraft",
+    "What discord bot is in the most servers?": "Mee6"
   }
 }
