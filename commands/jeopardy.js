@@ -10,24 +10,27 @@ exports.run = function(client, msg, args) {
     return false;
   }
   var questpath = `/app/stuff/questions.json`
-  var questionsFILE = require(questpath);
-  var questions = questionsFILE;
+  var questions = require(questpath);
   var i;
   client.jeopardy = {}; // let me use things
   if (client.jeopardy.insession) {
     return false;
   }
-  client.jeopardy.question = function() {
-    var random = client.random(questions.text.length);
-    var question = questions.text[random-1];
+  this.askQuestion = function() {
+    var random = client.random(questions.text.length-1);
+    var question = questions.text[random];
     var audio = questions.audio[question];
-    var answer = questions.answer[question];
+    var answer = questions.answers[question];
+    msg.channel.send(`R: ${random}/${questions.text.length-1} Q: ${question}; A: ${audio}; ANS: ${answer}`);
+    client.jeopardy.question = question;
+    client.jeopardy.audio = audio;
+    client.jeopardy.answer = answer;
     client.jeopardy.voiceconnection.playArbitraryInput(audio);
   }
   client.jeopardy.insession = true;
   msg.member.voiceChannel.join().then(connection => {
     client.jeopardy.voiceconnection = connection;
-    this.askQuestion()
+    this.askQuestion();
   });
 }
 
