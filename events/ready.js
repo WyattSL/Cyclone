@@ -13,8 +13,8 @@ exports.run = function(client, args) {
     var r = client.random(footers.length-1);
     var f = footers[r];
     if (holidays[`${d.getMonth()+1}/${d.getDate()}`]) f = holidays[`${d.getMonth()+1}/${d.getDate()}`];
-    if (holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getYear()}`]) f = holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getYear()}`];
-    console.log(`${d.getMonth()+1}/${d.getDate()}/${d.getYear()}`);
+    if (holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`]) f = holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`];
+    console.log(`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`);
     console.log(f);
     return f;
   }
