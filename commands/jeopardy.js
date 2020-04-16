@@ -27,7 +27,7 @@ exports.run = function(client, msg, args) {
   client.jeopardy.insession = true;
   msg.member.voiceChannel.join().then(connection => {
     client.jeopardy.voiceconnection = connection;
-    client.jeopardy.question();
+    this.askQuestion()
   });
 }
 
