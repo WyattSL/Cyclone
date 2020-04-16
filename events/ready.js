@@ -1,6 +1,7 @@
 exports.run = function(client, args) {
   console.log("starting");
   client.assets = require("/app/stuff/assets.json");
+  client.configlist = require("/app/stuff/config.json"); // actually used by various things; believe it or not
   client.random = function(max) {
     if (!max) {
       max = 1
