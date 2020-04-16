@@ -36,14 +36,15 @@ exports.run = function(client, msg, args) {
   eq=eq.replace(/x/g, "");
   eq=eq.replace(/y/g, "");
   eq=eq.replace(/z/g, "");
-  eq=eq.replace(/ /g, "");
+  eq=eq.replace(/\^/g, "**");
   try {
     var x;
     eval(`var x = ${eq}`);
     if (eq == "9+10" || eq == "10+9") x = "19 OR 21";
+    eq=eq.replace("**", "^");
     msg.channel.send(`${eq}=${x}`)
   } catch(err) {
-    msg.channel.send(`I was unable to process that input. ${err}`);
+    msg.channel.send(`I was unable to process ${eq} as input. ${err}`);
   }
 }
 
