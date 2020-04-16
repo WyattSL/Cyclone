@@ -2,6 +2,7 @@ exports.run = function(client, msg, args) {
   var announcement = msg.content.slice(10, msg.content.length);
   var channel = client.config[msg.guild.id].announceChannel;
   if (!channel) {
+    console.log(channel);
     var embed = new client.embed;
     embed.setTitle("Oh noes!");
     embed.setDescription("A announcement channel is not set. Please do so in the config.");
