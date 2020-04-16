@@ -58,9 +58,17 @@ exports.run = function(client, msg, args) {
         embed.setTimestamp();
         msg.channel.send(embed);
       }
-      if (client.jeopardy.rounds <= client.jeopardy.maxrounds) {
+      if (client.jeopardy.rounds < client.jeopardy.maxrounds) {
         client.jeopardy.rounds=client.jeopardy.rounds+1
         this.askQuestion();
+      } else {
+        var e = new client.embed;
+        e.setTitle("Jeopardy");
+        e.setDescription("And that will conclude this round of Jeopardy!");
+        e.setColor(0x000000);
+        e.setFooter(client.generateFooter());
+        e.setTimestamp();
+        msg.channel.send(e);
       }
       return;
     });
@@ -71,6 +79,7 @@ exports.run = function(client, msg, args) {
     var i;
     client.jeopardy.rounds = 1
     client.jeopardy.maxrounds = 5;
+    this.askQuestion();
     client.jeopardy.insession = false;
     connection.voiceChannel.leave();
   });
