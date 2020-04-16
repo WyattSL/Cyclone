@@ -34,7 +34,13 @@ exports.run = function(client, msg, args) {
     client.jeopardy.audio = audio;
     client.jeopardy.answer = answer;
     client.jeopardy.voiceconnection.playArbitraryInput(`https://wl-cyclone.glitch.me/img/${audio}`);
-    var filter = msg => msg.content.toLowerCase() == answer.toLowerCase();
+    var answerLower;
+    if (answer.toLowerCase()) {
+      answerLower = answer.toLowerCase();
+    } else {
+      answerLower = answer;
+    }
+    var filter = msg => msg.content.toLowerCase() == answerLower;
     var collector = msg.channel.createMessageCollector(filter, {time: 15000});
     var e = new client.embed;
     e.setTitle("Jeopardy");
