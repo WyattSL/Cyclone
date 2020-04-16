@@ -1,3 +1,9 @@
+async function findFirst(day, month, order) {
+  if (day < 1 || day > 31 || order < 
+  var d = new Date();
+  d.setMonth(month);
+};
+
 exports.run = function(client, args) {
   console.log("starting");
   client.random = function(max) {
