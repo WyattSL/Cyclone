@@ -4,5 +4,8 @@
   ],
   "audio": {
     "What city is the empire state building located in?": "Jep_EmpireStateBuilding"
+  },
+  "answers": {
+    "What city is the empire state building located in?": "New York"
   }
 }
