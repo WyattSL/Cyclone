@@ -23,8 +23,7 @@ exports.run = function(client, msg, args) {
       embed.addField(`${name}: ${cvalue}`, `${description}`, true);
     };
     msg.channel.send(embed);
-  }
-  if (key && !value) {
+  } else if (key && !value) {
     var embed = new client.embed;
     embed.setFooter(client.generateFooter());
     embed.setColor(0x000000);
@@ -45,8 +44,25 @@ exports.run = function(client, msg, args) {
     var cvalue = client.config[msg.guild.id][key] || Default
     embed.addField(`Current Value`, cvalue);
     embed.addField(`Description`, description);
+    embed.addField(`Default Value`, Default);
     msg.channel.send(embed);
-  }  
+  } else if (key && value) {
+    var embed = new client.embed;
+    embed.setFooter(client.generateFooter());
+    embed.setColor(0x000000);
+    embed.setTitle("Cyclone Configuration");
+    embed.setDescription(key);
+    var c = client.configlist[client.configlistkeys[key]];
+    var cvalue = client.config[msg.guild.id].default || Default;
+    embed.addField(`Old`, cvalue, true);
+    embed.addField(`New`, value, true);
+    var q = `DELETE FROM config WHERE guild=@0 AND key=@1`;
+    client.db.run(q, msg.guild.id, key);
+    var q = `INSERT INTO config ("guild", "key", "value") VALUES (@0, @1, @2)`;
+    client.db.run(q, msg.guild.id, key, value);
+    client.config[msg.guild.id][key] = value;
+    msg.channel.send(embed);
+  }
 }
 
 exports.usage = "config [key] [value] \n config [key]";
