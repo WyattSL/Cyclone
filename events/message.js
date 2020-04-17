@@ -9,22 +9,20 @@ function swearCheck(client, msg) {
     if (msg.content.includes(list[i])) {
       if (msg.deletable && !msg.deleted) msg.delete();
       if (!replacetext) replacetext = msg.content;
+      var x = "";
+      var y;
+      for (y=0;y<list[i].length;y++) {
+        x=x+"#"
+      }
       var reg = new RegExp(list[i], "g");
-      replacetext = replacetext.replace(reg, "#");
+      replacetext = replacetext.replace(reg, x);
     }
   }
   if (replacetext) {
     var name = msg.member.displayName;
     var av = msg.author.displayAvatarURL;
     msg.channel.createWebhook(name, av, "Swear Filter").then(Webhook => {
-      Webhook.sendSlackMessage({
-        username: name,
-        attachments: [
-          {
-            pretext: replacetext
-          }
-        ]
-      });
+      Webhook.send(replacetext);
       setTimeout(function() {
         Webhook.delete("Swear Filter : Cleanup");
       }, 500)
@@ -32,7 +30,12 @@ function swearCheck(client, msg) {
   }
 }
 
-function inviteCheck(client, msg) {}
+function inviteCheck(client, msg) {
+  if (msg.content.contains("discord.gg/")) {
+    msg.delete();
+    msg.channel.send(`:scream: ${msg.member.displayname}! How dare you? We do not post invites here!`)
+  }
+}
 
 exports.run = (client, args) => {
   var RichEmbed = client.embed;

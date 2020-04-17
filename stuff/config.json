@@ -28,5 +28,11 @@
     "description": "A different solution to profanity in your server!",
     "default": "false",
     "type": "bool"
+  },
+  {
+    "name": "inviteFilter",
+    "description": "Prevent invites from being sent.",
+    "default": "false",
+    "type": "bool"
   }
 ]
