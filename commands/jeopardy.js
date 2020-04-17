@@ -94,7 +94,7 @@ exports.run = function(client, msg, args) {
     client.jeopardy.maxrounds = 5;
     this.askQuestion();
     client.jeopardy.insession = false;
-    connection.voiceChannel.leave();
+    connection.channel.leave();
   });
 }
 

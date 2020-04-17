@@ -34,5 +34,11 @@
     "description": "Prevent invites from being sent.",
     "default": "false",
     "type": "bool"
+  },
+  {
+    "name": "announceChannel",
+    "description": "Send announcements to this channel.",
+    "default": "none",
+    "type": "channel"
   }
 ]
