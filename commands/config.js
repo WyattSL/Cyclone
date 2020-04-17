@@ -63,6 +63,9 @@ exports.run = function(client, msg, args) {
         return false;
       }
     }
+    if (type == "bool") {
+      
+    }
     embed.addField(`Old`, cvalue, true);
     embed.addField(`New`, value, true);
     var q = `DELETE FROM config WHERE guild=@0 AND key=@1`;
