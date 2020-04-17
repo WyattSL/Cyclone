@@ -1,70 +1,102 @@
-const fs = require('fs')
+const fs = require("fs");
 const aliases = require("/app/stuff/alias.json");
 
 function swearCheck(client, msg) {
   const list = require("/app/stuff/words.json");
   var i;
   var replacetext;
-  for (i=0;i<list.length;i++) {
+  for (i = 0; i < list.length; i++) {
     if (msg.content.includes(list[i])) {
       if (msg.deletable && !msg.deleted) msg.delete();
-      var name = msg.member.displayName;
-      var av = msg.author.displayAvatarURL;
       if (!replacetext) replacetext = msg.content;
-      replacetext=replacetext.replace(/list[i]/g, "")
+      var reg = new RegExp(list[i], "g");
+      replacetext = replacetext.replace(reg, "#");
     }
   }
-};
+  if (replacetext) {
+    var name = msg.member.displayName;
+    var av = msg.author.displayAvatarURL;
+    msg.channel.createWebhook(name, av, "Swear Filter").then(Webhook => {
+      Webhook.sendSlackMessage({
+        username: name,
+        attachments: [
+          {
+            pretext: replacetext
+          }
+        ]
+      });
+      setTimeout(function() {
+        Webhook.delete("Swear Filter : Cleanup");
+      }, 500)
+    });
+  }
+}
 
-function inviteCheck(client, msg) {
-  
-};
+function inviteCheck(client, msg) {}
 
 exports.run = (client, args) => {
   var RichEmbed = client.embed;
   var msg = args[0];
-  console.log("@" + msg.member.displayName + " said " + msg.content + " in " + msg.guild.name + " on #" + msg.channel.name)
+  console.log(
+    "@" +
+      msg.member.displayName +
+      " said " +
+      msg.content +
+      " in " +
+      msg.guild.name +
+      " on #" +
+      msg.channel.name
+  );
   if (msg.author.bot) return false;
   if (!client.config[msg.guild.id]) client.config[msg.guild.id] = {};
-  var prefix = client.config[msg.guild.id].prefix || "." // get the prefix; if it is not set, the prefix will default to "."
-  if (msg.mentions.users.first() && msg.mentions.users.first().id == client.user.id) {
-    msg.channel.send(
-      `The prefix on ${msg.guild.name} is \`\`${prefix}\`\``
-    );
+  var prefix = client.config[msg.guild.id].prefix || "."; // get the prefix; if it is not set, the prefix will default to "."
+  if (
+    msg.mentions.users.first() &&
+    msg.mentions.users.first().id == client.user.id
+  ) {
+    msg.channel.send(`The prefix on ${msg.guild.name} is \`\`${prefix}\`\``);
     return true;
   } else if (!msg.content.startsWith(prefix)) {
-    if (client.config[msg.guild.id].swearfilter) {
+    if (client.config[msg.guild.id].swearFilter) {
       swearCheck(client, msg);
-    } else if (client.config[msg.guild.id].invitefilter) {
+    } else if (client.config[msg.guild.id].inviteFilter) {
       inviteCheck(client, msg);
     }
     return false;
   }
-  var target = msg.content.slice(prefix.length).split(" ")[0]
+  var target = msg.content.slice(prefix.length).split(" ")[0];
   if (aliases[target]) target = aliases[target];
-  var module = `/app/commands/${target}.js`
+  var module = `/app/commands/${target}.js`;
   if (fs.existsSync(module)) {
     module = require(module);
     if (module.meonly) {
-      if (msg.author.id == 270035320894914560) {}else {
-        var e = new RichEmbed;
-        e.setTitle("Error!")
-        e.setColor(0xFF0000);
-        e.setDescription("You do not have permission to perform this action. ``IS_WYATT=FALSE``")
-        e.setThumbnail("https://wl-cyclone.glitch.me/img/X")
+      if (msg.author.id == 270035320894914560) {
+      } else {
+        var e = new RichEmbed();
+        e.setTitle("Error!");
+        e.setColor(0xff0000);
+        e.setDescription(
+          "You do not have permission to perform this action. ``IS_WYATT=FALSE``"
+        );
+        e.setThumbnail("https://wl-cyclone.glitch.me/img/X");
         e.setFooter(client.generateFooter());
         msg.channel.send(e);
         return false;
       }
     }
     if (module.permission) {
-      if (module.permission == "MANAGE_SERVER") module.permission = "MANAGE_GUILD";
+      if (module.permission == "MANAGE_SERVER")
+        module.permission = "MANAGE_GUILD";
       if (!msg.member.hasPermission(module.permission, false, true, true)) {
-        var e = new RichEmbed;
-        e.setTitle("Error!")
-        e.setColor(0xFF0000);
-        e.setDescription("You do not have permission to perform this action. ``" + module.permission + "``")
-        e.setThumbnail("https://wl-cyclone.glitch.me/img/X")
+        var e = new RichEmbed();
+        e.setTitle("Error!");
+        e.setColor(0xff0000);
+        e.setDescription(
+          "You do not have permission to perform this action. ``" +
+            module.permission +
+            "``"
+        );
+        e.setThumbnail("https://wl-cyclone.glitch.me/img/X");
         e.setFooter(client.generateFooter());
         msg.channel.send(e);
         return false;
@@ -75,6 +107,6 @@ exports.run = (client, args) => {
     if (msg.deletable) {
       msg.delete(); // delete the command, if it can
     }
-    module.run(client, msg, args)
+    module.run(client, msg, args);
   }
 };

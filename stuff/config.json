@@ -22,5 +22,11 @@
     "description": "Channel testing!",
     "default": "General",
     "type": "channel"
+  },
+  {
+    "name": "swearFilter",
+    "description": "A different solution to profanity in your server!",
+    "default": "false",
+    "type": "bool"
   }
 ]

@@ -4,7 +4,11 @@ exports.run = function(client, msg, args) {
   msg.channel.send("```js\n" + code + "```");
   try {
     var x; // so glitch won't scream
-    eval(`var x=${code}`);
+    if (!msg.content.includes("eval!")) {
+      eval(`var x=${code}`);
+    } else {
+      eval(code);
+    }
     if (x && x != "[object Promise]") {
       msg.channel.send(`Executed successfully. Output: ${x}`);
     } else {

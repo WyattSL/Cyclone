@@ -1,4 +1,5 @@
 {
   "info": "ping",
-  "reboot": "restart"
+  "reboot": "restart",
+  "eval!": "eval"
 }
