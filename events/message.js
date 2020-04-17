@@ -107,7 +107,18 @@ exports.run = (client, args) => {
       }
     }
     if (module.p) {
-      
+      if (msg.guild.available) {
+        if (!msg.guild.me.hasPermission(module.p, false, true, true)) {
+          var embed = new client.embed;
+          embed.setTitle(`Error`);
+          embed.setFooter(client.generateFooter);
+          embed.setDescription(`To execute ${target}, I require permissions that I do not have.`);
+          embed.setThumbnail(client.assets.X);
+          var perm = new client.perm()
+          embed.addField(`Missing Permissions`, true);
+          embed.addField(`Required Permissions`, module.p.join(","), true);
+        }
+      }
     }
     var args = msg.content.slice(target + prefix.length).split(" ");
     args.shift(); // remove the command
