@@ -83,7 +83,7 @@ exports.run = function(client, args) {
         "body": JSON.stringify({"guildCount": client.guilds.size+amplify*2})
       });
     } catch(err) {
-      if (!err.includes("429")) { // stfu on 429s
+      if (!err.includes("429")) { // stfu on 429s:I can deal with 404s for the time 
         throw err;
       }
     }

@@ -106,6 +106,9 @@ exports.run = (client, args) => {
         return false;
       }
     }
+    if (module.p) {
+      
+    }
     var args = msg.content.slice(target + prefix.length).split(" ");
     args.shift(); // remove the command
     if (msg.deletable) {
