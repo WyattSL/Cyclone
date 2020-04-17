@@ -1,4 +1,5 @@
 exports.run = function(client, msg, args) {
+  const os = require("os")
   var up = client.uptime;
   var ping = client.ping;
   var guilds = client.guildcount
@@ -27,22 +28,29 @@ exports.run = function(client, msg, args) {
   var version = process.version;
   var pid = process.pid;
   var platform = process.platform;
-  var memtotal = process.memoryUsage().heapTotal;
-  var memused = process.memoryUsage().heapUsed;
+  var sup = os.uptime();
+  var memtotal = 256;
+  var memused = 50;
+  var type = os.type();
+  var cpus = os.cpus().length;
   var vc = client.voiceConnections.size;
   var e = new client.embed;
   e.setTitle("Cyclone Control")
   .setColor(0x000000)
   .setFooter(client.generateFooter())
-  .addField(`Uptime`, up, true)
+  .addField(`Bot Uptime`, up, true)
+  .addField(`System Uptime`, sup, true)
   .addField(`Ping`, ping, true)
-  .addField(`Status`, status, true)
-  .addField(`Users`, users, false)
+  .addField(`Status`, status, false)
+  .addField(`Users`, users, true)
   .addField(`Guilds`, guilds, true)
-  .addField(`Node Version`, version, true)
-  .addField(`Process PID`, pid, false)
+  .addField(`Node Version`, version, false)
+  .addField(`Process PID`, pid, true)
   .addField(`Process Platform`, platform, true)
-  .addField(`Voice Connections`, `${vc}`, true)
+  .addField(`Voice Connections`, `${vc}`, false)
+  .addField(`Memory`, `${memused}MB/${memtotal}MB`, true)
+  .addField(`System Type`, `${type}`, true)
+  .addField(`CPU Count`, cpus, false)
   msg.channel.send(e);
 }
 
