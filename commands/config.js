@@ -90,7 +90,7 @@ exports.run = function(client, msg, args) {
     }
     if (type == "channel") {
       var target = msg.mentions.channels.first();
-      if (!target.id) {
+      if (!target) {
         embed.setColor(0xFF0000);
         embed.setFooter(client.generateFooter());
         embed.setDescription("Please specify a channel.");

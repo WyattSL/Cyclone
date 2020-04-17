@@ -13,6 +13,7 @@ exports.run = function(client, msg, args) {
 }
 
 exports.meonly = true;
+exports.hide = true;
 exports.description = "Restart the bot."
 exports.usage = "restart"
 exports.example = "restart"

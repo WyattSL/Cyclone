@@ -10,6 +10,7 @@ exports.run = function(client, msg, args) {
 }
 
 exports.meonly = true;
+exports.hide = true;
 exports.usage = "db Code";
 exports.description = "Run sql code in a un-sandboxed enviornment.";
 exports.example = "db INSERT INTO mytable VALUES ('hi')";
