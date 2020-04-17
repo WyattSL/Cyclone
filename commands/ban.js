@@ -9,7 +9,7 @@ exports.run = function(client, msg, args) {
   if (!target) {
     target = msg.guild.members.find(m => m.displayName.includes(ping))
     if (!target) {
-      target = msg.guild.members.find(m => m.username.includes(ping))
+      target = msg.guild.members.find(m => m.user.username.includes(ping))
       if (!target) {
         var e = new client.embed;
         e.setTitle("Error")

@@ -60,10 +60,10 @@ exports.run = (client, args) => {
     msg.channel.send(`The prefix on ${msg.guild.name} is \`\`${prefix}\`\``);
     return true;
   } else if (!msg.content.startsWith(prefix)) {
-    if (client.config[msg.guild.id].swearFilter) {
+    if (client.config[msg.guild.id].swearFilter == "true") {
       swearCheck(client, msg);
     }
-    if (client.config[msg.guild.id].inviteFilter) {
+    if (client.config[msg.guild.id].inviteFilter == "true") {
       inviteCheck(client, msg);
     }
     return false;
