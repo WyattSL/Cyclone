@@ -23,4 +23,5 @@ exports.meonly = true;
 exports.hide = true;
 exports.usage = "eval Code";
 exports.description = "Run node code in a un-sandboxed enviornment.";
-exports.example = "eval msg.channel.send('hi');"
+exports.example = "eval msg.channel.send('hi');";
+exports.p = ["SEND_MESSAGES"];

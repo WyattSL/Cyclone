@@ -101,3 +101,4 @@ exports.run = function(client, msg, args) {
 exports.usage = "jeopardy"
 exports.description = "Begin a jeopardy session."
 exports.example = "jeopardy"
+exports.p = ["CONNECT", "SPEAK", "SEND_MESSAGES", "EMBED_LINKS"];

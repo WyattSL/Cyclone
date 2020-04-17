@@ -26,3 +26,4 @@ exports.example = "announce This is a very important announcement!";
 exports.description = "Send a announcement to the channel specified in the configuration.";
 exports.usage = "announce <announcement>";
 exports.permission = "MANAGE_MESSAGES"
+exports.p = ["SEND_MESSAGES", "EMBED_LINKS", "MANAGE_WEBHOOKS"]

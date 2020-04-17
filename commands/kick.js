@@ -108,4 +108,4 @@ exports.description = "Remove a user from the guild."
 exports.usage = "kick @user reason"
 exports.example = "kick @spammer spamming"
 exports.permission = "KICK_MEMBERS"
-exports.p = ["KICK_MEMBERS", "SEND_MESSAGES", "MANAGE_MESSAGES", "ADD_REACTIONS"]
+exports.p = ["KICK_MEMBERS", "SEND_MESSAGES", "MANAGE_MESSAGES", "ADD_REACTIONS", "EMBED_LINKS"]

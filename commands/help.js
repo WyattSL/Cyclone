@@ -32,4 +32,4 @@ exports.run = function(client, msg, args) {
 exports.usage = "help [command]";
 exports.description = "View help on a command, or list commands."
 exports.example = "help help";
-exports.p = ["SEND_MESSAGES", "MANAGE_GUILD"]
+exports.p = ["SEND_MESSAGES", "EMBED_LINKS"]

@@ -64,3 +64,4 @@ exports.run = function(client, msg, args) {
 exports.usage = "math equation";
 exports.description = "Solve complicated math equations!";
 exports.example = "math 9+5^3"
+exports.p = ["SEND_MESSAGES"]
