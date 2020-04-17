@@ -31,7 +31,7 @@ function swearCheck(client, msg) {
 }
 
 function inviteCheck(client, msg) {
-  if (msg.content.contains("discord.gg/")) {
+  if (msg.content.includes("discord.gg/")) {
     msg.delete();
     msg.channel.send(`:scream: ${msg.member.displayname}! How dare you? We do not post invites here!`)
   }
