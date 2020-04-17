@@ -30,6 +30,10 @@ app.get("/invite", function(req, res) {
   res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=696225400191320081&permissions=19934279&scope=bot`);
 });
 
+app.get("/uptime", function(req, res) {
+  res.sendStatus(200);
+});
+
 app.get("/*", function(req, res) {
   res.sendStatus(404);
 })
