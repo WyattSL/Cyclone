@@ -26,12 +26,8 @@ app.get("/img/*", function(req, res) {
   res.redirect(assets[id])
 });
 
-exports.setClient = function(client) {
-  this.client = client;
-}
-
 app.get("/invite", function(req, res) {
-  
+  res.redirect(require("/app/events/ready.js").invite);
 });
 
 app.get("/*", function(req, res) {

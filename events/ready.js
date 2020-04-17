@@ -1,5 +1,8 @@
 exports.run = function(client, args) {
   console.log("starting");
+  exports.client = client;
+  exports.invite = client.generateInvite(process.env.PERMS);
+  const serv = require("/app/server.js");
   client.user.setStatus("idle");
   client.assets = require("/app/stuff/assets.json");
   client.configlist = require("/app/stuff/config.json"); // actually used by various things; believe it or not
