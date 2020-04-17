@@ -6,7 +6,7 @@
     "type": "bool"
   },
   {
-    "name": "Prefix",
+    "name": "prefix",
     "description": "The bot's prefix. This is '.' by default. In the command: .config the '.' is the prefix.",
     "default": ".",
     "type": "string"

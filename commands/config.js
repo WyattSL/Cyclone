@@ -54,13 +54,17 @@ exports.run = function(client, msg, args) {
     embed.setDescription(key);
     var c = client.configlist[client.configlistkeys[key]];
     var cvalue = client.config[msg.guild.id].default || Default;
+    var type = c.type;
+    if (type == "number" || type == "integer") {
+      
+    }
     embed.addField(`Old`, cvalue, true);
     embed.addField(`New`, value, true);
     var q = `DELETE FROM config WHERE guild=@0 AND key=@1`;
     client.db.run(q, msg.guild.id, key);
     var q = `INSERT INTO config ("guild", "key", "value") VALUES (@0, @1, @2)`;
     client.db.run(q, msg.guild.id, key, value);
-    client.config[msg.guild.id][key] = value;  
+    client.config[msg.guild.id][key] = value;
     msg.channel.send(embed);
   }
 }

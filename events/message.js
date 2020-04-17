@@ -6,7 +6,7 @@ exports.run = (client, args) => {
   console.log("@" + msg.member.displayName + " said " + msg.content + " in " + msg.guild.name + " on #" + msg.channel.name)
   if (msg.author.bot) return false;
   if (!client.config[msg.guild.id]) client.config[msg.guild.id] = {};
-  var prefix = client.config[msg.guild.id].Prefix || "." // get the prefix; if it is not set, the prefix will default to "."
+  var prefix = client.config[msg.guild.id].prefix || "." // get the prefix; if it is not set, the prefix will default to "."
   if (msg.mentions.users.first() && msg.mentions.users.first().id == client.user.id) {
     msg.channel.send(
       `The prefix on ${msg.guild.name} is \`\`${prefix}\`\``
