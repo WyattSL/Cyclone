@@ -57,3 +57,4 @@ exports.run = function(client, msg, args) {
 exports.usage = "ping"
 exports.description = "Retrieve basic bot stats."
 exports.example = "ping"
+exports.p = ["EMBED_LINKS", "SEND_MESSAGES"]

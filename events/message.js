@@ -114,10 +114,16 @@ exports.run = (client, args) => {
           embed.setFooter(client.generateFooter());
           embed.setDescription(`To execute ${target}, I require permissions that I do not have.`);
           embed.setThumbnail(client.assets.X);
-          var mp = msg.guild.me.missingPermissions(module.p, false).concat(", ");
-          var rp = module.p.concat(", ");
-          rp=rp.replace(/_/g, "");
-          mp=mp.replace(/_/g, "");
+          var mp = `${msg.guild.me.permissions.missing(module.p)}`
+          var rp = `${module.p}`;
+          rp=rp.replace(/_/g, "   ");
+          rp=rp.replace(/\[/g, "");
+          rp=rp.replace(/\]/g, "");
+          rp=rp.replace(/,/g, ", ");
+          mp=mp.replace(/_/g, " ");
+          mp=mp.replace(/\[/g, "");
+          mp=mp.replace(/\]/g, "");
+          mp=mp.replace(/,/g, ", ");
           embed.addField(`Missing Permissions`, mp, true);
           embed.addField(`Required Permissions`, rp, true);
           msg.channel.send(embed);

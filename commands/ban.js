@@ -105,3 +105,4 @@ exports.permission = "BAN_MEMBERS"
 exports.description = "Permanently remove someone from the guild."
 exports.example = "ban @idiot Excessive Stupidity"
 exports.usage = "ban @user reason"
+exports.p = ["BAN_MEMBERS", "SEND_MESSAGES", "ADD_REACTIONS", "MANAGE_MESSAGES"]
