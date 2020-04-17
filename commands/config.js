@@ -56,7 +56,12 @@ exports.run = function(client, msg, args) {
     var cvalue = client.config[msg.guild.id].default || Default;
     var type = c.type;
     if (type == "number" || type == "integer") {
-      
+      if (!Number(value)) {
+        embed.setDescription("Please input a number.");
+        embed.setColor(0xFF0000);
+        msg.channel.send(embed);
+        return false;
+      }
     }
     embed.addField(`Old`, cvalue, true);
     embed.addField(`New`, value, true);

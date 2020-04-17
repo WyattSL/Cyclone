@@ -10,5 +10,11 @@
     "description": "The bot's prefix. This is '.' by default. In the command: .config the '.' is the prefix.",
     "default": ".",
     "type": "string"
+  },
+  {
+    "name": "testInt",
+    "description": "Number testing!",
+    "default": "0",
+    "type": "number"
   }
 ]
