@@ -6,6 +6,9 @@ exports.run = function(client, msg, args) {
   var status = client.status;
   var version = process.version;
   var pid = process.pid;
+  var platform = process.platform;
+  var e = new client.embed;
+  e.setTitle("Cyclone")
 }
 
 exports.usage = "ping"

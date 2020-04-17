@@ -80,8 +80,8 @@ exports.run = function(client, msg, args) {
         m.edit(e);
         m.clearReactions();
         collector.stop();
-        var msg = `You were been banned from ${msg.guild.name} for ${reason} by ${msg.member.displayName}. You can contact the owner at ${msg.guild.owner.user.username}#${msg.guild.owner.user.discriminator}.`
-        target.send(msg);
+        var smsg = `You were been banned from ${msg.guild.name} for ${reason} by ${msg.member.displayName}. You can contact the owner at ${msg.guild.owner.user.username}#${msg.guild.owner.user.discriminator}.`
+        target.send(smsg);
         target.ban(`Banned by ${msg.author.username}#${msg.author.discriminator} for ${reason}`)
         var query = `INSERT INTO punishments ("type", "user", "guild", "reason") VALUES ("ban", @0, @1, @2)`;
         client.db.run(query, target.user.id, target.guild.id, reason);
