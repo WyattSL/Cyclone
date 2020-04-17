@@ -64,7 +64,25 @@ exports.run = function(client, msg, args) {
       }
     }
     if (type == "bool") {
-      
+      switch (key) {
+        case "yes":
+          value = "true";
+          break;
+        case "no":
+          value = "false";
+          break;
+        case "on":
+          value = "true";
+          break;
+        case "off":
+          value = "false";
+          break;
+        default:
+          embed.setDescription("Please input true/false.");
+          embed.setColor(0xFF0000);
+          msg.channel.send(embed);
+          return false;
+      } 
     }
     embed.addField(`Old`, cvalue, true);
     embed.addField(`New`, value, true);
