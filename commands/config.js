@@ -64,7 +64,7 @@ exports.run = function(client, msg, args) {
       }
     }
     if (type == "bool") {
-      switch (key) {
+      switch (value) {
         case "yes":
           value = "true";
           break;
@@ -77,12 +77,27 @@ exports.run = function(client, msg, args) {
         case "off":
           value = "false";
           break;
+        case "true":
+          break;
+        case "false":
+          break;
         default:
           embed.setDescription("Please input true/false.");
           embed.setColor(0xFF0000);
           msg.channel.send(embed);
           return false;
       } 
+    }
+    if (type == "channel") {
+      var target = msg.mentions.channels.first();
+      if (!target.id) {
+        embed.setColor(0xFF0000);
+        embed.setFooter(client.generateFooter());
+        embed.setDescription("Please specify a channel.");
+        msg.channel.send(embed);
+        return false;
+      }
+      value = target.id;
     }
     embed.addField(`Old`, cvalue, true);
     embed.addField(`New`, value, true);
