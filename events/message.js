@@ -1,4 +1,5 @@
 const fs = require('fs')
+const aliases = require("/app/stuff/alias.json");
 
 exports.run = (client, args) => {
   var RichEmbed = client.embed;
@@ -16,6 +17,7 @@ exports.run = (client, args) => {
     return false;
   }
   var target = msg.content.slice(prefix.length).split(" ")[0]
+  if (aliases[target]) target = aliases[target];
   var module = `/app/commands/${target}.js`
   if (fs.existsSync(module)) {
     module = require(module);

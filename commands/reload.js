@@ -22,3 +22,7 @@ exports.run = function(client, msg, args) {
     msg.channel.send(e);
   }
 }
+
+exports.usage = "reload <command>"
+exports.description = "Reload a command; intended for debugging purposes.";
+exports.example = "reload ping"

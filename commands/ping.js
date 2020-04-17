@@ -1,5 +1,11 @@
 exports.run = function(client, msg, args) {
-  msg.channel.send(Math.round(client.ping) + "ms" + "; " + Math.round(client.uptime/1000) + "s!");
+  var up = client.uptime;
+  var ping = client.ping;
+  var guilds = client.guildscount
+  var users = client.userscount
+  var status = client.status;
+  var version = process.version;
+  var pid = process.pid;
 }
 
 exports.usage = "ping"
