@@ -111,12 +111,17 @@ exports.run = (client, args) => {
         if (!msg.guild.me.hasPermission(module.p, false, true, true)) {
           var embed = new client.embed;
           embed.setTitle(`Error`);
-          embed.setFooter(client.generateFooter);
+          embed.setFooter(client.generateFooter());
           embed.setDescription(`To execute ${target}, I require permissions that I do not have.`);
           embed.setThumbnail(client.assets.X);
-          var perm = new client.perm()
-          embed.addField(`Missing Permissions`, true);
-          embed.addField(`Required Permissions`, module.p.join(","), true);
+          var mp = msg.guild.me.missingPermissions(module.p, false).concat(", ");
+          var rp = module.p.concat(", ");
+          rp=rp.replace(/_/g, "");
+          mp=mp.replace(/_/g, "");
+          embed.addField(`Missing Permissions`, mp, true);
+          embed.addField(`Required Permissions`, rp, true);
+          msg.channel.send(embed);
+          return false;
         }
       }
     }
