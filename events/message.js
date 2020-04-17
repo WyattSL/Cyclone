@@ -33,7 +33,7 @@ function swearCheck(client, msg) {
 function inviteCheck(client, msg) {
   if (msg.content.includes("discord.gg/")) {
     msg.delete();
-    msg.channel.send(`:scream: ${msg.member.displayname}! How dare you? We do not post invites here!`)
+    msg.channel.send(`:scream: ${msg.member.displayName}! How dare you? We do not post invites here!`)
   }
 }
 
@@ -62,7 +62,8 @@ exports.run = (client, args) => {
   } else if (!msg.content.startsWith(prefix)) {
     if (client.config[msg.guild.id].swearFilter) {
       swearCheck(client, msg);
-    } else if (client.config[msg.guild.id].inviteFilter) {
+    }
+    if (client.config[msg.guild.id].inviteFilter) {
       inviteCheck(client, msg);
     }
     return false;
