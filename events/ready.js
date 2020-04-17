@@ -21,12 +21,25 @@ exports.run = function(client, args) {
     console.log(f);
     return f;
   }
+  // SQL
+  const fs = require("fs")
+  const dbFile = "./.data/sqlite.db";
+  const exists = fs.existsSync(dbFile);
+  const sqlite3 = require("sqlite3").verbose();
+  const db = new sqlite3.Database(dbFile);
+  db.serialize();
+  client.db = db;
   client.config = {}
   var i;
-  var glist = client.guilds.array();
-  for (i=0;i<glist.length;i++) { // in future please load config values here: this will just stop errors with prefix
-    client.config[glist[i].id] = {};
-  }
+  var q = `SELECT * FROM config`;
+  client.db.all(q, function(err, res) {
+    if (err) throw err;
+    if (res[0]) {
+      for (i=0;i<res.length;i++) {
+        
+      }
+    }
+  });
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0
   var mod = 15000
@@ -45,13 +58,4 @@ exports.run = function(client, args) {
     client.user.setPresence({status: "online", game:{ name: p, type:s}});
     client.prescount=client.prescount+1
   }, mod);
-  
-  // SQL
-  const fs = require("fs")
-  const dbFile = "./.data/sqlite.db";
-  const exists = fs.existsSync(dbFile);
-  const sqlite3 = require("sqlite3").verbose();
-  const db = new sqlite3.Database(dbFile);
-  db.serialize();
-  client.db = db;
 }
