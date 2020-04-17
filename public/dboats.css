@@ -1,7 +1,11 @@
-.btn a {
+.btn-dark a[href*="/"] {
+  display: inline-block !important;
+}
+
+.btn-dark a {
   display: none !important;
 }
 
-.btn a[href] {
-  display: inline-block !important;
+h1 {
+  text-weight: bold;
 }
