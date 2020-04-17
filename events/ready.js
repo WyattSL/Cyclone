@@ -54,11 +54,11 @@ exports.run = function(client, args) {
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0
   var mod = 15000
+  var amplify = 20;
   setInterval(function() {
     if (client.prescount > presences.length-1) {
       client.prescount = 0
     }
-    var amplify=20
     var p = presences[client.prescount];
     p=p.replace(/%users%/, client.users.size+amplify*2);
     p=p.replace(/%guilds%/, client.guilds.size+amplify*2);
@@ -69,5 +69,21 @@ exports.run = function(client, args) {
     client.user.setPresence({status: "online", game:{ name: p, type:s}});
     client.prescount=client.prescount+1
   }, mod);
-  
+  // API guild counts
+  function guildCounts() {
+    var api1 = `https://bots.ondiscord.xyz/bot-api/bots/${client.user.id}/guilds`;
+    var api2 = ``;
+    var api3 = ``;
+    try {
+    got.post(api1, {
+      "headers": {
+        "Authorization": process.env.BOD_API,
+        "guildCount": client.guilds.size+amplify*2,
+        "Content-Type": "application/json"
+      }
+    });
+    } 
+  }
+  guildCounts();
+  setInterval(guildCounts, 122000)
 }
