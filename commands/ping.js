@@ -2,6 +2,6 @@ exports.run = function(client, msg, args) {
   msg.channel.send(Math.round(client.ping) + "ms" + "; " + Math.round(client.uptime/1000) + "s!");
 }
 
-exports.usage = "reload <command>"
-exports.description = "Reload a command."
-exports.example = "reload ping"
+exports.usage = "ping"
+exports.description = "Retrieve basic bot stats."
+exports.example = "ping"
