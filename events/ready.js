@@ -1,5 +1,6 @@
 exports.run = function(client, args) {
   const fs = require("fs");
+  const got = require("got");
   console.log("starting");
   exports.client = client;
   exports.invite = `https://discordapp.com/api/oauth2/authorize?client_id=696225400191320081&permissions=19934279&scope=bot`
@@ -68,4 +69,5 @@ exports.run = function(client, args) {
     client.user.setPresence({status: "online", game:{ name: p, type:s}});
     client.prescount=client.prescount+1
   }, mod);
+  
 }
