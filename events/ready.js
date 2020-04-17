@@ -1,7 +1,8 @@
 exports.run = function(client, args) {
+  const fs = require("fs");
   console.log("starting");
   exports.client = client;
-  exports.invite = client.generateInvite(process.env.PERMS);
+  exports.invite = `https://discordapp.com/api/oauth2/authorize?client_id=696225400191320081&permissions=19934279&scope=bot`
   const serv = require("/app/server.js");
   client.user.setStatus("idle");
   client.assets = require("/app/stuff/assets.json");
@@ -25,7 +26,6 @@ exports.run = function(client, args) {
     return f;
   }
   // SQL
-  const fs = require("fs")
   const dbFile = "./.data/sqlite.db";
   const exists = fs.existsSync(dbFile);
   const sqlite3 = require("sqlite3").verbose();

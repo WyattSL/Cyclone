@@ -27,7 +27,7 @@ app.get("/img/*", function(req, res) {
 });
 
 app.get("/invite", function(req, res) {
-  res.redirect(require("/app/events/ready.js").invite);
+  res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=696225400191320081&permissions=19934279&scope=bot`);
 });
 
 app.get("/*", function(req, res) {
