@@ -1,6 +1,25 @@
 const fs = require('fs')
 const aliases = require("/app/stuff/alias.json");
 
+function swearCheck(client, msg) {
+  const list = require("/app/stuff/words.json");
+  var i;
+  var replacetext;
+  for (i=0;i<list.length;i++) {
+    if (msg.content.includes(list[i])) {
+      if (msg.deletable && !msg.deleted) msg.delete();
+      var name = msg.member.displayName;
+      var av = msg.author.displayAvatarURL;
+      if (!replacetext) replacetext = msg.content;
+      replacetext=replacetext.replace(/list[i]/g, "")
+    }
+  }
+};
+
+function inviteCheck(client, msg) {
+  
+};
+
 exports.run = (client, args) => {
   var RichEmbed = client.embed;
   var msg = args[0];
@@ -14,6 +33,11 @@ exports.run = (client, args) => {
     );
     return true;
   } else if (!msg.content.startsWith(prefix)) {
+    if (client.config[msg.guild.id].swearfilter) {
+      swearCheck(client, msg);
+    } else if (client.config[msg.guild.id].invitefilter) {
+      inviteCheck(client, msg);
+    }
     return false;
   }
   var target = msg.content.slice(prefix.length).split(" ")[0]
