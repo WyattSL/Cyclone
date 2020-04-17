@@ -12,6 +12,7 @@ exports.run = function(client, msg, args) {
     } else {
       embed.setTitle(`Top Secret Control Panel`);
     }
+    client.configlistkeys = {};
     for (i=0;i<configlist.length;i++) {
       var name = configlist[i].name;
       client.configlistkeys[name] = i;
@@ -37,10 +38,15 @@ exports.run = function(client, msg, args) {
       msg.channel.send(embed);
       return;
     }
-    embed.addField(``)
-    
-    
-  }
+    var c = client.configlist[k];
+    var Default = c.default;
+    var description = c.description;
+    var type = c.type;
+    var cvalue = client.config[msg.guild.id][key] || Default
+    embed.addField(`Current Value`, cvalue);
+    embed.addField(`Description`, description);
+    msg.channel.send(embed);
+  }  
 }
 
 exports.usage = "config [key] [value] \n config [key]";
