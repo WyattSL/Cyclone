@@ -36,7 +36,14 @@ exports.run = function(client, args) {
     if (err) throw err;
     if (res[0]) {
       for (i=0;i<res.length;i++) {
-        
+        var r = res[i];
+        var gl = r.guild;
+        gl=gl.slice(-12);
+        gl=Number(gl);
+        var guild = client.guilds.find(g => g.id.includes(gl));
+        console.log(`${r.guild} | ${gl} | ${guild.id} | ${r.key} | ${r.value}`);
+        if (!client.config[guild.id]) client.config[guild.id] = {};
+        client.config[guild.id][r.key] = r.value;
       }
     }
   });

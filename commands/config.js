@@ -60,7 +60,7 @@ exports.run = function(client, msg, args) {
     client.db.run(q, msg.guild.id, key);
     var q = `INSERT INTO config ("guild", "key", "value") VALUES (@0, @1, @2)`;
     client.db.run(q, msg.guild.id, key, value);
-    client.config[msg.guild.id][key] = value;
+    client.config[msg.guild.id][key] = value;  
     msg.channel.send(embed);
   }
 }
