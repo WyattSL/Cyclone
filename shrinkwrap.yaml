@@ -7,6 +7,7 @@ dependencies:
   express: 4.17.1
   got: 10.7.0
   sqlite3: 4.1.1
+  translate: 1.1.2
   uws: 99.0.0
 packages:
   /@discordjs/opus/0.1.0:
@@ -393,6 +394,12 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
+  /encoding/0.1.12:
+    dependencies:
+      iconv-lite: 0.4.24
+    dev: false
+    resolution:
+      integrity: sha1-U4tm8+5izRq1HsMjgp0flIDHS+s=
   /end-of-stream/1.4.4:
     dependencies:
       once: 1.4.0
@@ -703,6 +710,12 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-o7MKXE8ZkYMWeqq5O+764937ZU8=
+  /is-stream/1.1.0:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-EtSj3U5o4Lec6428hBc66A2RykQ=
   /is-typedarray/1.0.0:
     dev: false
     resolution:
@@ -904,6 +917,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ASCL5U13as7HhOExbT6OlWJJUV/lLzL2voOSP1UVehpRD8FbSrSDjfScK/KwAvVTI5AS6r4VwbOMlIqtvRidnA==
+  /node-fetch/1.7.3:
+    dependencies:
+      encoding: 0.1.12
+      is-stream: 1.1.0
+    dev: false
+    resolution:
+      integrity: sha512-NhZ4CsKx7cYm2vSrBAr2PvFOe6sWDf0UYLRqA6svUYg7+/TSfVAu49jYC4BvQ4Sms9SZgdqGBgroqfDhJdTyKQ==
   /node-gyp-build/3.7.0:
     dev: false
     hasBin: true
@@ -1406,6 +1426,12 @@ packages:
       node: '>=0.8'
     resolution:
       integrity: sha512-Q5srk/4vDM54WJsJio3XNn6K2sCG+CQ8G5Wz6bZhRZoAe/+TxjWB/GlFAnYEbkYVlON9FMk/fE3h2RLpPXo4lQ==
+  /translate/1.1.2:
+    dependencies:
+      node-fetch: 1.7.3
+    dev: false
+    resolution:
+      integrity: sha512-3RlVAzzcNuZ7dDfYk2qsQTxJLSeIQ06bMrYYkBneLHtewV0JGaKSP0GjTKHJn/vYwr18bvHEgdmjfg8B0DFuWw==
   /tunnel-agent/0.6.0:
     dependencies:
       safe-buffer: 5.2.0
@@ -1515,4 +1541,5 @@ specifiers:
   express: ^4.17.1
   got: ^10.7.0
   sqlite3: ^4.1.1
+  translate: ^1.1.2
   uws: ^99.0.0
