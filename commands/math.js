@@ -14,6 +14,8 @@ exports.run = function(client, msg, args) {
   eq=eq.replace(/divide/g, "/");
   eq=eq.replace(/squared/g, "^2");
   eq=eq.replace(/cubed/g, "^3");
+  eq=eq.replace(/\(/g, "*");
+  eq=eq.replace(/\)/g, "");
   eq=eq.replace(/a/g, "");
   eq=eq.replace(/b/g, "");
   eq=eq.replace(/c/g, "");
@@ -52,9 +54,8 @@ exports.run = function(client, msg, args) {
     eq=eq.replace("**", "^");
     eq=eq.replace("**", "^");
     eq=eq.replace("**", "^");
-    eq=eq.replace(/390105249390105249390105249390105249390105249/g, "∞");
+    eq=eq.replace(/390105249390105249390105249390105249390105249/g, "Infinity");
     if (x>=9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999) x = "Infinity";
-    if (x == "Infinity") x = "∞"
     msg.channel.send(`\`\`${eq}\`\`=${x}`)
   } catch(err) {
     msg.channel.send(`I was unable to process \`\`${eq}\`\` as input. ${err}`);

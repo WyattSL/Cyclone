@@ -135,7 +135,7 @@ exports.run = (client, args) => {
         }
       }
     }
-    if (msg.channel.topic.includes("no-commands")) {
+    if (msg.channel.topic && msg.channel.topic.includes("no-commands")) {
       if (msg.deletable()) msg.delete();
       return;
     }
