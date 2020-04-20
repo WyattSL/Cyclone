@@ -4,6 +4,7 @@ exports.run = function(client, msg, args) {
     msg.channel.send("Please specify a equation!");
     return false;
   }
+  eq=eq.replace(/negative/g, "-");
   eq=eq.replace(/times/g, "*");
   eq=eq.replace(/x/g, "*");
   eq=eq.replace(/plus/g, "+");
