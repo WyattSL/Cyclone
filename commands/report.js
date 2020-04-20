@@ -33,12 +33,13 @@ exports.run = function(client, msg, args) {
       e.setFooter(client.generateFooter());
       e.setTimestamp();
       e.setURL(m.url);
+      e.setAuthor(`${msg.member.displayName}#${msg.author.discriminator}`, msg.author.displayAvatarURL);
       ch.send(e).then(ms => {
-        ms.react("no_entry");
-        ms.react("boot")
-        ms.react("mute");
-        ms.react("warning");
-        ms.react("negative_squared_cross_mark");
+        ms.react("⛔");
+        ms.react("🥾")
+        ms.react("🔇");
+        ms.react("⚠️");
+        ms.react("❎");
       });
     });
   };
