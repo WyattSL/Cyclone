@@ -18,9 +18,9 @@
     "type": "number"
   },
   {
-    "name": "testChannel",
-    "description": "Channel testing!",
-    "default": "General",
+    "name": "reportsChannel",
+    "description": "Channel all reports goto",
+    "default": "none",
     "type": "channel"
   },
   {
