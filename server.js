@@ -26,6 +26,10 @@ app.get("/img/*", function(req, res) {
   res.redirect(assets[id])
 });
 
+app.get("/support", function(req, res) {
+  res.redirect("https://discord.gg/nqDKcYC")
+});
+
 app.get("/invite", function(req, res) {
   res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=696225400191320081&permissions=19934279&scope=bot`);
 });
