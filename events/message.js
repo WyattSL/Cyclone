@@ -135,6 +135,10 @@ exports.run = (client, args) => {
         }
       }
     }
+    if (msg.channel.topic.includes("no-commands")) {
+      if (msg.deletable()) msg.delete();
+      return;
+    }
     var args = msg.content.slice(target + prefix.length).split(" ");
     args.shift(); // remove the command
     if (msg.deletable) {
