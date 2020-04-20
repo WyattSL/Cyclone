@@ -126,6 +126,7 @@ exports.run = (client, args) => {
           mp=mp.replace(/,/g, ", ");
           embed.addField(`Missing Permissions`, mp, true);
           embed.addField(`Required Permissions`, rp, true);
+          if (msg.channel.sendable)
           msg.channel.send(embed);
           return false;
         }
