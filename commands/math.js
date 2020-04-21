@@ -4,6 +4,7 @@ exports.run = function(client, msg, args) {
     msg.channel.send("Please specify a equation!");
     return false;
   }
+  eq=eq.toLowerCase();
   eq=eq.replace(/negative/g, "-");
   eq=eq.replace(/times/g, "*");
   eq=eq.replace(/x/g, "*");
@@ -47,7 +48,7 @@ exports.run = function(client, msg, args) {
   try {
     var x;
     eval(`var x = ${eq}`);
-    if (eq == "9+10" || eq == "10+9") x = "19 OR 21";
+    if (eq == "9+10" || eq == "10+9") x = "19 **|OR|** 21";
     eq=eq.replace("**", "^");
     eq=eq.replace("**", "^");
     eq=eq.replace("**", "^");
