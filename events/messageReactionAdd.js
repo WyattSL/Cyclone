@@ -54,7 +54,7 @@ exports.run = function(client, args) {
             msg.edit(embed);
           }
         case "⚠️": // warn
-          if (msg.guild.member(user).hasPermission("MUTE_MEMBERS", false, true, true)) {
+          if (msg.guild.member(user).hasPermission("MANAGE_MESSAGES", false, true, true)) {
             msg.clearReactions();
             var e = msg.embeds.first();
             var embed = new client.embed;
