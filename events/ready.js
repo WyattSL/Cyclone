@@ -45,9 +45,13 @@ exports.run = function(client, args) {
         gl=gl.slice(-12);
         gl=Number(gl);
         var guild = client.guilds.find(g => g.id.includes(gl));
-        console.log(`${r.guild} | ${gl} | ${guild.id} | ${r.key} | ${r.value}`);
-        if (!client.config[guild.id]) client.config[guild.id] = {};
-        client.config[guild.id][r.key] = r.value;
+        if (!guild) {
+          console.log(`Could not find a guild for ${r.guild} matching ${gl} and ${r.key} with ${r.value}`)
+        } else {
+          console.log(`${r.guild} | ${gl} | ${guild.id} | ${r.key} | ${r.value}`);
+          if (!client.config[guild.id]) client.config[guild.id] = {};
+          client.config[guild.id][r.key] = r.value;
+        }
       }
     }
   });

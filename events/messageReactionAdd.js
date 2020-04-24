@@ -19,6 +19,7 @@ exports.run = function(client, args) {
             embed.setDescription(e.description);
             embed.addField("Punishment", `${msg.guild.member(user).displayName}#${user.discriminator} banned the target.`);
             embed.setTimestamp();
+            embed.setURL(e.url());
             msg.edit(embed);
           }
           return;
@@ -37,7 +38,22 @@ exports.run = function(client, args) {
             embed.setURL(e.url())
             msg.edit(embed);
           }
-        case "🔇": // kick
+        case "🔇": // mute
+          if (msg.guild.member(user).hasPermission("MUTE_MEMBERS", false, true, true)) {
+            msg.clearReactions();
+            var e = msg.embeds.first();
+            var embed = new client.embed;
+            embed.setTitle(e.title);
+            embed.setAuthor(e.author);
+            embed.setThumbnail(e.thumbnail);
+            embed.setFooter(e.footer);
+            embed.setDescription(e.description);
+            embed.addField("Punishment", `${msg.guild.member(user).displayName}#${user.discriminator} muted the target.`);
+            embed.setTimestamp();
+            embed.setURL(e.url())
+            msg.edit(embed);
+          }
+        case "⚠️": // warn
           if (msg.guild.member(user).hasPermission("MUTE_MEMBERS", false, true, true)) {
             msg.clearReactions();
             var e = msg.embeds.first();
