@@ -28,12 +28,12 @@ exports.run = function(client, msg, args) {
       var reason = args.join(" ");
       var e = new client.embed;
       e.setTitle("Click here to visit the message.");
-      e.setDescription(`${target.user.username}#${target.user.discriminator} was reported for ${reason}.`);
+      e.setDescription(`${user.user.username}#${user.user.discriminator} reported ${target.user.username}#${target.user.discriminator} for ${reason}.`);
       e.setThumbnail(target.user.displayAvatarURL);
       e.setFooter(client.generateFooter());
       e.setTimestamp();
       e.setURL(m.url);
-      e.setAuthor(`${msg.member.displayName}#${msg.author.discriminator}`, msg.author.displayAvatarURL);
+      e.setAuthor(`${target.displayName}#${target.discriminator}`, target.user.displayAvatarURL);
       ch.send(e).then(ms => {
         ms.react("⛔");
         ms.react("🥾")
