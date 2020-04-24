@@ -34,6 +34,10 @@ app.get("/invite", function(req, res) {
   res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=696225400191320081&permissions=19934279&scope=bot`);
 });
 
+app.get("/select", function(req, res) {
+  res.sendFile(__dirname + "/views/select.html")
+});
+
 app.get("/uptime", function(req, res) {
   res.sendStatus(200);
 });
