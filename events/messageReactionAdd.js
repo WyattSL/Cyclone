@@ -2,9 +2,9 @@ exports.run = function(client, args) {
   var reaction = args[0];
   var user = args[1];
   var msg = reaction.message;
-  var rc = client.config[msg.guild.id].reportsChannel;
+  var rc = client.channels.find(ch => ch.id == client.config[msg.guild.id].reportsChannel);
   console.log(1);
-  if (msg.embeds && msg.author.id == client.user.id && msg.channel == rc) {
+  if (msg.embeds && msg.channel == rc) {
     console.log(2);
     if (msg.embeds.first().description.includes("was reported for")) {
       console.log(3);
