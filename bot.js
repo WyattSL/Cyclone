@@ -26,4 +26,13 @@ fs.readdir("./events/", (err, files) => {
   });
 });
 
+process.on("uncaughtException", err => {
+  require("./events/error.js").error(err);
+});
+
+process.on("uncaughtRejection", (promise, err) => {
+  var msg = `Rejection at ${promise} with error ${err}`
+  require("./events/error.js").error(msg);
+});
+
 client.login(process.env.TOKEN)

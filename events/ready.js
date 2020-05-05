@@ -6,6 +6,9 @@ exports.run = function(client, args) {
   exports.invite = `https://discordapp.com/api/oauth2/authorize?client_id=696225400191320081&permissions=19934279&scope=bot`
   const serv = require("/app/server.js");
   client.user.setStatus("idle");
+  client.err = function(error) {
+    require("./error.js").error(error);
+  }
   client.assets = require("/app/stuff/assets.json");
   client.configlist = require("/app/stuff/config.json"); // actually used by various things; believe it or not
   client.random = function(max) {

@@ -2,5 +2,6 @@
   "info": "ping",
   "reboot": "restart",
   "eval!": "eval",
+  "eval:": "eval",
   "banish": "ban"
 }

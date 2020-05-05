@@ -3,8 +3,11 @@ exports.run = function(client, args) {
   var user = args[1];
   var msg = reaction.message;
   var rc = client.config[msg.guild.id].reportsChannel;
-  if (msg.embeds && msg.author.id == client.author.id && msg.channel == rc) {
+  console.log(1);
+  if (msg.embeds && msg.author.id == client.user.id && msg.channel == rc) {
+    console.log(2);
     if (msg.embeds.first().description.includes("was reported for")) {
+      console.log(3);
       var target = msg.guild.members.find(m => m.name.includes(msg.embeds.first().author.split("#")[0]));
       switch (reaction.emoji) { // ⛔ 🥾 🔇 ⚠️ ❎
         case "⛔": // ban
