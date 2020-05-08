@@ -12,12 +12,6 @@
     "type": "string"
   },
   {
-    "name": "testInt",
-    "description": "Number testing!",
-    "default": "0",
-    "type": "number"
-  },
-  {
     "name": "reportsChannel",
     "description": "Channel all reports goto",
     "default": "none",
