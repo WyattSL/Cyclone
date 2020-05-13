@@ -22,6 +22,47 @@ exports.run = async function(client, msg, args) {
       e.setDescription("This user has not setup their profile.");
     } else if (d.communityvisiblitystate < 3) {
       e.setDescription("This user's profile is not public.");
+    } else if (d.realname) {
+      e.setDescription(d.realname);
+    }
+    if (d.personastate) {
+      var state;
+      switch (d.personastate) {
+        case 0:
+          state = "Offline"
+          break;
+        case 1:
+          state = "Online"
+          break;
+        case 2:
+          state = "Busy"
+          break;
+        case 3:
+          state = "Away"
+          break;
+        case 4:
+          state = "Snooze"
+          break;
+        case 5:
+          state = "Looking to Trade"
+          break;
+        case 6:
+          state = "Looking to Play"
+          break;
+        default:
+          state = "Unknown"
+      }
+      e.addField("Status", state)
+    }
+    if (d.loccountrycode) {
+      var loc = d.loccountrycode
+      if (d.locstatecode) {
+        loc = loc + ", " + d.locstatecode
+      }
+      e.addField("Location", loc)
+    }
+    if (d.gameextrainfo) {
+      e.addField("Playing", d.gameextrainfo);
     }
     msg.channel.send(e);
   } else if (e == 42) {
