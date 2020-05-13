@@ -4,9 +4,9 @@ const Webhook = new Discord.WebhookClient(process.env.WC, process.env.WS);
 
 exports.run = function(client, args) {
   var err = args[0];
-  Webhook.send(err);
+  Webhook.send("```" + err + "```");
 }
 
 exports.error = function(err) {
-  Webhook.send(err);
+  Webhook.send("```" + err + "```");
 }

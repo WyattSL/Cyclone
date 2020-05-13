@@ -77,6 +77,6 @@ exports.run = function(client, args) {
     client.prescount=client.prescount+1
   }, mod);
   setInterval(function() { // will wait 60 seconds before posting
-    require("/app/func/api.js").run(client);
+    require("/app/func/apis.js").run(client);
   }, 60000)
 }

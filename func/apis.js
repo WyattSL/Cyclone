@@ -17,7 +17,7 @@ exports.run = function(client) {
     "body": JSON.stringify({"server_count": client.guilds.size+amplify*2})
   });
   // -----------------------------------------------------------------------------
-  got.post("top.gg/bost/" + client.user.id + "/stats", {
+  got.post("https://top.gg/bots/" + client.user.id + "/stats", {
     "headers": {
       "Authorization": process.env.TOP_API
     },
