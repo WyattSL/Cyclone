@@ -76,25 +76,4 @@ exports.run = function(client, args) {
     client.user.setPresence({status: "online", game:{ name: p, type:s}});
     client.prescount=client.prescount+1
   }, mod);
-  // API guild counts
-  function guildCounts() {
-    var api1 = `https://bots.ondiscord.xyz/bot-api/bots/${client.user.id}/guilds`;
-    var api2 = `https://discord.boats`;
-    var api3 = ``;
-    try {
-      got.post(api1, {
-        "headers": {
-          "Authorization": process.env.BOD_API,
-          "Content-Type": "application/json"
-        },
-        "body": JSON.stringify({"guildCount": client.guilds.size+amplify*2})
-      });
-    } catch(err) {
-      if (!err.includes("429")) { // stfu on 429s:I can deal with 404s for the time 
-        throw err;
-      }
-    }
-  }
-  guildCounts();
-  setInterval(guildCounts, 122000)
 }
