@@ -34,13 +34,7 @@ exports.run = function(client, msg, args) {
       e.setTimestamp();
       e.setURL(m.url);
       e.setAuthor(`${target.displayName}#${target.discriminator}`, target.user.displayAvatarURL);
-      ch.send(e).then(ms => {
-        ms.react("⛔");
-        ms.react("🥾")
-        ms.react("🔇");
-        ms.react("⚠️");
-        ms.react("❎");
-      });
+      ch.send(e);
     });
   };
 };
