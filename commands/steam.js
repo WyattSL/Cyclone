@@ -71,6 +71,7 @@ exports.run = async function(client, msg, args) {
       var d = new Date(d.timecreated * 1000);
       e.addField("Date Created", d);
     }
+    console.log(d.lastlogoff);
     if (d.lastlogoff) {
       var d = new Date(d.lastlogoff * 1000);
       e.addField("Last Online", d)
