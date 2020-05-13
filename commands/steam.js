@@ -64,6 +64,17 @@ exports.run = async function(client, msg, args) {
     if (d.gameextrainfo) {
       e.addField("Playing", d.gameextrainfo);
     }
+    if (d.gameserverip) {
+      e.addField("Current Server", d.gameserverip)
+    }
+    if (d.timecreated) {
+      var d = new Date(d.timecreated * 1000);
+      e.addField("Date Created", d);
+    }
+    if (d.lastlogoff) {
+      var d = new Date(d.lastlogoff * 1000);
+      e.addField("Last Online", d)
+    }
     msg.channel.send(e);
   } else if (e == 42) {
     msg.channel.send(`I was unable to find a user with that vanity url.`);
