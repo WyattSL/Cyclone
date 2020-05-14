@@ -25,7 +25,7 @@ exports.run = async function(client, msg, args) {
     } else if (d.realname) {
       e.setDescription(d.realname);
     }
-    if (d.personastate) {
+    if (d.personastate > -1) {
       var state;
       switch (d.personastate) {
         case 0:
@@ -52,6 +52,15 @@ exports.run = async function(client, msg, args) {
         default:
           state = "Unknown"
       }
+      if (d.personastateflags == 1024) {
+        state = "Big Picture Mode"
+      } else if (d.personastateflags == 64) {
+        state = "Steam Controller"
+      } else if (d.personastateflags == 256) {
+        state = "Web Client"
+      } else if (d.personastateflags == 512) {
+        state = "Mobile"
+      }
       e.addField("Status", state)
     }
     if (d.loccountrycode) {
@@ -74,6 +83,9 @@ exports.run = async function(client, msg, args) {
     if (d.lastlogoff) {
       var d = new Date(d.lastlogoff * 1000);
       e.addField("Last Online", d)
+    }
+    if (d.personastateflags == 4) {
+      e.addField("Special", "This person has a golden flag, and is probably important.")
     }
     msg.channel.send(e);
   } else if (e == 42) {

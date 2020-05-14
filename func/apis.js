@@ -2,7 +2,7 @@ const got = require("got");
 const amplify = 20;
 
 exports.run = function(client) {
-  got.post("https://discord.botsondiscord.xyz/bot-api/bots/", + client.user.id + "/guilds", {
+  got.post("https://bots.ondiscord.xyz/bot-api/bots/", + client.user.id + "/guilds", {
       "headers": {
         "Authorization": process.env.BOD_API,
         "Content-Type": "application/json"
