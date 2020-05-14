@@ -1,17 +1,21 @@
 const got = require("got");
 
 exports.run = async function(client, msg, args) {
+  var vurl = args.join(" ");
+  if (!vurl.startsWith("76")) {
   var url = `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API}&vanityurl=${args.join(" ")}`;
   var id;
   var req = await got(url);
-  console.log(req.body);
   var d = JSON.parse(req.body).response;
   var e = d.success
-  if (e == 1) {
-    id=d.steamid;
+  } else {
+    var id = vurl;
+    var e = -1;
+  }
+  if (e == 1 || e == -1) {
+    if (e == 1) id=d.steamid;
     var url = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_API}&steamids=${id}`;
     var req = await got(url);
-    console.log(req.body);
     var d = JSON.parse(req.body).response.players[0];
     var e = new client.embed;
     e.setTitle("Lookup Results");
@@ -77,21 +81,21 @@ exports.run = async function(client, msg, args) {
       e.addField("Current Server", d.gameserverip)
     }
     if (d.timecreated) {
-      var d = new Date(d.timecreated * 1000);
-      e.addField("Date Created", d);
+      var da = new Date(d.timecreated * 1000);
+      e.addField("Date Created", da);
     }
     if (d.lastlogoff) {
-      var d = new Date(d.lastlogoff * 1000);
-      e.addField("Last Online", d)
+      var da = new Date(d.lastlogoff * 1000);
+      e.addField("Last Online", da)
     }
     if (d.personastateflags == 4) {
       e.addField("Special", "This person has a golden flag, and is probably important.")
     }
     if (d.timecreated) {
-      e.setFooter(`${client.generateFooter} | Account Created: `);
-      e.setTimestamp(d.timecreated*1000)
+      e.setFooter(`${client.generateFooter()} | Account Created: `);
+      e.setTimestamp(new Date(d.timecreated*1000));
     } else {
-      e.setFooter(`${client.generateFooter}`)
+      e.setFooter(`${client.generateFooter()}`)
     }
     msg.channel.send(e);
   } else if (e == 42) {
@@ -101,6 +105,6 @@ exports.run = async function(client, msg, args) {
   }
 }
 
-exports.usage = "steam <vanityurl>";
+exports.usage = "steam <steam64/vanityurl>";
 exports.description = "Retreive information on a steam user.";
 exports.example = "steam WyattL"
