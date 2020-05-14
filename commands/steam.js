@@ -52,14 +52,14 @@ exports.run = async function(client, msg, args) {
         default:
           state = "Unknown"
       }
-      if (d.personastateflags == 1024) {
-        state = "Big Picture Mode"
-      } else if (d.personastateflags == 64) {
-        state = "Steam Controller"
-      } else if (d.personastateflags == 256) {
-        state = "Web Client"
-      } else if (d.personastateflags == 512) {
-        state = "Mobile"
+      if (d.personastateflags & 1024) {
+        state = "Online in Big Picture Mode"
+      } else if (d.personastateflags & 64) {
+        state = "Online with a Steam Controller"
+      } else if (d.personastateflags & 256) {
+        state = "Online on the Steam Web Client"
+      } else if (d.personastateflags & 512) {
+        state = "Online on the Steam Mobile App"
       }
       e.addField("Status", state)
     }
@@ -86,6 +86,12 @@ exports.run = async function(client, msg, args) {
     }
     if (d.personastateflags == 4) {
       e.addField("Special", "This person has a golden flag, and is probably important.")
+    }
+    if (d.timecreated) {
+      e.setFooter(`${client.generateFooter} | Account Created: `);
+      e.setTimestamp(d.timecreated*1000)
+    } else {
+      e.setFooter(`${client.generateFooter}`)
     }
     msg.channel.send(e);
   } else if (e == 42) {
