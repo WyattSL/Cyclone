@@ -35,4 +35,4 @@ process.on("uncaughtRejection", (promise, err) => {
   require("./events/error.js").error(msg);
 });
 
-client.login(process.env.TOKEN)
+client.login(process.env.TOKEN);
