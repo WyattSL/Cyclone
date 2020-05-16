@@ -34,5 +34,14 @@
     "description": "Send announcements to this channel.",
     "default": "none",
     "type": "channel"
+  },
+  {
+    "name": "listGuilds",
+    "description": "List this guild in the guilds command.",
+    "default": "true",
+    "type": "bool"
+  },
+  {
+    "name": ""
   }
 ]
