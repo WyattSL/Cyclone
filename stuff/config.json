@@ -42,6 +42,9 @@
     "type": "bool"
   },
   {
-    "name": ""
+    "name": "listGuildsInvite",
+    "description": "Show a invite to this guild in the guilds commands",
+    "default": "false",
+    "type": "bool"
   }
 ]
