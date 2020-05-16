@@ -31,11 +31,21 @@ exports.run = function(client, msg, args) {
   } else {
     var embed = new client.embed;
     embed.setTitle("Cyclone Datacenter Results");
-    var file = `./${args[0]}.js`;
+    embed.setFooter(client.generateFooter());
+    embed.setTimestamp();
+    var file = `/app/commands/${args[0]}.js`;
     if (fs.existsSync(file)) {
-      
+      embed.setColor(0x00FF00);
+      embed.setDescription(args[0]);
+      var cmd = require(file);
+      embed.addField("Usage", cmd.usage);
+      embed.addField("Description", cmd.description);
+      embed.addField("Example", cmd.example);
+      msg.channel.send(embed);
     } else {
-      embed.setDescription("")
+      embed.setDescription(`Failed to find command ${args[0]}.`);
+      embed.setColor(0xFF0000);
+      msg.channel.send(embed);
     }
   }
 }
