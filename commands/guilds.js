@@ -10,8 +10,16 @@ exports.run = function(client, msg, args) {
   for (i=0;i<guilds.length;i++) {
     var guild = guilds[i];
     if (!client.config[guild.id]["listGuilds"] || client.config[guild.id]["listGuilds"] == "false") return false;
-    if (client.config[guild.id])
+    if (client.config[guild.id]["listGuildsInvite"] == "true") {
+      guild.channels.random().createInvite().then(invite => {
+        desc = `[${guild.name}](${invite}, Invite)\n`;
+      });
+    } else {
+      desc = `${guild.name}\n`;
+    }
   }
+  embed.setDescription(desc);
+  msg.channel.send(embed);
 }
 
 exports.usage = "guilds"
