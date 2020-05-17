@@ -88,6 +88,19 @@ exports.run = (client, args) => {
         e.setFooter(client.generateFooter());
         msg.channel.send(e);
         return false;
+      };
+    };
+    if (module.owneronly) {
+      if (msg.author.id == msg.guild.owner.id) {
+      } else {
+        var e = new RichEmbed();
+        e.setTitle("Error!");
+        e.setColor(0xff0000);
+        e.setDescription("You do not have permission to perform this action. ``IS_GUILD_OWNER=FALSE``");
+        e.setThumbnail("https://wl-cyclone.glitch.me/img/X");
+        e.setFooter(client.generateFooter());
+        msg.channel.send(e);
+        return false;
       }
     }
     if (module.permission) {
