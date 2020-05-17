@@ -1,10 +1,11 @@
 const crypto = require("crypto");
+
 exports.run = function(client, msg, args) {
   var q = `DELETE FROM weblinks WHERE guild=?`;
   client.db.run(q, msg.guild.id);
   var secret = process.env.SECRET
   var hash = crypto.createHmac('sha256', secret)
-   .update('I love cupcakes')
+   .update(msg.guild.id)
    .digest('hex');
   console.log(hash);
   var q = `INSERT INTO weblinks ("guild", "hash") VALUES (@0, @1)`;
@@ -13,7 +14,10 @@ exports.run = function(client, msg, args) {
   embed.setTitle("Cyclone Control");
   embed.setDescription("aka Web Dashboard");
   embed.addField("I didn't request this?", `Than something really messed up and you should tell me posthaste.`);
-  embed.addField(`[Click here to access the web dashboard.](https://wl-cyclone.glitch.me)``)
+  embed.addField(`Do not share this link with anyone else!`, `[Click here to access the web dashboard.](https://wl-cyclone.glitch.me/dashboard/${msg.guild.id}/${hash})`);
+  embed.setColor(0x0000FF);
+  embed.setFooter(client.generateFooter());
+  embed.setTimestamp();
   msg.guild.owner.send(embed);
 };
 
