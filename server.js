@@ -15,6 +15,12 @@ app.use(bodyParser.json());
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
 
+const dbFile = "./.data/sqlite.db";
+const exists = fs.existsSync(dbFile);
+const sqlite3 = require("sqlite3").verbose();
+const db = new sqlite3.Database(dbFile);
+db.serialize();
+
 const assets = require("/app/stuff/assets.json")
 
 
@@ -46,7 +52,14 @@ app.get("/dashboard/*/*", function(req, res) {
   var id = req.path.split("/")[2];
   var hash = req.path.split("/")[3];
   var q = `SELECT * FROM weblinks WHERE id=?`;
-  db.all(q, id)
+  db.all(q, id, function(err, res) {
+    if (err) throw err;
+    if (res[0] && res[0].guild.length > 5 && res[0].hash.length > 7) {
+      res.sendFile(__dirname + `/views/dashboard.html`);
+    } else {
+      res.sendStatus(403);
+    }
+  });
 });
 
 app.get("/*", function(req, res) {
