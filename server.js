@@ -15,11 +15,9 @@ app.use(bodyParser.json());
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
 
-const dbFile = "./.data/sqlite.db";
-const exists = fs.existsSync(dbFile);
-const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database(dbFile);
-db.serialize();
+exports.setdb = function(db) {
+  
+}
 
 const assets = require("/app/stuff/assets.json")
 
