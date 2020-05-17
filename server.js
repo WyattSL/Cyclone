@@ -42,6 +42,13 @@ app.get("/uptime", function(req, res) {
   res.sendStatus(200);
 });
 
+app.get("/dashboard/*/*", function(req, res) {
+  var id = req.path.split("/")[2];
+  var hash = req.path.split("/")[3];
+  var q = `SELECT * FROM weblinks WHERE id=?`;
+  db.all(q, id)
+});
+
 app.get("/*", function(req, res) {
   res.sendStatus(404);
 })
