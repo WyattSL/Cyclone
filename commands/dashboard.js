@@ -9,6 +9,12 @@ exports.run = function(client, msg, args) {
   console.log(hash);
   var q = `INSERT INTO weblinks ("guild", "hash") VALUES (@0, @1)`;
   client.db.run(q, msg.guild.id, hash);
+  var embed = new client.embed;
+  embed.setTitle("Cyclone Control");
+  embed.setDescription("aka Web Dashboard");
+  embed.addField("I didn't request this?", `Than something really messed up and you should tell me posthaste.`);
+  embed.addField(`[Click here to access the web dashboard.](https://wl-cyclone.glitch.me)``)
+  msg.guild.owner.send(embed);
 };
 
 exports.owneronly = true;
