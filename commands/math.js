@@ -44,8 +44,9 @@ exports.run = function(client, msg, args) {
   eq=eq.replace(/z/g, "");
   eq=eq.replace(/ /g, "");
   eq=eq.replace(/\^/g, "**");
-  eq=eq.replace(/∞/g, "390105249390105249390105249390105249390105249")
+  eq=eq.replace(/∞/g, "999999999999999999999999999999999999999999999999999999999999999999999999999999")
   try {
+    console.log(eq);
     var x;
     eval(`var x = ${eq}`);
     if (eq == "9+10" || eq == "10+9") x = "19 **|OR|** 21";
@@ -54,8 +55,6 @@ exports.run = function(client, msg, args) {
     eq=eq.replace("**", "^");
     eq=eq.replace("**", "^");
     eq=eq.replace("**", "^");
-    eq=eq.replace(/390105249390105249390105249390105249390105249/g, "Infinity");
-    if (x>=9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999) x = "Infinity";
     msg.channel.send(`\`\`${eq}\`\`=${x}`)
   } catch(err) {
     msg.channel.send(`I was unable to process \`\`${eq}\`\` as input. ${err}`);
