@@ -25,8 +25,6 @@ exports.run = function(client, args) {
     var f = footers[r];
     if (holidays[`${d.getMonth()+1}/${d.getDate()}`]) f = holidays[`${d.getMonth()+1}/${d.getDate()}`];
     if (holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`]) f = holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`];
-    console.log(`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`);
-    console.log(f);
     return f;
   }
   // SQL
