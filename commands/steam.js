@@ -123,8 +123,23 @@ exports.run = async function(client, msg, args) {
     var res = JSON.parse(req.body)[id];
     if (res.success) {
       var data = res.data;
+      var embed = new client.embed;
+      embed.setFooter(client.generateFooter());
+      if (data.name) embed.setTitle(data.name);
+      if (!data.is_free) embed.addField(`Price`, `${data.price_overview.final_formatted}`);
+      if (data.legal_notice) embed.addField(`Legal Notice`, data.legal_notice);
+      if (data.short_description) embed.setDescription(data.short_description);
+      if (data.supported_languages) embed.addField(`Supported Languages`, data.supported_languages);
+      msg.channel.send(embed);
     } else {
-      
+      var embed = new client.embed;
+      embed.setTitle("Error");
+      embed.setColor(0xFF0000);
+      embed.setFooter(client.generateFooter());
+      embed.setDescription(`Something went wrong whilst processing your request. Please ensure that you inputted the correct game ID, or try again with the Game ID. (ex: 4000)`);
+      embed.addField(`Attempted ID`, `${id}`)
+      embed.setThumbnail(client.assets.X);
+      msg.channel.send(embed);
     }
   } else {
     var embed = new client.embed;
