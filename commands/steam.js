@@ -172,14 +172,31 @@ exports.run = async function(client, msg, args) {
           embed.addField(`Categories`, cats);
         }
         if (data.support_info) {
-          var m = ""
+          var m;
           if (data.support_info.url) {
             m = `[Support URL](${data.support_info.url})`;
           }
           if (data.support_info.email) {
-            m = `${m}; ${data.support_info.email}`
+            if (m) {
+              m = `${m}; ${data.support_info.email}`;
+            } else {
+              m = data.support_info.email;
+            }
+          };
+          if (m) {
+            embed.addField(`Support`, m);
           }
         }
+        if (data.screenshots[0]) {
+          var i;
+          var shots = [];
+          for (i=0;i<data.screenshots.length;i++) {
+            shots.push(data.screenshots[i].path_full);
+          }
+          console.log(shots);
+          embed.attachFiles(shots);
+        }
+        embed.addField(`App ID`, id);
         embed.setURL(`https://store.steampowered.com/app/${id}`)
         ms.edit(embed);
       } else {
