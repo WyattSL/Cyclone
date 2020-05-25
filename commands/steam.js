@@ -127,7 +127,7 @@ exports.run = async function(client, msg, args) {
         var embed = new client.embed;
         embed.setFooter(client.generateFooter());
         if (data.name) embed.setTitle(data.name);
-        if (!data.is_free) embed.addField(`Price`, `${data.price_overview.final_formatted}`, false);
+        if (data.price_overview) embed.addField(`Price`, `${data.price_overview.final_formatted}`, false);
         if (data.legal_notice) embed.addField(`Legal Notice`, data.legal_notice, false);
         if (data.short_description) embed.setDescription(data.short_description);
         if (data.supported_languages) {
@@ -139,6 +139,7 @@ exports.run = async function(client, msg, args) {
           lang = lang.replace(/\*/g, ``);
           embed.addField(`Supported Languages`, lang, false);
         }
+        if (data.required_age) embed.addField(`Age Requirement`, data.required_age, false)
         var dev;
         if (!data.developers) {
           if (data.publishers.length == 1) {
@@ -153,7 +154,7 @@ exports.run = async function(client, msg, args) {
         }
         if (!data.publishers || data.publishers == data.developers) {
           // don't do shit
-        } else if (data.publishers.length == 1) {
+        } else if (data.publishers.length == 1 && data.publishers[0]) {
           embed.addField(`Publisher`, data.publishers[0])
         } else if (data.publishers.length > 1) {
           var devs = data.publishers.concat(", ");
@@ -171,6 +172,18 @@ exports.run = async function(client, msg, args) {
           }
           embed.addField(`Categories`, cats);
         }
+        if (data.genres) {
+          var i;
+          var gens = ""
+          for (i=0;i<data.genres.length;i++) {
+            if (i < data.genres.length-1) {
+              gens = `${cats}${data.genres[i].description}, `;
+            } else {
+              gens = `${cats}${data.genres[i].description}.`;
+            }
+          }
+          embed.addField(`Genres`, gens);
+        }
         if (data.support_info) {
           var m;
           if (data.support_info.url) {
@@ -187,7 +200,7 @@ exports.run = async function(client, msg, args) {
             embed.addField(`Support`, m);
           }
         }
-        if (data.screenshots[0]) {
+        if (data.screenshots && data.screenshots[0]) {
           var i;
           var shots = [];
           for (i=0;i<data.screenshots.length;i++) {
