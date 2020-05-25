@@ -241,7 +241,7 @@ exports.run = async function(client, msg, args) {
       embed.setColor(0xFF0000);
       embed.setFooter(client.generateFooter());
       var x = "```";
-      var prefix = client.config[msg.guild.id].prefix;
+      var prefix = client.config[msg.guild.id].prefix || "."
       embed.setDescription(`Parameter error. Please use ${x}${prefix}help steam${x} for usage information.`);
       embed.setThumbnail(client.assets.X);
       ms.edit(embed);
