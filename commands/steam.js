@@ -152,11 +152,12 @@ exports.run = async function(client, msg, args) {
         }
         if (data.release_date && data.release_date.coming_soon) {
           var d = new Date(data.release_date.date);
-          var f = `${d.getDay()} ${d.getMonth()} ${client.formatDay(d.getDay())}, ${d.getYear()}.`
-          embed.addField(`Coming Soon`, d, true)
+          var f = `${client.formatDay(d.getDay())} ${client.formatMonth(d.getMonth())} ${client.formatOrdinal(d.getDate())}, ${d.getFullYear()}.`
+          embed.addField(`Coming Soon`, f, true)
         } else if (data.release_date && data.release_date.date) {
           var d = new Date(data.release_date.date);
-          embed.addField(`Released`, d, true);
+          var f = `${client.formatDay(d.getDay())} ${client.formatMonth(d.getMonth())} ${client.formatOrdinal(d.getDate())}, ${d.getFullYear()}.`
+          embed.addField(`Released`, f, true);
         }
         if (data.genres) {
           var x;
