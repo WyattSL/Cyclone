@@ -122,4 +122,4 @@ exports.run = async function(client, msg, args) {
 
 exports.usage = "steam <lookup/store> <steam64/vanityurl/gameid/gamename>";
 exports.description = "Retreive information on a steam user.";
-exports.example = "steam WyattL"
+exports.example = "steam lookup Wyatt"
