@@ -129,7 +129,19 @@ exports.run = async function(client, msg, args) {
       if (!data.is_free) embed.addField(`Price`, `${data.price_overview.final_formatted}`);
       if (data.legal_notice) embed.addField(`Legal Notice`, data.legal_notice);
       if (data.short_description) embed.setDescription(data.short_description);
-      if (data.supported_languages) embed.addField(`Supported Languages`, data.supported_languages);
+      if (data.supported_languages) {
+        var lang = data.supported_languages;
+        lang = lang.split("<br>")[0];
+        lang = lang.replace(/<strong><\/strong>/g, ``);
+        lang = lang.replace(/<strong>/g, ``);
+        lang = lang.replace(/<\/strong>/g, ``);
+        lang = lang.replace(/\*/g, ``);
+        embed.addField(`Supported Languages`, lang);
+      }
+      var dev;
+      if (data.developers.length == 1) {
+        embed.
+      }
       msg.channel.send(embed);
     } else {
       var embed = new client.embed;
