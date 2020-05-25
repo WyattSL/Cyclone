@@ -127,7 +127,6 @@ exports.run = async function(client, msg, args) {
         var embed = new client.embed;
         embed.setFooter(client.generateFooter());
         if (data.name) embed.setTitle(data.name);
-        if (data.price_overview) embed.addField(`Price`, `${data.price_overview.final_formatted}`, false);
         if (data.legal_notice) embed.addField(`Legal Notice`, data.legal_notice, false);
         if (data.short_description) embed.setDescription(data.short_description);
         if (data.supported_languages) {
@@ -139,7 +138,48 @@ exports.run = async function(client, msg, args) {
           lang = lang.replace(/\*/g, ``);
           embed.addField(`Supported Languages`, lang, false);
         }
-        if (data.required_age) embed.addField(`Age Requirement`, data.required_age, false)
+        if (data.categories) {
+          var i;
+          var cats = ""
+          for (i=0;i<data.categories.length;i++) {
+            if (i < data.categories.length-1) {
+              cats = `${cats}${data.categories[i].description}, `;
+            } else {
+              cats = `${cats}${data.categories[i].description}.`;
+            }
+          }
+          embed.addField(`Categories`, cats);
+        }
+        if (data.genres) {
+          var x;
+          var gens = ""
+          for (x=0;x<data.genres.length;x++) {
+            if (x < data.genres.length-1) {
+              gens = `${gens}${data.genres[x].description}, `;
+            } else {
+              gens = `${gens}${data.genres[x].description}.`;
+            }
+          }
+          embed.addField(`Genres`, gens, true);
+        }
+        if (data.support_info) {
+          var m;
+          if (data.support_info.url) {
+            m = `[Support URL](${data.support_info.url})`;
+          }
+          if (data.support_info.email) {
+            if (m) {
+              m = `${m}; ${data.support_info.email}`;
+            } else {
+              m = data.support_info.email;
+            }
+          };
+          if (m) {
+            embed.addField(`Support`, m, true);
+          }
+        }
+        if (data.required_age) embed.addField(`Age Requirement`, data.required_age, true);
+        if (data.price_overview) embed.addField(`Price`, `${data.price_overview.final_formatted}`, true);
         var dev;
         if (!data.developers) {
           if (data.publishers.length == 1) {
@@ -160,46 +200,6 @@ exports.run = async function(client, msg, args) {
           var devs = data.publishers.concat(", ");
           embed.addField(`Publishers`, devs);
         }
-        if (data.categories) {
-          var i;
-          var cats = ""
-          for (i=0;i<data.categories.length;i++) {
-            if (i < data.categories.length-1) {
-              cats = `${cats}${data.categories[i].description}, `;
-            } else {
-              cats = `${cats}${data.categories[i].description}.`;
-            }
-          }
-          embed.addField(`Categories`, cats);
-        }
-        if (data.genres) {
-          var i;
-          var gens = ""
-          for (i=0;i<data.genres.length;i++) {
-            if (i < data.genres.length-1) {
-              gens = `${cats}${data.genres[i].description}, `;
-            } else {
-              gens = `${cats}${data.genres[i].description}.`;
-            }
-          }
-          embed.addField(`Genres`, gens);
-        }
-        if (data.support_info) {
-          var m;
-          if (data.support_info.url) {
-            m = `[Support URL](${data.support_info.url})`;
-          }
-          if (data.support_info.email) {
-            if (m) {
-              m = `${m}; ${data.support_info.email}`;
-            } else {
-              m = data.support_info.email;
-            }
-          };
-          if (m) {
-            embed.addField(`Support`, m);
-          }
-        }
         if (data.screenshots && data.screenshots[0]) {
           var i;
           var shots = [];
@@ -212,7 +212,8 @@ exports.run = async function(client, msg, args) {
           };
           embed.attachFiles(shots);
         }
-        embed.addField(`App ID`, id);
+        if (data.recommendations && data.recommendations.total) embed.addField(`Recommendations`, data.recommendations.total, true);
+        embed.addField(`App ID`, id, true);
         embed.setURL(`https://store.steampowered.com/app/${id}`)
         ms.edit(embed);
       } else {
