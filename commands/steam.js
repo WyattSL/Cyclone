@@ -106,7 +106,26 @@ exports.run = async function(client, msg, args) {
       msg.channel.send(`API Error: [${e}] ${d.message}`);
     }
   } else if (type == "game" || type == "store") {
-    
+    var query = args.join(" ");
+    var id;
+    var mode;
+    if (Number(query)) {
+      mode = 1
+      id = Number(query);
+    } else {
+      mode = 2;
+    }
+    if (mode == 2) { // remember to do this; once I find out how to search the store
+      
+    }
+    var url = `https://store.steampowered.com/api/appdetails?appids=${id}`;
+    var req = await got(url);
+    var res = JSON.parse(req.body)[id];
+    if (res.success) {
+      var data = res.data;
+    } else {
+      
+    }
   } else {
     var embed = new client.embed;
     embed.setTitle("Error");
@@ -122,4 +141,4 @@ exports.run = async function(client, msg, args) {
 
 exports.usage = "steam <lookup/store> <steam64/vanityurl/gameid/gamename>";
 exports.description = "Retreive information on a steam user.";
-exports.example = "steam lookup Wyatt"
+exports.example = "steam lookup Wyatt; steam store 4000"
