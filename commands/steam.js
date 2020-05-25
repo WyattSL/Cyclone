@@ -191,9 +191,12 @@ exports.run = async function(client, msg, args) {
           var i;
           var shots = [];
           for (i=0;i<data.screenshots.length;i++) {
-            shots.push(data.screenshots[i].path_full);
-          }
-          console.log(shots);
+            //shots.push(data.screenshots[i].path_full);
+            var url = data.screenshots[i].path_full;
+            var re = await got(url);
+            var buffer = re.body;
+            shots.push(buffer);
+          };
           embed.attachFiles(shots);
         }
         embed.addField(`App ID`, id);
