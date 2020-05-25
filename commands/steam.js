@@ -150,6 +150,14 @@ exports.run = async function(client, msg, args) {
           }
           embed.addField(`Categories`, cats);
         }
+        if (data.release_date && data.release_date.coming_soon) {
+          var d = new Date(data.release_date.date);
+          var f = `${d.getDay()} ${d.getMonth()} ${client.formatDay(d.getDay())}, ${d.getYear()}.`
+          embed.addField(`Coming Soon`, d, true)
+        } else if (data.release_date && data.release_date.date) {
+          var d = new Date(data.release_date.date);
+          embed.addField(`Released`, d, true);
+        }
         if (data.genres) {
           var x;
           var gens = ""
@@ -190,15 +198,15 @@ exports.run = async function(client, msg, args) {
         } else if (data.developers.length > 1) {
           var i;
           var devs = data.developers.concat(", ");
-          embed.addField(`Developers`, devs);
+          embed.addField(`Developers`, devs, true);
         }
         if (!data.publishers || data.publishers == data.developers) {
           // don't do shit
         } else if (data.publishers.length == 1 && data.publishers[0]) {
-          embed.addField(`Publisher`, data.publishers[0])
+          embed.addField(`Publisher`, data.publishers[0], true)
         } else if (data.publishers.length > 1) {
           var devs = data.publishers.concat(", ");
-          embed.addField(`Publishers`, devs);
+          embed.addField(`Publishers`, devs, true);
         }
         if (data.screenshots && data.screenshots[0]) {
           var i;

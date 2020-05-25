@@ -27,6 +27,14 @@ exports.run = function(client, args) {
     if (holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`]) f = holidays[`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`];
     return f;
   }
+  client.formatDay = function(day) {
+    const days = require("/app/stuff/ordinals.json");
+    if (days[day]) {
+      return days[day];
+    } else {
+      return `${day}th`
+    }
+  }
   // SQL
   const dbFile = "./.data/sqlite.db";
   const exists = fs.existsSync(dbFile);
