@@ -2,7 +2,7 @@ const got = require("got");
 
 exports.run = async function(client, msg, args) {
   var type = args.shift();
-  msg.channel.send(`Please wait a moment whilst I fetch that...`).then(ms => {
+  msg.channel.send(`Please wait a moment whilst I fetch that...`).then(async ms => {
     if (type == "lookup" || type == "user") {
       var vurl = args.join(" ");
       if (!vurl.startsWith("76")) {
@@ -158,6 +158,27 @@ exports.run = async function(client, msg, args) {
         } else if (data.publishers.length > 1) {
           var devs = data.publishers.concat(", ");
           embed.addField(`Publishers`, devs);
+        }
+        if (data.categories) {
+          var i;
+          var cats = ""
+          for (i=0;i<data.categories.length;i++) {
+            if (i < data.categories.length-1) {
+              cats = `${cats}${data.categories[i].description}, `;
+            } else {
+              cats = `${cats}${data.categories[i].description}.`;
+            }
+          }
+          embed.addField(`Categories`, cats);
+        }
+        if (data.support_info) {
+          var m = ""
+          if (data.support_info.url) {
+            m = `[Support URL](${data.support_info.url})`;
+          }
+          if (data.support_info.email) {
+            m = `${m}; ${data.support_info.email}`
+          }
         }
         embed.setURL(`https://store.steampowered.com/app/${id}`)
         ms.edit(embed);
