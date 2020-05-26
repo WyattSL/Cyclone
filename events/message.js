@@ -56,8 +56,7 @@ exports.run = (client, args) => {
   if (!client.config[msg.guild.id]) client.config[msg.guild.id] = {};
   var prefix = client.config[msg.guild.id].prefix || "."; // get the prefix; if it is not set, the prefix will default to "."
   if (
-    msg.mentions.users.first() &&
-    msg.mentions.users.first().id == client.user.id
+    msg.content == "<@!696225400191320081>"
   ) {
     msg.channel.send(`The prefix on ${msg.guild.name} is \`\`${prefix}\`\``);
     return true;
