@@ -1,6 +1,6 @@
 const got = require("got");
 
-exports.run = function(client, msg, args) {
+exports.run = async function(client, msg, args) {
     var type = args.shift();
     if (!type) {
         return 1;
@@ -21,7 +21,7 @@ exports.run = function(client, msg, args) {
         }
         res = JSON.parse(req.body);
         if (res.status == "success") {
-
+            
         } else {
             var e = new RichEmbed;
             e.setFooter(client.generateFooter());
@@ -29,7 +29,10 @@ exports.run = function(client, msg, args) {
             e.setColor(0xFF0000);
             e.setThumbnail(client.assets.X);
             e.setDescription("A error has occured whilst processing your request. **This is not my fault!**");
-            e.
+            e.addField("Success?", res.status);
+            e.addField("Error Message", res.error)
+            msg.channel.send(e);
+            return 0;
         }
     }
 }

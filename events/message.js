@@ -158,6 +158,17 @@ exports.run = (client, args) => {
     if (msg.deletable) {
       msg.delete(); // delete the command, if it can
     }
-    module.run(client, msg, args);
+    var res = module.run(client, msg, args);
+    switch (res) {
+      case 0:
+        msg.channel.send(`Incorrect parameters.`);
+        break;
+      case 1:
+        msg.channel.send(`Internal error.`);
+        break;
+      default:
+        msg.channel.send(`Unknown return code: ${res}`);
+        break;
+    }
   }
 };
