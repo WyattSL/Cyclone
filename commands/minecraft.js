@@ -41,7 +41,11 @@ exports.run = async function(client, msg, args) {
             if (res.motd) e.setDescription(res.motd);
             if (res.online) e.setThumbnail(client.assets.ONLINE);
             if (!res.online) e.setThumbnail(client.assets.OFFLINE);
-            if (res.favicon) e.setImage(new Buffer().from(res.favicon.split(",")[1]).data);
+            if (res.favicon) {
+                var type = res.favicon.split(";")[0].split("/")[1];
+                e.attachFile(Buffer.from(res.favicon.split(",")[1], "base64"), "fav");
+                e.setImage("attachment://fav.png");
+            }
             if (res.last_online && !res.online) e.addField(`Last Online`, client.formatStamp(res.last_online));
             if (res.players.max) {
                 if (!res.players.now) {
