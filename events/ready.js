@@ -55,6 +55,10 @@ exports.run = function(client, args) {
         return false;
     }
   }
+  client.formatStamp = function(ts) {
+    var d = new Date(ts);
+    return `${client.formatDay(d.getDay())} ${client.formatMonth(d.getMonth)} ${client.formatOrdinal(d.getDate())}, ${d.getFullYear()}`
+  }
   client.formatMonth = function(month) {
     switch (month) {
       case 0:

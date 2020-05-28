@@ -6,8 +6,8 @@ exports.run = async function(client, msg, args) {
         return 1; // invalid param
     }
     if (type == "server") {
-        var ip = args.shift();
-        var port = ip.split(":")[1] || 25565;
+        var ip = args.join(" ").split(":")[0];
+        var port = args.join(" ").split(":")[1] || 25565;
         port = Number(port);
         if (!ip || !port) {
             return 1; // invalid param
@@ -23,11 +23,12 @@ exports.run = async function(client, msg, args) {
             var e = new client.embed;
             if (res.last_updated) {
                 e.setFooter(client.generateFooter() + " | Last Updated");
-                e.setTimestamp(res.last_updated);
+                e.setTimestamp(res.last_updated*1000);
             } else {
                 e.setFooter(client.generateFooter());
             }
             e.setTitle("Minecraft Server Lookup");
+            e.addField(`IP Address`, `${ip}:${port}`)
             if (res.server.name) {
                 var asset = client.assets[res.server.name.split(" ")[0]];
                 console.log(res.server.name.split(" ")[0]);
@@ -40,8 +41,8 @@ exports.run = async function(client, msg, args) {
             if (res.motd) e.setDescription(res.motd);
             if (res.online) e.setThumbnail(client.assets.ONLINE);
             if (!res.online) e.setThumbnail(client.assets.OFFLINE);
-            if (res.favicon) e.setImage(new Buffer(res.favicon.split(",")[1]).data);
-            //if (res.last_online && !res.online) e.addField(`Last Online`, client.formatStamp(res.last_online));
+            if (res.favicon) e.setImage(new Buffer().from(res.favicon.split(",")[1]).data);
+            if (res.last_online && !res.online) e.addField(`Last Online`, client.formatStamp(res.last_online));
             if (res.players.max) {
                 if (!res.players.now) {
                     e.addField(`Max Players`, res.players.max);

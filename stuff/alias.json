@@ -3,5 +3,6 @@
   "reboot": "restart",
   "eval!": "eval",
   "eval:": "eval",
-  "banish": "ban"
+  "banish": "ban",
+  "mc": "minecraft"
 }
