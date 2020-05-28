@@ -159,11 +159,14 @@ exports.run = async (client, args) => {
       msg.delete(); // delete the command, if it can
     }
     var res = await module.run(client, msg, args);
+    if (!res) res = 0; // no return? presume all is good
     switch (res) {
-      case 0:
-        msg.channel.send(`Incorrect parameters.`);
-        break;
+      case 0: // success
+        break; // yes ik this is valid so don't default
       case 1:
+        msg.channel.send(`Incorrect parameters.`); // placeholder; replace with help msg
+        break;
+      case 2:
         msg.channel.send(`Internal error.`);
         break;
       default:
