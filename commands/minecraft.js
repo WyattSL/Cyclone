@@ -29,7 +29,8 @@ exports.run = async function(client, msg, args) {
             }
             e.setTitle("Minecraft Server Lookup");
             if (res.server.name) {
-                var asset = client.assets[res.server.name.split(" ")[0]]
+                var asset = client.assets[res.server.name.split(" ")[0]];
+                console.log(res.server.name.split(" ")[0]);
                 if (asset) {
                     e.setAuthor(res.server.name, asset);
                 } else {
@@ -39,9 +40,10 @@ exports.run = async function(client, msg, args) {
             if (res.motd) e.setDescription(res.motd);
             if (res.online) e.setThumbnail(client.assets.ONLINE);
             if (!res.online) e.setThumbnail(client.assets.OFFLINE);
-            //if (res.last_online) e.addField(`Last Online`, client.formatStamp(res.last_online));
+            if (res.favicon) e.setImage(new Buffer(res.favicon.split(",")[1]).data);
+            //if (res.last_online && !res.online) e.addField(`Last Online`, client.formatStamp(res.last_online));
             if (res.players.max) {
-                if (res.players.now) {
+                if (!res.players.now) {
                     e.addField(`Max Players`, res.players.max);
                 } else {
                     e.addField(`Players`, `${res.players.now}/${res.players.max}`)
