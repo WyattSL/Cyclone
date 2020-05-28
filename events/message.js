@@ -37,7 +37,7 @@ function inviteCheck(client, msg) {
   }
 }
 
-exports.run = (client, args) => {
+exports.run = async (client, args) => {
   var RichEmbed = client.embed;
   var msg = args[0];
   if (!msg.guild.name.includes("Discord Boats") && !msg.guild.name.includes("Discord Bot List") && !msg.guild.name.includes("Bots on Discord")) {
@@ -158,7 +158,7 @@ exports.run = (client, args) => {
     if (msg.deletable) {
       msg.delete(); // delete the command, if it can
     }
-    var res = module.run(client, msg, args);
+    var res = await module.run(client, msg, args);
     switch (res) {
       case 0:
         msg.channel.send(`Incorrect parameters.`);
