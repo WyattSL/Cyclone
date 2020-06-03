@@ -58,7 +58,7 @@ app.get("/privacy", function(req, res) {
 });
 
 app.post("/updateProfile", function(req, res) {
-  var id = req.body.user;
+  var id = req.body.id;
   if (!id) { 
     res.sendStatus(400);
     return;
@@ -71,6 +71,11 @@ app.post("/updateProfile", function(req, res) {
   var q = `INSERT INTO profiles ("user", "birthday", "minecraft", "epic") VALUES (@0, @1, @2, @3)`;
   db.run(q, id, bday, mc, epic);
   res.redirect("/profile/#Your profile has been updated.");
+});
+
+app.get("/oauth/redirect", (req, res) => {
+  var url = `https://discord.com/api/oauth2/authorize?client_id=696225400191320081&redirect_uri=https://${req}/oauth/callback&response_type=code&scope=identify%20connections`
+  res.set("Location", url).sendStatus(301);
 });
 
 app.get("/*", function(req, res) {
