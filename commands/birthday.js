@@ -15,11 +15,14 @@ exports.run = function(client, msg, args) {
             var cday = new Date();
             var age = bday.getFullYear()-cday.getFullYear()
             var e = new client.embed;
+            var dlm = bday.getMonth()-cday.getMonth()
+            var dld = bday.getDate()-cday.getDate()
             e.setTitle(`Birthday`);
             e.setColor(0x0000FF);
             var x = "```";
-            e.setDescription(`You will turn ${x}${age}${x}`);
-            e.setFooter(client.generateFooter())
+            e.setDescription(`You will turn ${x}${age}${x} in ${dlm} months and ${dld} days.`);
+            e.setFooter(client.generateFooter());
+            msg.channel.send(e);
         }
     });
 }
