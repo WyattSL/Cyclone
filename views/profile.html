@@ -19,19 +19,20 @@
             <div class="w3-margin-left w3-margin-right">
                 <form action="/updateProfile" method="POST" enctype="application/x-www-form-urlencoded">
                     <!-- Since these fields use the base form method, I must add these additional fields. -->
+                    <input type="text" id="id" name="token"
                     <input type="text" id="token" name="token" readonly hidden required>
                     <label>
                         Birthday
                     </label>
-                    <input type="date" name="Birthday" class="w3-input" max="2007-01-01" id="birthday">
+                    <input type="date" name="birthday" class="w3-input" max="2007-01-01" id="birthday">
                     <label>
                         Minecraft Java Edition Username
                     </label>
-                    <input type="text" name="Minecraft" class="w3-input" minlength="3" maxlength="16" id="minecraft">
+                    <input type="text" name="minecraft" class="w3-input" minlength="3" maxlength="16" id="minecraft">
                     <label>
                         Epic Games Username
                     </label>
-                    <input type="text" name="Epic" class="w3-input" id="epic">
+                    <input type="text" name="epic" class="w3-input" id="epic">
                     <input type="submit" value="Update" class="w3-btn w3-lime w3-margin-top">
                 </form>
             </div>

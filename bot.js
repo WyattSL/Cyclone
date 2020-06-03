@@ -26,6 +26,8 @@ fs.readdir("./events/", (err, files) => {
   });
 });
 
+exports.db = require("./events/ready.js").db;
+
 process.on("uncaughtException", err => {
   require("./events/error.js").error(err);
 });

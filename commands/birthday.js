@@ -23,7 +23,7 @@ exports.run = function(client, msg, args) {
             e.setColor(0x0000FF);
             var x = "``";
             if (bday.getMonth() == cday.getMonth() && bday.getDate() == cday.getDate()) {
-                e.setDescription(`Happy ${x}${client.formatOrdinal(age)}${x} birthday!`)
+                e.setDescription(`Happy ${x}${client.formatOrdinal(age)}${x} birthday!`);
             } else {
                 e.setDescription(`You will turn ${x}${age}${x} in ${x}${dlm} months${x} and ${x}${dld} days${x}.`);
             }

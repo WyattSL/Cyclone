@@ -10,15 +10,17 @@ const bot = require("./bot.js")
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+  const dbFile = "./.data/sqlite.db";
+  const exists = fs.existsSync(dbFile);
+  const sqlite3 = require("sqlite3").verbose();
+  const db = new sqlite3.Database(dbFile);
+  db.serialize();
+
 // we've started you off with Express,
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
-
-exports.setdb = function(db) {
-  
-}
 
 const assets = require("/app/stuff/assets.json")
 
@@ -53,6 +55,22 @@ app.get("/profile", function(req, res) {
 
 app.get("/privacy", function(req, res) {
   res.sendFile(`${__dirname}/views/privacy.html`)
+});
+
+app.post("/updateProfile", function(req, res) {
+  var id = req.body.user;
+  if (!id) { 
+    res.sendStatus(400);
+    return;
+  }
+  var q = `DELETE FROM profiles WHERE user=?`; // remove any existing profiles
+  db.run(q, id);
+  var bday = req.body.birthday || "";
+  var mc = req.body.minecraft || "";
+  var epic = req.body.epic || "";
+  var q = `INSERT INTO profiles ("user", "birthday", "minecraft", "epic") VALUES (@0, @1, @2, @3)`;
+  db.run(q, id, bday, mc, epic);
+  res.redirect("/profile/#Your profile has been updated.");
 });
 
 app.get("/*", function(req, res) {

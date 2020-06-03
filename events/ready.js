@@ -118,6 +118,7 @@ exports.run = function(client, args) {
       }
     }
   });
+  exports.db = db;
   var presences = require("/app/stuff/presence.json");
   client.prescount = 0
   var mod = 15000
