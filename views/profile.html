@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+        <script src="/profile.js" defer></script>
+    </head>
+    <body class="w3-animate-opacity w3-green">
+        <header class="w3-teal w3-container">
+            <h1>
+                Cyclone Profile
+            </h1>
+        </header>
+        <main>
+            <p class="w3-center">
+                <b>
+                    Cyclone has many advanced capabilites. Some of these, however, require information that you must give us.
+                    If you wish, you can fill out that information below.
+                </b>
+            </p>
+            <div class="w3-margin-left w3-margin-right">
+                <form action="/updateProfile" method="POST">
+                    <!-- Since these fields use the base form method, I must add these additional fields. -->
+                    <input type="text" id="token" name="token" readonly hidden required>
+                    <label>
+                        Birthday
+                    </label>
+                    <input type="date" name="Birthday" class="w3-input" max="01-01-2007">
+                    <input type="submit" value="Update" class="w3-btn w3-lime w3-margin-top">
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

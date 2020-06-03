@@ -6,6 +6,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const fs = require("fs");
+const bot = require("./bot.js")
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -46,18 +47,12 @@ app.get("/uptime", function(req, res) {
   res.sendStatus(200);
 });
 
-app.get("/dashboard/*/*", function(req, res) {
-  var id = req.path.split("/")[2];
-  var hash = req.path.split("/")[3];
-  var q = `SELECT * FROM weblinks WHERE id=?`;
-  db.all(q, id, function(err, res) {
-    if (err) throw err;
-    if (res[0] && res[0].guild.length > 5 && res[0].hash.length > 7) {
-      res.sendFile(__dirname + `/views/dashboard.html`);
-    } else {
-      res.sendStatus(403);
-    }
-  });
+app.get("/profile", function(req, res) {
+  res.sendFile(`${__dirname}/views/profile.html`)
+});
+
+app.get("/privacy", function(req, res) {
+  res.sendFile(`${__dirname}/views/privacy.html`)
 });
 
 app.get("/*", function(req, res) {
