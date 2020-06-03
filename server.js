@@ -74,8 +74,13 @@ app.post("/updateProfile", function(req, res) {
 });
 
 app.get("/oauth/redirect", (req, res) => {
-  var url = `https://discord.com/api/oauth2/authorize?client_id=696225400191320081&redirect_uri=https://cyclone.tk/oauth/callback&response_type=code&scope=identify%20connections`
+  var url = `https://discord.com/api/oauth2/authorize?client_id=696225400191320081&redirect_uri=https://cyclone.tk/oauth/callback&response_type=token&scope=identify%20connections`
   res.set("Location", url).sendStatus(308);
+});
+
+app.get("/oauth/callback", (req, res) => {
+  var code = req.query.code;
+  
 });
 
 app.get("/*", function(req, res) {
