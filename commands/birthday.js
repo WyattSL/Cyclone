@@ -13,14 +13,20 @@ exports.run = function(client, msg, args) {
         } else {
             var bday = new Date(res[0].birthday);
             var cday = new Date();
-            var age = bday.getFullYear()-cday.getFullYear()
+            var age = cday.getFullYear()-bday.getFullYear()
             var e = new client.embed;
             var dlm = bday.getMonth()-cday.getMonth()
+            if (dlm<0) dlm=dlm+12
             var dld = bday.getDate()-cday.getDate()
+            if (dld<0) dld=dld+31
             e.setTitle(`Birthday`);
             e.setColor(0x0000FF);
-            var x = "```";
-            e.setDescription(`You will turn ${x}${age}${x} in ${dlm} months and ${dld} days.`);
+            var x = "``";
+            if (bday.getMonth() == cday.getMonth() && bday.getDate() == cday.getDate()) {
+                e.setDescription(`Happy ${x}${client.formatOrdinal(age)}${x} birthday!`)
+            } else {
+                e.setDescription(`You will turn ${x}${age}${x} in ${x}${dlm} months${x} and ${x}${dld} days${x}.`);
+            }
             e.setFooter(client.generateFooter());
             msg.channel.send(e);
         }
