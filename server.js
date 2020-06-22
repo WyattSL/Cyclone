@@ -84,7 +84,12 @@ app.get("/oauth/callback", (req, res) => {
 });
 
 app.get("/*", function(req, res) {
-  res.sendStatus(404);
+  var file = req.path;
+  if (fs.existsSync(__dirname + file)) {
+    res.sendFile(__dirname + file)
+  } else {
+    res.sendStatus(404);
+  }
 })
 
 app.post("/*", function(req, res) {
