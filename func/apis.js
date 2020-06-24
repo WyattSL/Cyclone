@@ -3,7 +3,7 @@ const amplify = 20;
 
 exports.run = function(client) {
   got.post("https://bots.ondiscord.xyz/bot-api/bots/", + client.user.id + "/guilds", {
-    ignoreHttpErrors: true,
+    throwHttpErrors: true,
       "headers": {
         "Authorization": process.env.BOD_API,
         "Content-Type": "application/json"
@@ -12,7 +12,7 @@ exports.run = function(client) {
   });
   // -----------------------------------------------------------------------------
   got.post("https://discord.boats/api/bot/" + client.user.id, {
-    ignoreHttpErrors: true,
+    throwHttpErrors: true,
     "headers": {
       "Authorization": process.env.DB_API
     },
@@ -20,7 +20,7 @@ exports.run = function(client) {
   });
   // -----------------------------------------------------------------------------
   got.post("https://top.gg/bots/" + client.user.id + "/stats", {
-    ignoreHttpErrors: true,
+    throwHttpErrors: true,
     "headers": {
       "Authorization": process.env.TOP_API
     },
