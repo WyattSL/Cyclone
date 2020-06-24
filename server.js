@@ -6,7 +6,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const fs = require("fs");
-const bot = require("./bot.js")
+const bot = require("./bot.js");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -46,7 +46,20 @@ app.get("/select", function(req, res) {
 });
 
 app.get("/uptime", function(req, res) {
-  res.sendStatus(200);
+  var client = bot.client;
+  if (client.status == 0) {
+    res.sendStatus(200);
+  } else if (client.status == 1) { //Connecting
+    res.sendStatus(201)
+  } else if (client.status == 2) { // reconnecting
+    res.sendStatus(202)
+  } else if (client.status == 3) { // idle
+    res.sendStatus(203)
+  } else if (client.status == 4) { // nearly
+    res.sendStatus(204);
+  } else if (client.status == 5) { // disconnected
+    res.sendStatus(205);
+  }
 });
 
 app.get("/profile", function(req, res) {

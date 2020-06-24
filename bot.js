@@ -20,7 +20,9 @@ fs.readdir("./events/", (err, files) => {
     client.on(eventName, (arg1, arg2, arg3, arg4, arg5) => {
       var args = [arg1, arg2, arg3, arg4, arg5]
       client.embed = RichEmbed;
-      event.run(client, args)
+      var res = event.run(client, args);
+      // res is only the client SO
+      exports.client = res;
     });
     delete require.cache[require.resolve(`./events/${file}`)];
   });
