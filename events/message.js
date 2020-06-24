@@ -166,7 +166,7 @@ exports.run = async (client, args) => {
       case 1:
         msg.channel.send(`Incorrect parameters.`); // placeholder; replace with help msg
         break;
-      case 2:
+      case 2: 
         msg.channel.send(`Internal error.`);
         break;
       default:
