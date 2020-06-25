@@ -30,6 +30,21 @@ req.onreadystatechange = function() {
                             desc.setAttribute("class", "");
                             div.appendChild(desc);
                         }
+                        if (s.premiumSubscriptionCount) {
+                            var dsubs = document.createElement("div");
+                            var isubs = document.createElement("img");
+                            isubs.src = "https://discordemoji.com/assets/emoji/7485_server_boost.png"
+                            div.appendChild(dsubs);
+                            dsubs.appendChild(isubs);
+                            var count = document.createElement("p");
+                            var t = s.premiumTier;
+                            var max;
+                            if (t == 0 || !t) t = 2
+                            if (t == 1) t = 15
+                            if (t == 2) t == 30
+                            if (t == 3) t == 30
+                            count.innerHTML = `${s.premiumSubscriptionCount}/${max}`
+                        }
                     }
                 }
             }

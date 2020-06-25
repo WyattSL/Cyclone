@@ -48,6 +48,21 @@ app.get("/icon/*", function(req, res) {
   }
 });
 
+app.get("/stats/*", function(req, res) {
+  var id = req.path.split("/")[2];
+  var guild = client.guilds.find(g => g.id == id);
+  if (guild) {
+    var obj = {};
+    obj["members"] = guild.memberCount
+    obj["roles"] = guild.roles.size();
+    obj["channels"] = guild.channels.size();
+    obj["owner"] = guild.owner.user.tag;
+    res.json(obj);
+  } else {
+    res.sendStatus(404);
+  }
+})
+
 app.get("/support", function(req, res) {
   res.redirect("https://discord.gg/nqDKcYC")
 });
