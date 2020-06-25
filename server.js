@@ -38,6 +38,16 @@ app.get("/img/*", function(req, res) {
   res.redirect(assets[id])
 });
 
+app.get("/icon/*", function(req, res) {
+  var id = req.path.split("/")[2];
+  var guild = client.guilds.find(g => g.id == id);
+  if (guild) {
+    res.redirect(guild.iconURL)
+  } else {
+    res.sendStatus(404);
+  }
+});
+
 app.get("/support", function(req, res) {
   res.redirect("https://discord.gg/nqDKcYC")
 });
