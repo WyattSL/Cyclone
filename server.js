@@ -25,9 +25,8 @@ app.use(express.static("public"));
 const assets = require("/app/stuff/assets.json")
 
 var client;
-exports.setClient = function(client) {
-  client = client;
-  console.log(`Server Client has been set: ${client.user.tag}`)
+exports.setClient = function(c) {
+  client = c;
 }
 
 
@@ -52,8 +51,6 @@ app.get("/select", function(req, res) {
 });
 
 app.get("/uptime", function(req, res) {
-  var client = this.client;
-  console.log(`Using: ${client}`)
   if (client) {
     if (client.status == 0) {
       res.sendStatus(200);
@@ -74,7 +71,11 @@ app.get("/uptime", function(req, res) {
 });
 
 app.get("/servers", function(req, res) {
+  res.json(client.guilds.array());
+});
 
+app.get("/config", function(req, res) {
+  res.json(client.config);
 });
 
 app.get("/profile", function(req, res) {

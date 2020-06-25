@@ -142,7 +142,6 @@ exports.run = function(client, args) {
   }, 60000);
   setTimeout(function() {
     const server = require("/app/server.js");
-    console.log(`Setting server client to: ${client.user.tag}`)
     server.setClient(client);
   }, 0);
 }
