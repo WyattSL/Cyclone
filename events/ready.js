@@ -140,6 +140,9 @@ exports.run = function(client, args) {
   setInterval(function() { // will wait 60 seconds before posting
     require("/app/func/apis.js").run(client);
   }, 60000);
-  const server = require("/app/server.js");
-  server.setClient(client);
+  setTimeout(function() {
+    const server = require("/app/server.js");
+    console.log(`Setting server client to: ${client.user.tag}`)
+    server.setClient(client);
+  }, 0);
 }

@@ -24,8 +24,10 @@ app.use(express.static("public"));
 
 const assets = require("/app/stuff/assets.json")
 
+var client;
 exports.setClient = function(client) {
-  this.client = client;
+  client = client;
+  console.log(`Server Client has been set: ${client.user.tag}`)
 }
 
 
@@ -51,18 +53,23 @@ app.get("/select", function(req, res) {
 
 app.get("/uptime", function(req, res) {
   var client = this.client;
-  if (client.status == 0) {
-    res.sendStatus(200);
-  } else if (client.status == 1) { //Connecting
-    res.sendStatus(201)
-  } else if (client.status == 2) { // reconnecting
-    res.sendStatus(202)
-  } else if (client.status == 3) { // idle
-    res.sendStatus(203)
-  } else if (client.status == 4) { // nearly
-    res.sendStatus(204);
-  } else if (client.status == 5) { // disconnected
-    res.sendStatus(205);
+  console.log(`Using: ${client}`)
+  if (client) {
+    if (client.status == 0) {
+      res.sendStatus(200);
+    } else if (client.status == 1) { // Connecting
+      res.sendStatus(201)
+    } else if (client.status == 2) { // reconnecting
+      res.sendStatus(202)
+    } else if (client.status == 3) { // idle
+      res.sendStatus(203)
+    } else if (client.status == 4) { // nearly
+      res.sendStatus(204);
+    } else if (client.status == 5) { // disconnected
+      res.sendStatus(205);
+    }
+  } else {
+    res.status(600).end(`SERVER_NULL_CLIENT`)
   }
 });
 
