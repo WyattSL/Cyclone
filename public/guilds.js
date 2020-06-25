@@ -34,16 +34,28 @@ req.onreadystatechange = function() {
                             var dsubs = document.createElement("div");
                             var isubs = document.createElement("img");
                             isubs.src = "https://discordemoji.com/assets/emoji/7485_server_boost.png"
+                            isubs.style = "max-width: 50px; width: 50px"
                             div.appendChild(dsubs);
                             dsubs.appendChild(isubs);
                             var count = document.createElement("p");
                             var t = s.premiumTier;
                             var max;
-                            if (t == 0 || !t) t = 2
-                            if (t == 1) t = 15
-                            if (t == 2) t == 30
-                            if (t == 3) t == 30
+                            if (t == 0 || !t) max = 2
+                            if (t == 1) max = 15
+                            if (t == 2) max = 30
+                            if (t == 3) max = 30
                             count.innerHTML = `${s.premiumSubscriptionCount}/${max}`
+                            dsubs.appendChild(count);
+                        }
+                        if (s.features) {
+                            var flist = document.createElement("ul");
+                            div.appendChild(flist);
+                            var i;
+                            for (i=0;i<s.features.length;i++) {
+                                var fi = document.createElement("li");
+                                fi.innerHTML = s.features[i];
+                                flist.appendChild(fi);
+                            }
                         }
                     }
                 }
