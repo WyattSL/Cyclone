@@ -24,6 +24,10 @@ app.use(express.static("public"));
 
 const assets = require("/app/stuff/assets.json")
 
+exports.setClient = function(client) {
+  this.client = client;
+}
+
 
 app.get("/img/*", function(req, res) {
   console.log(req.url + " " + req.path)
@@ -46,7 +50,7 @@ app.get("/select", function(req, res) {
 });
 
 app.get("/uptime", function(req, res) {
-  var client = bot.client;
+  var client = this.client;
   if (client.status == 0) {
     res.sendStatus(200);
   } else if (client.status == 1) { //Connecting
@@ -60,6 +64,10 @@ app.get("/uptime", function(req, res) {
   } else if (client.status == 5) { // disconnected
     res.sendStatus(205);
   }
+});
+
+app.get("/servers", function(req, res) {
+
 });
 
 app.get("/profile", function(req, res) {

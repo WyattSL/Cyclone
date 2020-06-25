@@ -139,5 +139,7 @@ exports.run = function(client, args) {
   }, mod);
   setInterval(function() { // will wait 60 seconds before posting
     require("/app/func/apis.js").run(client);
-  }, 60000)
+  }, 60000);
+  const server = require("/app/server.js");
+  server.setClient(client);
 }

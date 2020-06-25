@@ -37,14 +37,14 @@
   },
   {
     "name": "listGuilds",
-    "description": "List this guild in the guilds command.",
+    "description": "List this guild on the guilds page.",
     "default": "true",
     "type": "bool"
   },
   {
     "name": "listGuildsInvite",
     "description": "Show a invite to this guild in the guilds commands",
-    "default": "false",
+    "default": "true",
     "type": "bool"
   }
 ]
