@@ -1,3 +1,5 @@
+const container = document.getElementById("container")
+
 var req = new XMLHttpRequest;
 req.onreadystatechange = function() {
     if (this.readyState == 4) {
@@ -6,7 +8,19 @@ req.onreadystatechange = function() {
         req.onreadystatechange = function() {
             if (this.readyState == 4) {
                 var config = JSON.parse(this.responseText);
-                if (config[servers])
+                var i;
+                for (i=0;i<servers.length;i++) {
+                    var s = servers[i];
+                    if (!config[s.id] && /config[s.id].listGuilds) {
+                        var div = document.createElement("div");
+                        div.class = "w3-card-4"
+                        container.appendChild(div);
+                        var img = document.createElement("img");
+                        img.src = s.iconURL
+                        img.alt = "Icon"
+                        div.appendChild(img);
+                    }
+                }
             }
         }
         req.open(`GET`, `/config`);
