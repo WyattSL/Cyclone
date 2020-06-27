@@ -24,6 +24,14 @@ async function searchGame(query, msg) {
   return appid;
 }
 
+async function vanityUser(query) {
+  var url = `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API}&vanityurl=${query}`;
+  var req = await got(url);
+  var d = JSON.parse(req.body).response;
+  var id = d.steamid
+  return id;
+}
+
 async function gameStats(user, game) {
   var u = `http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=${game}&key=${process.env.STEAM_API}&steamid=${user}`
   var req = await got(u);
@@ -33,6 +41,8 @@ async function gameStats(user, game) {
 exports.searchGame = searchGame
 
 exports.gameStats = gameStats
+
+exports.vanityUser = vanityUser
 
 exports.run = async function(client, msg, args) {
   var type = args.shift();
