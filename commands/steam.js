@@ -384,6 +384,19 @@ exports.run = async function(client, msg, args) {
       embed.setTimestamp(date);
       embed.setDescription(body);
       ms.edit(embed);
+    } else if (type == "players") {
+      var sgame = args.join(" ");
+      var game = searchGame(sgame);
+      var url = `http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=${game.appid}`
+      console.log(url);
+      var req = await got(url);
+      var players = JSON.parse(req.body).response.player_count
+      var embed = new client.embed;
+      var x = "``"
+      embed.setTitle(sgame);
+      embed.setDescription(`There is currently ${x}${players}${x} people playing ${game.title}!`)
+      embed.setFooter(client.generateFooter());
+      ms.edit(embed);
     } else {
       var embed = new client.embed;
       embed.setTitle("Error");
