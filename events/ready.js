@@ -1,3 +1,5 @@
+const DBL = require("dblapi.js");
+
 exports.run = function(client, args) {
   const fs = require("fs");
   const got = require("got");
@@ -9,6 +11,7 @@ exports.run = function(client, args) {
   client.err = function(error) {
     require("./error.js").error(error);
   }
+  client.dbl = new DBL(process.env.TOP_API)
   client.assets = require("/app/stuff/assets.json");
   client.configlist = require("/app/stuff/config.json"); // actually used by various things; believe it or not
   client.random = function(max) {
