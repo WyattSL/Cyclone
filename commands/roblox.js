@@ -1,7 +1,27 @@
 exports.run = function(client, msg, args) {
-    var user = args.join(" ");
-    var url = ``
-    var req = await got(url);
+    msg.channel.send("Please wait...").then(ms => {
+        var user = args.join(" ");
+        var url = `https://www.roblox.com/search/users/results?keyword=${user}&maxRows=1&startIndex=0`
+        var req = await got(url);
+        var res = JSON.parse(req.body).UserSearchResults;
+        if (!res[0]) {
+            return 2;
+        }
+        var id = res[0].UserId
+        var embed = new RichEmbed;
+        embed.setTitle("Roblox Data Retrieval")
+        embed.setFooter(client.generateFooter())
+        embed.setColor(0x000000)
+        var url = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=150x150&format=png`
+        var areq = await got(url);
+        var ares = JSON.parse(areq).data[0]
+        embed.setAuthor(res.DisplayName, ares.imageUrl)
+        embed.setURL(`https://roblox.com/users/${id}/profile`);
+        var url = `https://www.roblox.com/search/users/presence?userIds=${id}`;
+        var req = await got(url);
+        var res = JSON.parse(req.body).PlayerPresences[0];
+        ms.edit(embed);
+    });
 }
 
 exports.usage = "roblox <user>"
