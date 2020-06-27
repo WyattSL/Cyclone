@@ -1,29 +1,32 @@
-exports.run = function(client, msg, args) {
-    var e = new client.embed;
-    e.setTitle(msg.guild.name)
-    e.setThumbnail(msg.iconURL)
-    e.setAuthor(msg.guild.owner.user.tag, msg.guild.owner.user.displayAvatarURL)
-    var channels = [
-        `Total Channels: ${msg.guild.channels.size}`,
-        `Text Channels: ${msg.guild.channels.filter(ch => ch.type == "text").size}`,
-        `Voice Channels: ${msg.guild.channels.filter(ch => ch.type == "voice").size}`,
-        `Categories: ${msg.guild.channel.filter(ch => ch.type == "category").size}`
-    ]
-    e.addField("Channels", channels.concat("\n"))
-    var roles = [
-        `Total: ${msg.guild.roles.size}`,
-        `--- List ---`,
-        `${msg.guild.roles.concat("\n")}`
-    ]
-    e.addField("Roles", roles.concat("\n"));
-    if (msg.guild.description) e.addField("Description", msg.guild.description);
-    if (msg.guild.features) e.addField("Features", msg.guild.features.concat(", "));
-    if (msg.guild.premiumSubscriptions) e.addField(`Tier ${msg.guild.premiumTier}`, `:booster: ${msg.guild.premiumSubscriptions}`);
-    if (msg.guild.region) e.addField(`Region`, msg.guild.region)
-    if (msg.guild.verified) e.addField(`Verified`, `:heavy_check_mark:`)
-    e.setFooter(`${client.generateFooter} | Guild created at`);
-    e.setTimestamp(msg.guild.createdTimestamp)
-    msg.channel.send(e);
+exports.run = async function(client, msg, args) {
+    msg.guild.fetch().then(guild => {
+        msg.guild = guild;
+        var e = new client.embed;
+        e.setTitle(guild.name)
+        e.setThumbnail(msg.iconURL)
+        e.setAuthor(guild.owner.user.tag, guild.owner.user.displayAvatarURL)
+        var channels = [
+            `Total Channels: ${guild.channels.size}`,
+            `Text Channels: ${guild.channels.filter(ch => ch.type == "text").size}`,
+            `Voice Channels: ${guild.channels.filter(ch => ch.type == "voice").size}`,
+            `Categories: ${guild.channel.filter(ch => ch.type == "category").size}`
+        ]
+        e.addField("Channels", channels.concat("\n"))
+        var roles = [
+            `Total: ${guild.roles.size}`,
+            `--- List ---`,
+            `${guild.roles.concat("\n")}`
+        ]
+        e.addField("Roles", roles.concat("\n"));
+        if (guild.description) e.addField("Description", guild.description);
+        if (guild.features) e.addField("Features", guild.features.concat(", "));
+        if (guild.premiumSubscriptions) e.addField(`Tier ${guild.premiumTier}`, `:booster: ${guild.premiumSubscriptions}`);
+        if (guild.region) e.addField(`Region`, guild.region)
+        if (guild.verified) e.addField(`Verified`, `:heavy_check_mark:`)
+        e.setFooter(`${client.generateFooter} | Guild created at`);
+        e.setTimestamp(guild.createdTimestamp)
+        msg.channel.send(e);
+    });
 }
   
 exports.usage = "stats"

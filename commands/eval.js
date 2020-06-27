@@ -2,7 +2,7 @@ exports.run = function(client, msg, args) {
   var code = args.join(" ");
   var supersecuretoken = client.token;
   msg.channel.send("```js\n" + code + "```");
-  if (!msg.content.includes("eval:")) {
+  if (!msg.content.includes("eval-")) {
     try {
       var x; // so glitch won't scream
       if (!msg.content.includes("eval!")) {
@@ -12,8 +12,10 @@ exports.run = function(client, msg, args) {
       }
       if (x && x != "[object Promise]") {
         msg.channel.send(`Executed successfully. Output: ${x}`);
+      } else if (x) {
+        msg.channel.send(`Executed successfully, Promise returned.`)
       } else {
-        msg.channel.send(`Executed successfully.`)
+        msg.channel.send(`Executed successfully, no output.`)
       }
     } catch(err) {
       msg.channel.send("```fix\n" + err + "```")
