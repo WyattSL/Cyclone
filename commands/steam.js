@@ -187,10 +187,6 @@ exports.run = async function(client, msg, args) {
             if (Math.round(g.playtime_forever/60) > 0) {
               var rpt = Math.round((g.playtime_2weeks || 0)/60)
               e.addField(g.name, `${rpt}/${Math.round((g.playtime_forever || 0)/60)} Hrs`, true);
-              if (i+1 == max && max == 25) {
-                ms.edit(e);
-                return;
-              }
               if (i+1 == 25) {
                 ms.edit(e);
                 e = new client.embed;
@@ -208,6 +204,9 @@ exports.run = async function(client, msg, args) {
                 e.setFooter(client.generateFooter());
               }
             }
+          }
+          if (max == 25) {
+            ms.edit(e);
           }
         }
     } else if (type == "game" || type == "store") {
