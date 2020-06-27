@@ -1,6 +1,6 @@
 const got = require('got');
 
-async function resolveUser(user) {
+async function searchUser(user) {
     var url = `https://www.roblox.com/search/users/results?keyword=${user}&maxRows=1&startIndex=0`
     var req = await got(url);
     var res = JSON.parse(req.body).UserSearchResults;
@@ -11,8 +11,16 @@ async function resolveUser(user) {
     return id;
 }
 
-async function resolveAsset(id) {
-    var url = ``
+async function resolveGroup(id) {
+    var url = `https://groups.roblox.com/v1/groups/${id}`
+    var req = await got(url)
+    return JSON.parse(req);
+}
+
+async function resolvePrimaryGroup(user) {
+    var url = `https://groups.roblox.com/v1/users/${user}/groups/primary/role`;
+    var req = await got(url);
+    return JSON.parse(req);
 }
 
 exports.run = function(client, msg, args) {
@@ -26,7 +34,7 @@ exports.run = function(client, msg, args) {
             case "user":
                 switch(type2) {
                     case "info":
-                        var id = await resolveUser(args.join(" "))
+                        var id = await searchUser(args.join(" "))
                         var embed = new client.embed;
                         embed.setTitle("Roblox Data Retrieval")
                         embed.setFooter(client.generateFooter())
@@ -49,6 +57,9 @@ exports.run = function(client, msg, args) {
                         if (res.isBanned) embed.setDescription(`${client.emoji("dblMod")} This user is banned.`)
                         ms.edit(embed);
                         break;
+                    case "groups":
+                        var groups = resolve
+                        break;
                     default:
                         ms.delete();
                         return 1;
@@ -61,7 +72,7 @@ exports.run = function(client, msg, args) {
     });
 }
 
-exports.usage = "roblox <user/group/game> <creations/info/inventory/badges/groups/clothes | creations/info | media/info/badges>"
+exports.usage = "roblox <user/group/game> <creations/info/inventory/badges/groups | creations/info | media/info/badges>"
 exports.description = "Get data on a roblox user."
 exports.example = "roblox WyattPlayzPC"
 exports.p = ["EMBED_LINKS", "SEND_MESSAGES"]
