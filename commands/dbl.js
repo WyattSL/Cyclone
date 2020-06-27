@@ -24,7 +24,23 @@ exports.run = async function(client, msg, args) {
             var embed = new client.embed;
             embed.setTitle("Discord Bot List");
             embed.setURL("https://top.gg/bot/" + bot.id);
-            embed.setAuthor(bot.username, bot.avatar)
+            embed.setAuthor(bot.username, `https://images.discordapp.net/avatars/${bot.id}/${bot.avatar}?size=512`);
+            var links = `[Invite](${bot.invite})`
+            if (bot.website) links = links+`, [Website](${bot.website})`;
+            if (bot.support) links = links+`, [Support](${bot.support})`;
+            if (bot.github) links = links+`, [Github](${bot.github})`;
+            embed.addField("Links", links)
+            embed.setDescription(bot.shortdesc);
+            embed.addField("Prefix", bot.prefix);
+            embed.addField("Library", bot.lib);
+            embed.addField("ID", bot.clientid);
+            embed.addField("Tags", bot.tags.concat());
+            embed.addField("Points", `${bot.monthlyPoints}/${bot.points}`);
+            if (bot.certifiedBot) {
+                embed.addField("Certified", ":dblCertified:");
+            } else {
+                embed.addField("Certified", ":x:")
+            }
             ms.edit(embed);
         } else if (type == "user") {
 
