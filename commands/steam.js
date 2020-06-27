@@ -24,6 +24,16 @@ async function searchGame(query, msg) {
   return appid;
 }
 
+async function gameStats(user, game) {
+  var u = `http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=${game}&key=${process.env.STEAM_API}&steamid=${user}`
+  var req = await got(u);
+  return req.body;
+}
+
+exports.searchGame = searchGame
+
+exports.gameStats = gameStats
+
 exports.run = async function(client, msg, args) {
   var type = args.shift();
   msg.channel.send(`Please wait a moment whilst I fetch that...`).then(async ms => {
