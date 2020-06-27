@@ -34,13 +34,14 @@ exports.run = async function(client, msg, args) {
             embed.setDescription(bot.shortdesc);
             embed.addField("Prefix", bot.prefix, true);
             embed.addField("Library", bot.lib, true);
-            embed.addField("Owners", bot.clientid, true);
+            embed.addField("Owners", bot.owners, true);
             embed.addField("Tags", bot.tags.concat(), true);
             embed.addField("Points", `${bot.monthlyPoints}/${bot.points}`, true);
+            embed.addField("ID", bot.clientid, true)
             if (bot.certifiedBot) {
-                embed.addField("Certified", client.Emoji("dblCertified"));
+                embed.addField("Certified", client.Emoji("dblCertified"), true);
             } else {
-                embed.addField("Certified", ":x:")
+                embed.addField("Certified", ":x:", true)
             }
             ms.edit(embed);
         } else if (type == "user") {
