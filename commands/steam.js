@@ -13,16 +13,14 @@ async function searchGame(query, msg) {
       "Connection": "keep-alive",
       "Pragma": "no-cache",
       "Cache-Control": "no-cache"
-    }
+    },
+    throwHttpErrors: false
   }
   var req = await got(u, options)
   req.on('error', function(err) {
     msg.channel.send(`HTTP Error: ${err}`)
   })
   var res = req.body;
-  console.log(req);
-  console.log(req.headers);
-  console.log(res)
   var appid = res.split("data-ds-appid=\"")[1].split("\"")[0];
   return appid;
 }
