@@ -152,7 +152,7 @@ exports.run = async function(client, msg, args) {
       }
     } else if (type == "games" || type == "library") {
       var vurl = args[0];
-      var id;
+      var id = ""
       var e = new client.embed;
       e.setTitle(`${vurl}'s Games`);
       e.setFooter(client.generateFooter());
@@ -160,13 +160,14 @@ exports.run = async function(client, msg, args) {
       var url = `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API}&vanityurl=${vurl}`;
       var req = await got(url);
       var d = JSON.parse(req.body).response;
-      if (d.success) {
-        id = d.steamid;
+      if (d.success && d.success == 1) {
+        id = `${d.steamid}`;
       } else {
-        id = vurl;
+        id = `${vurl}`;
       }
         msg.channel.send(`Getting games for ${id}.`)
-        var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API}&steamid=${id}&include_appinfo=true`
+        var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API}&include_appinfo=true&steamid=${id}`
+        console.log(url);
         var greq = await got(url);
         var d = JSON.parse(greq.body).response;
         var pages = Number(args[args.length-1]) || 1
