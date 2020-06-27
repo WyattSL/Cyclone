@@ -72,3 +72,8 @@ exports.run = async function(client, msg, args) {
         }
     }
 }
+
+exports.usage = "minecraft server <IP>:<PORT>"
+exports.description = "Ping a minecraft server"
+exports.example = "minecraft server hypixel.net"
+exports.p = ["SEND_MESSAGES", "EMBED_LINKS"]
