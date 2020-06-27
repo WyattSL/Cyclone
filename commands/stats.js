@@ -19,10 +19,10 @@ exports.run = async function(client, msg, args) {
         ]
         e.addField("Roles", roles.concat("\n"));
         if (guild.description) e.addField("Description", guild.description);
-        if (guild.features) e.addField("Features", guild.features.array().concat(", "));
-        if (guild.premiumSubscriptionCount) e.addField(`Tier ${guild.premiumTier}`, `:booster: ${guild.premiumSubscriptionCount}`);
+        if (guild.features) e.addField("Features", guild.features.concat());
+        if (guild.premiumSubscriptionCount) e.addField(`Tier ${guild.premiumTier}`, `${guild.premiumSubscriptionCount} Boosts!`);
         if (guild.region) e.addField(`Region`, guild.region)
-        if (guild.verified) e.addField(`Verified`, `:heavy_check_mark:`)
+        if (guild.verified) e.addField(`Verification`, `Verified!`)
         e.setFooter(`${client.generateFooter()} | Guild created on`);
         e.setTimestamp(guild.createdTimestamp)
         msg.channel.send(e);
