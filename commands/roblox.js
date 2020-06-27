@@ -7,20 +7,32 @@ async function searchUser(user) {
     if (!res[0]) {
         return 2;
     }
-    var id = res[0].UserId
-    return id;
+    return res[0];
 }
 
 async function resolveGroup(id) {
     var url = `https://groups.roblox.com/v1/groups/${id}`
     var req = await got(url)
-    return JSON.parse(req);
+    return JSON.parse(req.body);
 }
 
 async function resolvePrimaryGroup(user) {
     var url = `https://groups.roblox.com/v1/users/${user}/groups/primary/role`;
     var req = await got(url);
-    return JSON.parse(req);
+    return JSON.parse(req.body);
+}
+
+async function resolveUserGroups(user) {
+    var url = `https://api.roblox.com/users/${user}/groups`;
+    var req = await got(url);
+    return JSON.parse(req.body);
+}
+
+async function getUserHeadshot(id) {
+    var url = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=150x150&format=png`
+    var areq = await got(url);
+    var ares = JSON.parse(areq.body).data[0]
+    return ares;
 }
 
 exports.run = function(client, msg, args) {
@@ -34,15 +46,13 @@ exports.run = function(client, msg, args) {
             case "user":
                 switch(type2) {
                     case "info":
-                        var id = await searchUser(args.join(" "))
+                        var user = await searchUser(args.join(" "))
+                        var id = user.UserId
                         var embed = new client.embed;
-                        embed.setTitle("Roblox Data Retrieval")
+                        embed.setTitle("Roblox Data Retrieval: user Lookup")
                         embed.setFooter(client.generateFooter())
                         embed.setColor(0x000000)
-                        var url = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=150x150&format=png`
-                        var areq = await got(url);
-                        var ares = JSON.parse(areq.body).data[0]
-                        embed.setAuthor(res[0].DisplayName, ares.imageUrl)
+                        embed.setAuthor(user.DisplayName, getUserHeadshot(id).imageUrl)
                         var url = `https://thumbnails.roblox.com/v1/users/avatar?userIds=${id}&size=352x352&format=png`;
                         var breq = await got(url);
                         var bres = JSON.parse(breq.body).data[0];
@@ -58,7 +68,18 @@ exports.run = function(client, msg, args) {
                         ms.edit(embed);
                         break;
                     case "groups":
-                        var groups = resolve
+                        var user = await searchUser(args.join(" "));
+                        var groups = await resolveUserGroups(user.UserId);
+                        var i;
+                        var embed = new client.embed;
+                        embed.setTitle("Roblox Data Retrieval: User Groups");
+                        embed.setAuthor(user.DisplayName, getUserHeadshot(user.UserId).imageUrl)
+                        embed.setFooter(client.generateFooter())
+                        for (i=0;i<groups.length;i++) {
+                            var g = groups[i]
+                            embed.addField(g.Name, g.Role, false);
+                        }
+                        ms.edit(embed);
                         break;
                     default:
                         ms.delete();
