@@ -40,18 +40,6 @@ function inviteCheck(client, msg) {
 exports.run = async (client, args) => {
   var RichEmbed = client.embed;
   var msg = args[0];
-  if (!msg.guild.name.includes("Discord Boats") && !msg.guild.name.includes("Discord Bot List") && !msg.guild.name.includes("Bots on Discord")) {
-    console.log(
-      "@" +
-        msg.member.displayName +
-        " said " +
-        msg.content +
-        " in " +
-        msg.guild.name +
-        " on #" +
-        msg.channel.name
-    );
-  }
   if (msg.author.bot) return false;
   if (!client.config[msg.guild.id]) client.config[msg.guild.id] = {};
   var prefix = client.config[msg.guild.id].prefix || "."; // get the prefix; if it is not set, the prefix will default to "."
