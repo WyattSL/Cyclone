@@ -8,7 +8,7 @@ exports.run = function(client, msg, args) {
   msg.channel.send(e);
   setTimeout(function() {
     client.destroy();
-    throw(`If the client did not self destruct, this (should) restart the project.`);
+    process.exit(0);
   }, 500);
 }
 

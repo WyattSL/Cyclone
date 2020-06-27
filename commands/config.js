@@ -29,7 +29,7 @@ exports.run = function(client, msg, args) {
     embed.setColor(0x000000);
     embed.setTitle("Cyclone Configuration");
     embed.setDescription(key);
-    var k = client.configlistkeys[key]
+    var k = client.configlistkeys[key];
     if (!k) {
       embed.setDescription(`I couldn't find ${key}.`);
       embed.setThumbnail(client.assets.X);
