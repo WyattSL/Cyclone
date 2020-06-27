@@ -386,16 +386,45 @@ exports.run = async function(client, msg, args) {
       ms.edit(embed);
     } else if (type == "players") {
       var sgame = args.join(" ");
-      var game = searchGame(sgame);
-      var url = `http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=${game.appid}`
+      var game = await searchGame(sgame);
+      var url = `http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=${game}`
       console.log(url);
       var req = await got(url);
       var players = JSON.parse(req.body).response.player_count
       var embed = new client.embed;
       var x = "``"
       embed.setTitle(sgame);
-      embed.setDescription(`There is currently ${x}${players}${x} people playing ${game.title}!`)
+      embed.setDescription(`There is currently ${x}${players}${x} people playing ${sgame}!`)
       embed.setFooter(client.generateFooter());
+      ms.edit(embed);
+    } else if (type == "bans") {
+      var suser = args.join(" ");
+      var user = await vanityUser(suser);
+      var url = `http://api.steampowered.com/ISteamUser/GetPlayerBans/v1?steamids=${user}&key=${process.env.STEAM_API}`;
+      console.log(url);
+      var req = await got(url);
+      var res = JSON.parse(res).players[0];
+      var embed = new client.embed;
+      embed.setTitle("Ban Information");
+      embed.setAuthor(suser);
+      embed.setFooter(client.generateFooter());
+      embed.setColor(0x000000);
+      if (res.CommunityBanned) {
+        embed.addField("Community Banned", ":white_check_mark:");
+      } else {
+        embed.addField("Community Banned", ":x:")
+      }
+      if (res.VACBanned) {
+        embed.addField("VAC Banned", ":white_check_mark: " + res.NumberOfVACBans);
+      } else {
+        embed.addField("VAC Banned", ":x:")
+      }
+      if (res.NumberOfGameBans) {
+        embed.addField("Game Bans", res.NumberOfGameBans);
+      }
+      if (res.EconomyBan) {
+        embed.addField("Economy Bans", res.EconomyBan);
+      }
       ms.edit(embed);
     } else {
       var embed = new client.embed;
