@@ -15,6 +15,15 @@ exports.run = function(client, msg, args) {
         `--- List ---`,
         `${msg.guild.roles.concat("\n")}`
     ]
+    e.addField("Roles", roles.concat("\n"));
+    if (msg.guild.description) e.addField("Description", msg.guild.description);
+    if (msg.guild.features) e.addField("Features", msg.guild.features.concat(", "));
+    if (msg.guild.premiumSubscriptions) e.addField(`Tier ${msg.guild.premiumTier}`, `:booster: ${msg.guild.premiumSubscriptions}`);
+    if (msg.guild.region) e.addField(`Region`, msg.guild.region)
+    if (msg.guild.verified) e.addField(`Verified`, `:heavy_check_mark:`)
+    e.setFooter(`${client.generateFooter} | Guild created at`);
+    e.setTimestamp(msg.guild.createdTimestamp)
+    msg.channel.send(e);
 }
   
 exports.usage = "stats"
