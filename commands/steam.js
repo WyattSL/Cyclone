@@ -9,8 +9,10 @@ async function searchGame(query) {
     headers: {
       "Host": "store.steampowered.com",
       "X-Requested-With": "XMLHttpRequest",
-      "Referer": "https://store.steampowered.com"
-    }
+      "Referer": "https://store.steampowered.com",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0"
+    },
+    throwHttpErrors: true
   }
   var req = await got(url, options);
   var res = req.body;
