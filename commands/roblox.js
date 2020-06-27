@@ -32,9 +32,12 @@ exports.run = function(client, msg, args) {
                         var bres = JSON.parse(breq.body).data[0];
                         embed.setThumbnail(bres.imageUrl);
                         embed.setURL(`https://roblox.com/users/${id}/profile`);
-                        var url = `https://www.roblox.com/search/users/presence?userIds=${id}`;
+                        var url = `https://users.roblox.com/v1/users/110946117`;
                         var req = await got(url);
-                        var res = JSON.parse(req.body).PlayerPresences[0];
+                        var res = JSON.parse(req.body)
+                        var d = new Date(res.created)
+                        embed.addField(`Account Created`, d)
+                        embed.setDescription(res.description);
                         ms.edit(embed);
                         break;
                     default:
