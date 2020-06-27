@@ -169,10 +169,10 @@ exports.run = async function(client, msg, args) {
         var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API}&include_appinfo=true&steamid=${id}`
         console.log(url);
         var greq = await got(url);
+        console.log(greq.body);
         var d = JSON.parse(greq.body).response;
         var pages = Number(args[args.length-1]) || 1
         if (d && d.games) {
-          var games = ""
           var glist = d.games;
           glist.sort(function(a, b){return b.playtime_forever - a.playtime_forever});
           var max;
@@ -187,6 +187,10 @@ exports.run = async function(client, msg, args) {
             if (Math.round(g.playtime_forever/60) > 0) {
               var rpt = Math.round((g.playtime_2weeks || 0)/60)
               e.addField(g.name, `${rpt}/${Math.round((g.playtime_forever || 0)/60)} Hrs`, true);
+              if (i+1 == max && max == 25) {
+                ms.edit(e);
+                return;
+              }
               if (i+1 == 25) {
                 ms.edit(e);
                 e = new client.embed;
