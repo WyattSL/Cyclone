@@ -100,6 +100,8 @@ exports.run = async function(client, msg, args) {
         } else {
           e.setFooter(`${client.generateFooter()}`)
         }
+        var url = ``
+        var greq = await got(url);
         ms.edit(e);
       } else if (e == 42) {
         ms.edit(`I was unable to find a user with that vanity url.`);
