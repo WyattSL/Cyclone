@@ -47,6 +47,7 @@ req.onreadystatechange = function() {
                             count.innerHTML = `${s.premiumSubscriptionCount}/${max}`
                             dsubs.appendChild(count);
                         }
+                        /*
                         if (s.features) {
                             var flist = document.createElement("ul");
                             div.appendChild(flist);
@@ -57,6 +58,12 @@ req.onreadystatechange = function() {
                                 flist.appendChild(fi);
                             }
                         }
+                        */
+                       if (s.memberCount) {
+                           var mc = document.createElement("p");
+                           mc.innerHTML = `Members: ${s.memberCount}`
+                           div.appendChild(mc);
+                       }
                     }
                 }
             }
