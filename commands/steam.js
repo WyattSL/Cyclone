@@ -3,18 +3,11 @@ const got = require("got");
 async function searchGame(query) {
   var q = query.replace(/ /g, "+");
   q=q.replace(/'/g, "%27");
-  var url = `https://store.steampowered.com/search/suggest?term=${q}&f=games&cc=US&realm=1&l=english&v=8802083`
-  console.log(url);
+  var u = `https://store.steampowered.com/search/suggest?term=${q}&f=games&cc=US&realm=1&l=english&v=8802085`
   var options = {
-    headers: {
-      "Host": "store.steampowered.com",
-      "X-Requested-With": "XMLHttpRequest",
-      "Referer": "https://store.steampowered.com",
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0"
-    },
     throwHttpErrors: true
   }
-  var req = await got(url, options);
+  var req = await got(u, options);
   var res = req.body;
   var appid = res.split("data-ds-appid=\"")[1].split("\"")[0];
   return appid;
