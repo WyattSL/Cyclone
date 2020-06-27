@@ -4,14 +4,14 @@ exports.run = function(client, msg, args) {
     exec(args.join(" "), (error, stdout, stderr) => {
         var x = "```"
         if (error) {
-            msg.channel.send(`Error: ${x}${error.message}${x}`);
+            msg.channel.send(`${x}${error.message}${x}`);
             return;
         }
         if (stderr) {
-            msg.channel.send(`STD Error ${x}${stderr}${x}`);
+            msg.channel.send(`${x}${stderr}${x}`);
             return;
         }
-        msg.channel.send(`Output: ${x}${stdout}${x}`);
+        msg.channel.send(`${x}${stdout}${x}`);
     });
 };
 
