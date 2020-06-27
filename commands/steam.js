@@ -5,7 +5,7 @@ async function searchGame(query, msg) {
   var q = query.replace(/ /g, "+");
   q=q.replace(/'/g, "%27");
   var u = `https://store.steampowered.com/search/suggest?term=${q}&f=games&cc=US&realm=1&l=english&v=8802085`
-  var options = {
+  var req = await got(u, {
     headers: {
       "Accept": "*/*",
       "Accept-Language": "en-US,en;q=0.5",
@@ -15,8 +15,7 @@ async function searchGame(query, msg) {
       "Cache-Control": "no-cache"
     },
     throwHttpErrors: false
-  }
-  var req = await got(u, options)
+  });
   req.on('error', function(err) {
     msg.channel.send(`HTTP Error: ${err}`)
   })
@@ -192,7 +191,7 @@ exports.run = async function(client, msg, args) {
         mode = 2;
       }
       if (mode == 2) { // remember to do this; once I find out how to search the store
-        id = searchGame(query, msg);
+        id = await searchGame(query, msg);
       }
       var url = `https://store.steampowered.com/api/appdetails?appids=${id}`;
       var req = await got(url);

@@ -32,3 +32,8 @@ exports.run = function(client, msg, args) {
         }
     });
 }
+
+exports.usage = "birthday"
+exports.example = "birthday"
+exports.description = "See how much longer it is until your birthday."
+exports.p = ["SEND_MESSAGES"]
