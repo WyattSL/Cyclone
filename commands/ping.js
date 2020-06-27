@@ -2,8 +2,8 @@ exports.run = function(client, msg, args) {
   const os = require("os")
   var up = client.uptime;
   var ping = client.ping;
-  var guilds = client.guildcount
-  var users = client.usercount
+  var guilds = client.guilds.size
+  var users = client.users.size
   var status = client.status;
   switch (status) {
     case 0:
