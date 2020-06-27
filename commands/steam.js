@@ -35,7 +35,7 @@ async function vanityUser(query) {
 async function gameStats(user, game) {
   var u = `http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=${game}&key=${process.env.STEAM_API}&steamid=${user}`
   var req = await got(u);
-  return req.body;
+  return JSON.parse(req.body).playerstats
 }
 
 exports.searchGame = searchGame
@@ -335,6 +335,27 @@ exports.run = async function(client, msg, args) {
         embed.setThumbnail(client.assets.X);
         ms.edit(embed);
       }
+    } else if (type == "stats") {
+      var suser = args.shift();
+      var sgame = args.join(" ");
+      game = await searchGame(sgame)
+      user = await vanityUser(suser)
+      var stats = await gameStats(user, game)
+      console.log(stats);
+      if (!stats) {
+        ms.edit(`Rejection! Stats not defined for ${sgame} [${game}] in context ${suser} [${user}]`);
+      }
+      var i;
+      var e = new client.embed;
+      e.setTitle(sgame);
+      e.setAuthor(suser);
+      e.setFooter(client.generateFooter());
+      e.setColor(0x000000);
+      for (i=0;i<25;i++) {
+        if (!stats.stats[i]) break;
+        e.addField(stats.stats[i].name, stats.stats[i].value, true);
+      }
+      ms.edit(e);
     } else {
       var embed = new client.embed;
       embed.setTitle("Error");
