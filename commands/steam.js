@@ -188,7 +188,13 @@ exports.run = async function(client, msg, args) {
           }
         }
         if (data.required_age) embed.addField(`Age Requirement`, data.required_age, true);
-        if (data.price_overview) embed.addField(`Price`, `${data.price_overview.final_formatted}`, true);
+        if (data.price_overview) {
+          if (data.price_overview.final_formatted == data.price_overview.initial_formatted) {
+            embed.addField(`Price`, `${data.price_overview.final_formatted}`, true);
+          } else {
+            embed.addField(`Price`, `~~${data.price_overview.initial_formatted}~~ ${data.price_overview.final_formatted}`);
+          }
+        }
         var dev;
         if (!data.developers) {
           if (data.publishers.length == 1) {
