@@ -165,6 +165,7 @@ exports.run = async function(client, msg, args) {
       } else {
         id = vurl;
       }
+        msg.channel.send(`Getting games for ${id}.`)
         var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API}&steamid=${id}&include_appinfo=true`
         var greq = await got(url);
         var d = JSON.parse(greq.body).response;
