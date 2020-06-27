@@ -1,6 +1,6 @@
 exports.run = function(client, msg, args) {
     if (!args) {
-        var x = "```";
+        var x = "``";
         msg.channel.send(`Incorrect usage! ${x}${this.usage}${x}`);
     } else {
         var i;
@@ -12,8 +12,8 @@ exports.run = function(client, msg, args) {
                 kicked.push(members[i].user.tag);
             }
         }
-        var x = "```"
-        msg.channel.send(`Purged ${x}${kicked.length}${x} members on context ${x}${args.join(" ")}${x}. Members include: ${x}${kicked.concat(", ")}.${x}`)
+        var x = "``"
+        msg.channel.send(`Purged ${x}${kicked.length}${x} members on context ${x}${args.join(" ")}${x}. Members include: ${x}${kicked.concat(" | ")}.${x}`)
     }
 }
   
