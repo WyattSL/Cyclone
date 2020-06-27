@@ -100,6 +100,23 @@ exports.run = async function(client, msg, args) {
         } else {
           e.setFooter(`${client.generateFooter()}`)
         }
+        ms.edit(e);
+      } else if (e == 42) {
+        ms.edit(`I was unable to find a user with that vanity url.`);
+      } else {
+        ms.edit(`API Error: [${e}] ${d.message}`);
+      }
+    } else if (type == "games" || type == "library") {
+      var vurl = args.join(" ");
+      var url = `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API}&vanityurl=${vurl}`;
+      var id;
+      msg.channel.send("Step1")
+      var req = await got(url);
+      var d = JSON.parse(req.body).response;
+      var e = d.success
+      id = d.steamid;
+      if (e == 1) id = args.join(" ");
+        m
         var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API}&steamid=${id}&include_appinfo=true`
         var greq = await got(url);
         var d = JSON.parse(greq.body).response;
@@ -108,21 +125,15 @@ exports.run = async function(client, msg, args) {
           var games = ""
           for (i=0;i<d.games.length;i++) {
             var g = d.games[i];
-            games = `${games}${g.name} [${g.playtime_2weeks || 0}/${g.playtime_forever}]`
+            games = `${games}${g.name}[${g.playtime_2weeks || 0}/${g.playtime_forever}]`
             if (i+1 == d.games.length) {
               games = games + "."
             } else {
               games = games + ", "
             }
           }
-          msg.channel.send(games, {split: true});
+          msg.channel.send(games, {split: {maxLength: 1950, char: " "}});
         }
-        ms.edit(e);
-      } else if (e == 42) {
-        ms.edit(`I was unable to find a user with that vanity url.`);
-      } else {
-        ms.edit(`API Error: [${e}] ${d.message}`);
-      }
     } else if (type == "game" || type == "store") {
       var query = args.join(" ");
       var id;
