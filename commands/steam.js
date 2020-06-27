@@ -110,29 +110,31 @@ exports.run = async function(client, msg, args) {
       var vurl = args.join(" ");
       var url = `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API}&vanityurl=${vurl}`;
       var id;
+      var e = new client.embed;
+      e.setTitle(`${vurl}'s Games`);
+      e.setFooter(client.generateFooter());
+      e.setColor(0x000000);
       var req = await got(url);
       var d = JSON.parse(req.body).response;
-      var e = d.success
       id = d.steamid;
         var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API}&steamid=${id}&include_appinfo=true`
         var greq = await got(url);
         var d = JSON.parse(greq.body).response;
+        var pages = Number(args[args.length]);
         if (d && d.games) {
           var games = ""
           var glist = d.games;
           glist.sort(function(a, b){return b.playtime_forever - a.playtime_forever});
-          for (i=0;i<glist.length;i++) {
+          i
+          for (i=0;i<25;i++) {
             var g = glist[i];
+            if (!g) break;
             if (Math.round(g.playtime_forever/60) > 0) {
-              games = `${games}${g.name}[${Math.round(g.playtime_2weeks/60) || 0}/${Math.round(g.playtime_forever/60)}]`
-              if (i+1 == glist.length) {
-                games = games + "."
-              } else {
-                games = games + ", "
-              }
+              var rpt = Math.round((g.playtime_2weeks || 0)/60)
+              e.addField(g.name, `${rpt}/${Math.round((g.playtime_forever || 0)/60)} Hrs`, true);
             }
           }
-          ms.edit(games, {split: {maxLength: 1950, char: " "}});
+          ms.edit(e);
         }
     } else if (type == "game" || type == "store") {
       var query = args.join(" ");
