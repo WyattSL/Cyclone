@@ -388,7 +388,6 @@ exports.run = async function(client, msg, args) {
       var sgame = args.join(" ");
       var game = await searchGame(sgame);
       var url = `http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=${game}`
-      console.log(url);
       var req = await got(url);
       var players = JSON.parse(req.body).response.player_count
       var embed = new client.embed;
@@ -401,9 +400,8 @@ exports.run = async function(client, msg, args) {
       var suser = args.join(" ");
       var user = await vanityUser(suser);
       var url = `http://api.steampowered.com/ISteamUser/GetPlayerBans/v1?steamids=${user}&key=${process.env.STEAM_API}`;
-      console.log(url);
       var req = await got(url);
-      var res = JSON.parse(res).players[0];
+      var res = JSON.parse(req.body).players[0];
       var embed = new client.embed;
       embed.setTitle("Ban Information");
       embed.setAuthor(suser);
@@ -419,11 +417,10 @@ exports.run = async function(client, msg, args) {
       } else {
         embed.addField("VAC Banned", ":x:")
       }
-      if (res.NumberOfGameBans) {
-        embed.addField("Game Bans", res.NumberOfGameBans);
-      }
-      if (res.EconomyBan) {
-        embed.addField("Economy Bans", res.EconomyBan);
+      embed.addField("Game Bans", res.NumberOfGameBans);
+      embed.addField("Economy Ban", res.EconomyBan);
+      if (embed.VACBanned) {
+        embed.addField(`Days since last VAC ban`, res.DaysSinceLastBan)
       }
       ms.edit(embed);
     } else {
