@@ -20,6 +20,9 @@ exports.run = function(client, args) {
     }
     return Math.floor(Math.random() * max);
   }
+  client.Emoji = function(name) {
+    return client.emojis.find(e => e.name.includes(name));
+  };
   client.generateFooter = function() {
     var holidays = require("/app/stuff/holiday.json");
     var d = new Date();

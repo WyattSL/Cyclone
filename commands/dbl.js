@@ -25,19 +25,20 @@ exports.run = async function(client, msg, args) {
             embed.setTitle("Discord Bot List");
             embed.setURL("https://top.gg/bot/" + bot.id);
             embed.setAuthor(bot.username, `https://images.discordapp.net/avatars/${bot.id}/${bot.avatar}?size=512`);
+            embed.setFooter(client.generateFooter());
             var links = `[Invite](${bot.invite})`
             if (bot.website) links = links+`, [Website](${bot.website})`;
             if (bot.support) links = links+`, [Support](${bot.support})`;
             if (bot.github) links = links+`, [Github](${bot.github})`;
-            embed.addField("Links", links)
+            embed.addField("Links", links, true)
             embed.setDescription(bot.shortdesc);
-            embed.addField("Prefix", bot.prefix);
-            embed.addField("Library", bot.lib);
-            embed.addField("ID", bot.clientid);
-            embed.addField("Tags", bot.tags.concat());
-            embed.addField("Points", `${bot.monthlyPoints}/${bot.points}`);
+            embed.addField("Prefix", bot.prefix, true);
+            embed.addField("Library", bot.lib, true);
+            embed.addField("Owners", bot.clientid, true);
+            embed.addField("Tags", bot.tags.concat(), true);
+            embed.addField("Points", `${bot.monthlyPoints}/${bot.points}`, true);
             if (bot.certifiedBot) {
-                embed.addField("Certified", ":dblCertified:");
+                embed.addField("Certified", client.Emoji("dblCertified"));
             } else {
                 embed.addField("Certified", ":x:")
             }
