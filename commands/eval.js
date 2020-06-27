@@ -13,7 +13,9 @@ exports.run = function(client, msg, args) {
       if (x && x != "[object Promise]") {
         msg.channel.send(`Executed successfully. Output: ${x}`);
       } else if (x) {
-        msg.channel.send(`Executed successfully, Promise returned.`)
+        x.then(out => {
+          msg.channel.send(`Promise execution successful. Output: ${out}`, {split: true});
+        })
       } else {
         msg.channel.send(`Executed successfully, no output.`)
       }
