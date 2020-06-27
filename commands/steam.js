@@ -187,26 +187,27 @@ exports.run = async function(client, msg, args) {
             if (Math.round(g.playtime_forever/60) > 0) {
               var rpt = Math.round((g.playtime_2weeks || 0)/60)
               e.addField(g.name, `${rpt}/${Math.round((g.playtime_forever || 0)/60)} Hrs`, true);
-              if (i+1 == 25) {
+              if (i+1 == 25 && max > 25) {
                 ms.edit(e);
                 e = new client.embed;
                 e.setColor(0x000000)
                 e.setFooter(client.generateFooter());
               } else if (i+1 == 50) {
                 msg.channel.send(e);
-                e = new client.embed;
-                e.setColor(0x000000)
-                e.setFooter(client.generateFooter());
+                if (max > 50) {
+                  e = new client.embed;
+                  e.setColor(0x000000)
+                  e.setFooter(client.generateFooter());
+                  }
               } else if (i+1 == 75) {
                 msg.channel.send(e);
-                e = new client.embed;
-                e.setColor(0x000000)
-                e.setFooter(client.generateFooter());
               }
             }
           }
           if (max == 25) {
             ms.edit(e);
+          } else {
+            msg.channel.send(e);
           }
         }
     } else if (type == "game" || type == "store") {
