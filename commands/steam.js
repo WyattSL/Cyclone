@@ -117,21 +117,22 @@ exports.run = async function(client, msg, args) {
         var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API}&steamid=${id}&include_appinfo=true`
         var greq = await got(url);
         var d = JSON.parse(greq.body).response;
-        console.log(d);
         if (d && d.games) {
           var games = ""
-          for (i=0;i<d.games.length;i++) {
-            var g = d.games[i];
-            if (g.playtime_forever > 0) {
-              games = `${games}${g.name}[${Math.round(g.playtime_2weeks/60) || 0}/${g.playtime_forever/60}]`
-              if (i+1 == d.games.length) {
+          var glist = d.games;
+          glist.sort(function(a, b){return b.playtime_forever - a.playtime_forever});
+          for (i=0;i<glist.length;i++) {
+            var g = glist[i];
+            if (Math.round(g.playtime_forever/60) > 0) {
+              games = `${games}${g.name}[${Math.round(g.playtime_2weeks/60) || 0}/${Math.round(g.playtime_forever/60)}]`
+              if (i+1 == glist.length) {
                 games = games + "."
               } else {
                 games = games + ", "
               }
             }
           }
-          msg.channel.send(games, {split: {maxLength: 1950, char: " "}});
+          ms.edit(games, {split: {maxLength: 1950, char: " "}});
         }
     } else if (type == "game" || type == "store") {
       var query = args.join(" ");
