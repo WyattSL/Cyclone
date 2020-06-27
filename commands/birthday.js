@@ -13,7 +13,7 @@ exports.run = function(client, msg, args) {
         } else {
             var bday = new Date(res[0].birthday);
             var cday = new Date();
-            var age = cday.getFullYear()-bday.getFullYear()
+            var age = (cday.getFullYear()-bday.getFullYear())+1
             var e = new client.embed;
             var dlm = bday.getMonth()-cday.getMonth()
             if (dlm<0) dlm=dlm+12
