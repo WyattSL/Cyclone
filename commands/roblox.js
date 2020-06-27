@@ -11,6 +11,10 @@ async function resolveUser(user) {
     return id;
 }
 
+async function resolveAsset(id) {
+    var url = ``
+}
+
 exports.run = function(client, msg, args) {
     var type = args.shift();
     var type2 = args.shift();
