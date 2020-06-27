@@ -351,7 +351,6 @@ exports.run = async function(client, msg, args) {
       game = await searchGame(sgame)
       user = await vanityUser(suser)
       var stats = await gameStats(user, game)
-      console.log(stats);
       if (!stats) {
         ms.edit(`Rejection! Stats not defined for ${sgame} [${game}] in context ${suser} [${user}]`);
       }
@@ -366,6 +365,25 @@ exports.run = async function(client, msg, args) {
         e.addField(stats.stats[i].name, stats.stats[i].value, true);
       }
       ms.edit(e);
+    } else if (type == "news") {
+      var sgame = args.shift();
+      var game = await searchGame(sgame);
+      var url = `http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=1&maxlength=1024&format=json`;
+      var req = await got(url);
+      var res = JSON.parse(req.body).appnews.newsitems[0];
+      var title = res.title;
+      var body = res.contents;
+      var date = res.date;
+      var author = res.author;
+      var url = res.url;
+      var embed = new client.embed;
+      embed.setTitle(title);
+      if (!res.is_external_url) embed.setURL(url);
+      embed.setAuthor(author);
+      embed.setFooter(client.generateFooter())
+      embed.setTimestamp(date);
+      embed.setDescription(body);
+      ms.edit(embed);
     } else {
       var embed = new client.embed;
       embed.setTitle("Error");
