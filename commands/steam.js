@@ -107,7 +107,7 @@ exports.run = async function(client, msg, args) {
         ms.edit(`API Error: [${e}] ${d.message}`);
       }
     } else if (type == "games" || type == "library") {
-      var vurl = args.join(" ");
+      var vurl = args[0];
       var url = `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API}&vanityurl=${vurl}`;
       var id;
       var e = new client.embed;
@@ -120,21 +120,41 @@ exports.run = async function(client, msg, args) {
         var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API}&steamid=${id}&include_appinfo=true`
         var greq = await got(url);
         var d = JSON.parse(greq.body).response;
-        var pages = Number(args[args.length]);
+        var pages = Number(args[args.length-1]) || 1
         if (d && d.games) {
           var games = ""
           var glist = d.games;
           glist.sort(function(a, b){return b.playtime_forever - a.playtime_forever});
-          i
-          for (i=0;i<25;i++) {
+          var max;
+          if (pages && pages <= 3) {
+            max = pages*25
+          } else {
+            max = 25;
+          }
+          for (i=0;i<max;i++) {
             var g = glist[i];
             if (!g) break;
             if (Math.round(g.playtime_forever/60) > 0) {
               var rpt = Math.round((g.playtime_2weeks || 0)/60)
               e.addField(g.name, `${rpt}/${Math.round((g.playtime_forever || 0)/60)} Hrs`, true);
+              if (i+1 == 25) {
+                ms.edit(e);
+                e = new client.embed;
+                e.setColor(0x000000)
+                e.setFooter(client.generateFooter());
+              } else if (i+1 == 50) {
+                msg.channel.send(e);
+                e = new client.embed;
+                e.setColor(0x000000)
+                e.setFooter(client.generateFooter());
+              } else if (i+1 == 75) {
+                msg.channel.send(e);
+                e = new client.embed;
+                e.setColor(0x000000)
+                e.setFooter(client.generateFooter());
+              }
             }
           }
-          ms.edit(e);
         }
     } else if (type == "game" || type == "store") {
       var query = args.join(" ");
