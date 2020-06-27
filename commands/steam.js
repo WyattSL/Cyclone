@@ -1,14 +1,28 @@
 const got = require("got");
+const request = require("request")
 
-async function searchGame(query) {
+async function searchGame(query, msg) {
   var q = query.replace(/ /g, "+");
   q=q.replace(/'/g, "%27");
   var u = `https://store.steampowered.com/search/suggest?term=${q}&f=games&cc=US&realm=1&l=english&v=8802085`
   var options = {
-    throwHttpErrors: true
+    headers: {
+      "Accept": "*/*",
+      "Accept-Language": "en-US,en;q=0.5",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Connection": "keep-alive",
+      "Pragma": "no-cache",
+      "Cache-Control": "no-cache"
+    }
   }
-  var req = await got(u, options);
+  var req = await got(u, options)
+  req.on('error', function(err) {
+    msg.channel.send(`HTTP Error: ${err}`)
+  })
   var res = req.body;
+  console.log(req);
+  console.log(req.headers);
+  console.log(res)
   var appid = res.split("data-ds-appid=\"")[1].split("\"")[0];
   return appid;
 }
@@ -180,7 +194,7 @@ exports.run = async function(client, msg, args) {
         mode = 2;
       }
       if (mode == 2) { // remember to do this; once I find out how to search the store
-        id = searchGame(query);
+        id = searchGame(query, msg);
       }
       var url = `https://store.steampowered.com/api/appdetails?appids=${id}`;
       var req = await got(url);
