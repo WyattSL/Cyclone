@@ -132,10 +132,23 @@ exports.run = function(client, msg, args) {
                             if (i == 24) break;
                             var b = badges[i];
                             var a = await resolveGame(b.awarder.id);
-                            if (a.rootPlaceId) {
-                                if (a.rootPlaceId != )
-                            }
-                            embed.addField(`${b.displayName} [${a.name}]`, `${b.displayDescription}`)
+                            embed.addField(`${b.displayName} [${b.statistics.winRatePercentage}%]`, `${b.displayDescription}\n[${b.statistics.pastDayAwardedCount}/${b.statistics.awardedCount}]`)
+                        }
+                        ms.edit(embed);
+                        break;
+                    case "inventory":
+                        var user = await searchUser(args.join(" "));
+                        var inv = await resolveInventory(user.UserId);
+                        var i;
+                        var embed = new client.embed;
+                        embed.setTitle("Roblox Data Retrieval: User Inventory");
+                        embed.setURL(`https://roblox.comusers/${user.UserId}/profile`);
+                        embed.setFooter(client.generateFooter());
+                        for (i=0;i<inv.length;i++) {
+                            if (i==24) break;
+                            var item = inv[i];
+                            var created = new Date(item.created);
+                            embed.addField(`${item.name} [${item.assetType}]`, `${created}`);
                         }
                         ms.edit(embed);
                         break;
