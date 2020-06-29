@@ -49,6 +49,13 @@ async function resolveUserBadges(id) {
     return res;
 }
 
+async function resolveGame(id) {
+    var url = `https://games.roblox.com/v1/games?universeIds=${id}`;
+    var req = await got(url);
+    var res = JSON.parse(req.body).data[0];
+    return res
+}
+
 exports.run = function(client, msg, args) {
     var type = args.shift();
     var type2 = args.shift();
@@ -124,8 +131,14 @@ exports.run = function(client, msg, args) {
                         for (i=0;i<badges.length;i++) {
                             if (i == 24) break;
                             var b = badges[i];
-                            embed.addField(`${b.displayName} [${b.awarder.name}]`, `${b.displayDescription}`)
+                            var a = await resolveGame(b.awarder.id);
+                            if (a.rootPlaceId) {
+                                if (a.rootPlaceId != )
+                            }
+                            embed.addField(`${b.displayName} [${a.name}]`, `${b.displayDescription}`)
                         }
+                        ms.edit(embed);
+                        break;
                     default:
                         ms.delete();
                         return 1;
