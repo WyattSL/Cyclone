@@ -36,10 +36,17 @@ async function getUserHeadshot(id) {
 }
 
 async function resolveUserCreations(id) {
-    var url = `https://games.roblox.com/v2/users/{userId}/games?userId=${id}`;
+    var url = `https://games.roblox.com/v2/users/${id}/games`;
     var req = await got(url);
     var res = JSON.parse(req.body);
     return res.data;
+}
+
+async function resolveUserBadges(id) {
+    var url = `https://badges.roblox.com/v1/users/${id}/badges`;
+    var req = await got(url);
+    var res = JSON.parse(req.body).data;
+    return res;
 }
 
 exports.run = function(client, msg, args) {
@@ -106,6 +113,19 @@ exports.run = function(client, msg, args) {
                         }
                         ms.edit(embed);
                         break;
+                    case "badges":
+                        var user = await searchUser(args.join(" "));
+                        var badges = await resolveUserBadges(user.UserId);
+                        var i;
+                        var embed = new client.embed;
+                        embed.setTitle("Roblox Data Retrieval: User Badges");
+                        embed.setURL(`https://roblox.com/users/${user.UserId}/profile`);
+                        embed.setFooter(client.generateFooter());
+                        for (i=0;i<badges.length;i++) {
+                            if (i == 24) break;
+                            var b = badges[i];
+                            embed.addField(`${b.displayName} [${b.awarder.name}]`, `${b.displayDescription}`)
+                        }
                     default:
                         ms.delete();
                         return 1;
