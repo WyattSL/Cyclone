@@ -152,7 +152,8 @@ exports.run = async (client, args) => {
       case 0: // success
         break; // yes ik this is valid so don't default
       case 1:
-        msg.channel.send(`Incorrect parameters.`); // placeholder; replace with help msg
+        var x = "```"
+        msg.channel.send(`Incorrect parameters. ${x}${prefix}${module.usage}${x}`); // placeholder; replace with help msg
         break;
       case 2: 
         msg.channel.send(`Internal error.`);

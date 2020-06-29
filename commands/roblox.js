@@ -35,6 +35,13 @@ async function getUserHeadshot(id) {
     return ares;
 }
 
+async function resolveUserCreations(id) {
+    var url = `https://games.roblox.com/v2/users/{userId}/games?userId=${id}`;
+    var req = await got(url);
+    var res = JSON.parse(req.body);
+    return res.data;
+}
+
 exports.run = function(client, msg, args) {
     var type = args.shift();
     var type2 = args.shift();
@@ -75,9 +82,27 @@ exports.run = function(client, msg, args) {
                         embed.setTitle("Roblox Data Retrieval: User Groups");
                         embed.setAuthor(user.DisplayName, getUserHeadshot(user.UserId).imageUrl)
                         embed.setFooter(client.generateFooter())
+                        embed.setURL(`https://roblox.com/users/${user.UserId}/profile`);
                         for (i=0;i<groups.length;i++) {
                             var g = groups[i]
                             embed.addField(g.Name, g.Role, false);
+                        }
+                        ms.edit(embed);
+                        break;
+                    case "creations":
+                        var user = await searchUser(args.join(" "));
+                        var creations = await resolveUserCreations(user.UserId);
+                        var i;
+                        var embed = new client.embed;
+                        embed.setTitle("Roblox Data Retrieval: User Creations");
+                        embed.setURL(`https://roblox.com/users/${user.UserId}/profile`);
+                        embed.setFooter(client.generateFooter());
+                        for (i=0;i<creations.length;i++) {
+                            if (i == 24) break;
+                            var g = creations[i];
+                            var modified = new Date(g.updated);
+                            var created = new Date(g.created);
+                            embed.addField(`${g.name}`, `${g.description}\n${created}\n${modified}`)
                         }
                         ms.edit(embed);
                         break;
