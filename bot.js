@@ -1,14 +1,7 @@
 const Discord = require("discord.js")
 const {RichEmbed} = require("discord.js")
-const { exec } = require("child_process");
-const readline = require("readline");
 const client = new Discord.Client();
 const fs = require("fs")
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 // This loop reads the /events/ folder and attaches each event file to the appropriate event.
 fs.readdir("./events/", (err, files) => {
@@ -41,22 +34,5 @@ process.on("uncaughtRejection", (promise, err) => {
   var msg = `Rejection at ${promise} with error ${err}`
   require("./events/error.js").error(msg);
 });
-
-function pro() {
-  rl.question("Command?", function(cmd) {
-    if (cmd.split(" ")[0] == "exec") {
-      exec(args.join(" "), (error, stdout, stderr) => {\
-        if (error) {
-            msg.channel.send(`ERROR: ${error.message}`);
-        }
-        if (stderr) {
-            console.log(`STDERR: ${stderr}`);
-        }
-        console.log(`STDOUT: ${stdout}`);
-        pro();
-    });
-    });
-  });
-};
 
 client.login(process.env.TOKEN);
