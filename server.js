@@ -6,6 +6,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const fs = require("fs");
+const got = require('got');
 const bot = require("./bot.js");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -149,6 +150,10 @@ app.get("/*", function(req, res) {
 app.post("/*", function(req, res) {
   res.sendStatus(404);
 })
+
+setInterval(function() {
+  got("https://wl-cyclone.glitch.me/uptime");
+}, 240000);
 
 
 // listen for requests :)
