@@ -1,5 +1,6 @@
 exports.run = function(client, msg, args) {
   const os = require("os")
+  const package = require("/app/package.json");
   var up = client.uptime;
   var ping = client.ping;
   var guilds = client.guilds.size
@@ -51,6 +52,7 @@ exports.run = function(client, msg, args) {
   .addField(`Memory`, `${memused}MB/${memtotal}MB`, true)
   .addField(`System Type`, `${type}`, true)
   .addField(`CPU Count`, cpus, false)
+  .addField(`Discord.JS`, "V " + package.dependencies["discord.js"], true);
   msg.channel.send(e);
 }
 

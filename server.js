@@ -6,6 +6,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const fs = require("fs");
+const got = require('got');
 const bot = require("./bot.js");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -134,11 +135,48 @@ app.get("/oauth/redirect", (req, res) => {
 
 app.get("/oauth/callback", (req, res) => {
   var code = req.query.code;
-  
+});
+
+app.get("/link/:id/twitch", (req, res) => {
+  if (!req.params.id) {
+    res.sendStatus(400);
+    return;
+  }
+  var redir = `https://cyclone.tk/link/twitch/callback`;
+  var scope = `channel:read:subscriptions+user_read+user_blocks_read+user_subscriptions+chat:read+channel_read+channel_check_subscription+channel_feed_read`;
+  var url = `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCHID}&redirect_uri=${redir}&response_type=code&scope=${scope}&state=${req.params.id}`
+  // that's a long url
+  res.redirect(url);
+});
+
+app.get("/link/twitch/callback", async (req, res) => {
+  if (!req.query.state) {
+    var d = `<html><head><script>
+      location.href=location.href.replace("#", "?");
+    </script></head></html>`
+    res.end(d);
+    return;
+  }
+  res.end(`Your account should now be linked.`)
+  var id = Buffer.from(req.query.state, 'hex').toString();
+  var code = req.query.code;
+  var redir = `https://cyclone.tk/link/twitch/callback`;
+  var url = `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCHID}&client_secret=${process.env.TWITCHSEC}&code=${code}&grant_type=authorization_code&redirect_uri=${redir}`;
+  var req = await got.post(url, {
+    throwHttpErrors: false
+  });
+  console.log(req.body);
+  var res = JSON.parse(req.body);
+  var access = res.access_token;
+  var refresh = res.refresh_token;
+  var q = `DELETE FROM links WHERE user=? AND service="twitch";`;
+  db.run(q, id);
+  var q = `INSERT INTO links ("user", "service", "token", "refresh") VALUES (@0, "twitch", @1, @2);`;
+  db.run(q, id, access, refresh);
 });
 
 app.get("/*", function(req, res) {
-  var file = req.path;
+  var file = `/views` + req.path;
   if (fs.existsSync(__dirname + file)) {
     res.sendFile(__dirname + file)
   } else {
@@ -149,6 +187,10 @@ app.get("/*", function(req, res) {
 app.post("/*", function(req, res) {
   res.sendStatus(404);
 })
+
+setInterval(function() {
+  got("https://wl-cyclone.glitch.me/uptime");
+}, 240000);
 
 
 // listen for requests :)
