@@ -1,6 +1,7 @@
 const got = require('got');
 
 async function searchUser(user) {
+    console.log("Search User: " + user)
     var url = `https://www.roblox.com/search/users/results?keyword=${user}&maxRows=1&startIndex=0`
     var req = await got(url);
     var res = JSON.parse(req.body).UserSearchResults;
@@ -11,24 +12,28 @@ async function searchUser(user) {
 }
 
 async function resolveGroup(id) {
+    console.log("Resolve Group: " + id)
     var url = `https://groups.roblox.com/v1/groups/${id}`
     var req = await got(url)
     return JSON.parse(req.body);
 }
 
 async function resolvePrimaryGroup(user) {
+    console.log(`Resolve Primary Group of: ${user}`)
     var url = `https://groups.roblox.com/v1/users/${user}/groups/primary/role`;
     var req = await got(url);
     return JSON.parse(req.body);
 }
 
 async function resolveUserGroups(user) {
+    console.log(`Resolve Groups of: ${user}`)
     var url = `https://api.roblox.com/users/${user}/groups`;
     var req = await got(url);
     return JSON.parse(req.body);
 }
 
 async function getUserHeadshot(id) {
+    console.log(`Get Headshot of: ${id}`)
     var url = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=150x150&format=png`
     var areq = await got(url);
     var ares = JSON.parse(areq.body).data[0]
@@ -36,6 +41,7 @@ async function getUserHeadshot(id) {
 }
 
 async function resolveUserCreations(id) {
+    console.log(`Resolve Creations by: ${id}`)
     var url = `https://games.roblox.com/v2/users/${id}/games`;
     var req = await got(url);
     var res = JSON.parse(req.body);
@@ -43,6 +49,7 @@ async function resolveUserCreations(id) {
 }
 
 async function resolveUserBadges(id) {
+    console.log(`Resolve User Badges: ${id}`)
     var url = `https://badges.roblox.com/v1/users/${id}/badges`;
     var req = await got(url);
     var res = JSON.parse(req.body).data;
@@ -50,6 +57,7 @@ async function resolveUserBadges(id) {
 }
 
 async function resolveGame(id) {
+    console.log(`Resolve Game: ${id}`)
     var url = `https://games.roblox.com/v1/games?universeIds=${id}`;
     var req = await got(url);
     var res = JSON.parse(req.body).data[0];
@@ -58,6 +66,7 @@ async function resolveGame(id) {
 
 exports.run = function(client, msg, args) {
     var type = args.shift();
+    var name = args.shift();
     var type2 = args.shift();
     if (!type || !type2) {
         return 1;
@@ -67,10 +76,10 @@ exports.run = function(client, msg, args) {
             case "user":
                 switch(type2) {
                     case "info":
-                        var user = await searchUser(args.join(" "))
+                        var user = await searchUser(name)
                         var id = user.UserId
                         var embed = new client.embed;
-                        embed.setTitle("Roblox Data Retrieval: user Lookup")
+                        embed.setTitle("Roblox Data Retrieval: User Lookup")
                         embed.setFooter(client.generateFooter())
                         embed.setColor(0x000000)
                         embed.setAuthor(user.DisplayName, getUserHeadshot(id).imageUrl)
@@ -89,7 +98,7 @@ exports.run = function(client, msg, args) {
                         ms.edit(embed);
                         break;
                     case "groups":
-                        var user = await searchUser(args.join(" "));
+                        var user = await searchUser(name);
                         var groups = await resolveUserGroups(user.UserId);
                         var i;
                         var embed = new client.embed;
@@ -104,7 +113,7 @@ exports.run = function(client, msg, args) {
                         ms.edit(embed);
                         break;
                     case "creations":
-                        var user = await searchUser(args.join(" "));
+                        var user = await searchUser(name);
                         var creations = await resolveUserCreations(user.UserId);
                         var i;
                         var embed = new client.embed;
@@ -121,7 +130,7 @@ exports.run = function(client, msg, args) {
                         ms.edit(embed);
                         break;
                     case "badges":
-                        var user = await searchUser(args.join(" "));
+                        var user = await searchUser(name);
                         var badges = await resolveUserBadges(user.UserId);
                         var i;
                         var embed = new client.embed;
@@ -132,23 +141,7 @@ exports.run = function(client, msg, args) {
                             if (i == 24) break;
                             var b = badges[i];
                             var a = await resolveGame(b.awarder.id);
-                            embed.addField(`${b.displayName} [${b.statistics.winRatePercentage}%]`, `${b.displayDescription}\n[${b.statistics.pastDayAwardedCount}/${b.statistics.awardedCount}]`)
-                        }
-                        ms.edit(embed);
-                        break;
-                    case "inventory":
-                        var user = await searchUser(args.join(" "));
-                        var inv = await resolveInventory(user.UserId);
-                        var i;
-                        var embed = new client.embed;
-                        embed.setTitle("Roblox Data Retrieval: User Inventory");
-                        embed.setURL(`https://roblox.comusers/${user.UserId}/profile`);
-                        embed.setFooter(client.generateFooter());
-                        for (i=0;i<inv.length;i++) {
-                            if (i==24) break;
-                            var item = inv[i];
-                            var created = new Date(item.created);
-                            embed.addField(`${item.name} [${item.assetType}]`, `${created}`);
+                            embed.addField(`${b.displayName} [${b.statistics.winRatePercentage}%]`, `${b.displayDescription}\n[${b.statistics.pastDayAwardedCount}/${b.statistics.awardedCount}]`, true)
                         }
                         ms.edit(embed);
                         break;
@@ -164,7 +157,7 @@ exports.run = function(client, msg, args) {
     });
 }
 
-exports.usage = "roblox <user/group/game> <creations/info/inventory/badges/groups | creations/info | media/info/badges>"
+exports.usage = "roblox <user/group/game> <name> <creations/info/badges/groups | creations/info | media/info/badges>"
 exports.description = "Get data on a roblox user."
 exports.example = "roblox WyattPlayzPC"
 exports.p = ["EMBED_LINKS", "SEND_MESSAGES"]

@@ -30,6 +30,12 @@
     "type": "bool"
   },
   {
+    "name": "logChannel",
+    "description": "The channel where logs are sent.",
+    "default": "none",
+    "type": "channel"
+  },
+  {
     "name": "announceChannel",
     "description": "Send announcements to this channel.",
     "default": "none",

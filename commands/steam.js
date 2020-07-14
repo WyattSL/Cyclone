@@ -430,13 +430,13 @@ exports.run = async function(client, msg, args) {
       embed.setFooter(client.generateFooter());
       var x = "```";
       var prefix = client.config[msg.guild.id].prefix || "."
-      embed.setDescription(`Parameter error. Please use ${x}${prefix}help steam${x} for usage information.`);
+      embed.setDescription(`Parameter error. ${x}${prefix}${this.usage}${x}`);
       embed.setThumbnail(client.assets.X);
       ms.edit(embed);
     }
   });
 }
 
-exports.usage = "steam <lookup/store> <steam64/vanityurl/gameid/gamename>";
+exports.usage = "steam <lookup/games/store> <steam64/vanityurl/gameid/gamename>";
 exports.description = "Retreive information on a steam user.";
 exports.example = "steam lookup Wyatt; steam store 4000"

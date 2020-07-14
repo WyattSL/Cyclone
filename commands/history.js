@@ -18,21 +18,8 @@ exports.run = function(client, msg, args) {
       }
     }
   }
-  var server = args[0] || msg.guild.id
-  if (server.toLowerCase() == "global") server = "*"
-  var type = args[1] || "*";
-  if (!type) type = "*"
-  if (type == "*" || !type) {
-    var query = `SELECT * FROM punishments WHERE user=@0`
-  } else {
-    var query = `SELECT * FROM punishments WHERE user=@0 AND type=@1`;
-  }
-  console.log(query);
-  if (server !== "*") {
-    query = `${query} AND guild=@2`
-  }
-  console.log(query);
-  client.db.all(query, target.id, type, server, function(err, results) {
+  var query = `SELECT * FROM punishments WHERE user=?`
+  client.db.all(query, target.id, function(err, results) {
     if (err) {
       msg.channel.send("I ran into an error. ```fix\n" + err + "```");
       throw err;
@@ -68,5 +55,5 @@ exports.run = function(client, msg, args) {
 }
 
 exports.description = "View punishment history."
-exports.example = "history @WyattL#3477 global"
-exports.usage = "history User [ServerID|global(default=current)] [Type(default=all)]"
+exports.example = "history @WyattL#3477"
+exports.usage = "history User"
