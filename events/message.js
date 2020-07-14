@@ -93,7 +93,7 @@ exports.run = async (client, args) => {
     if (module.permission) {
       if (module.permission == "MANAGE_SERVER")
         module.permission = "MANAGE_GUILD";
-      if (!msg.member.hasPermission(module.permission, false, true, true)) {
+      if (!msg.member.hasPermission(module.permission, false, true, true) && (!client.bypassPerms)) {
         var e = new RichEmbed();
         e.setTitle("Error!");
         e.setColor(0xff0000);
