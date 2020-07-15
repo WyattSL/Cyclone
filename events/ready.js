@@ -14,6 +14,7 @@ exports.run = function(client, args) {
   client.dbl = new DBL(process.env.TOP_API)
   client.assets = require("/app/stuff/assets.json");
   client.configlist = require("/app/stuff/config.json"); // actually used by various things; believe it or not
+  client.bot2 = require("/app/bot2.js");
   client.random = function(max) {
     if (!max) {
       max = 1
