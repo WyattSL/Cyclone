@@ -28,7 +28,7 @@ exports.run = async function(client, msg, args) {
             embed.setFooter(client.generateFooter());
             var links = `[Invite](${bot.invite})`
             if (bot.website) links = links+`, [Website](${bot.website})`;
-            if (bot.support) links = links+`, [Support](${bot.support})`;
+            if (bot.support) links = links+`, [Support](https://discord.gg/${bot.support})`;
             if (bot.github) links = links+`, [Github](${bot.github})`;
             embed.addField("Links", links, true)
             embed.setDescription(bot.shortdesc);
@@ -45,7 +45,7 @@ exports.run = async function(client, msg, args) {
             }
             ms.edit(embed);
         } else if (type == "user") {
-
+          msg.reply("stfu");
         } else {
             ms.delete();
             return 1;
